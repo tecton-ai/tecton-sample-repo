@@ -23,7 +23,7 @@ output_schema.add(StructField("user_ctr_7d", DoubleType()))
 )
 def user_ctr_7d(user_click_counts: pandas.DataFrame, user_impression_counts: pandas.DataFrame):
     import pandas as pd
-
+    
     df = pd.DataFrame()
     df['user_age'] = user_click_counts['clicked_sum_168h_1h'] / user_impression_counts['impression_count_168h_1h']
     return df

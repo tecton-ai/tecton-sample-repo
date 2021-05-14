@@ -22,6 +22,7 @@ output_schema.add(StructField("transaction_amount_is_high", LongType()))
 )
 def transaction_amount_is_high(transaction_request: pandas.DataFrame):
     import pandas as pd
+    
     df = pd.DataFrame()
     df['transaction_amount_is_high'] = (transaction_request['amount'] >= 10000).astype('int64')
     return df

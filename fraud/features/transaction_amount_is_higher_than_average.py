@@ -26,7 +26,9 @@ output_schema.add(StructField("transaction_amount_is_higher_than_average", LongT
 )
 def transaction_amount_is_higher_than_average(transaction_request: pandas.DataFrame, user_transaction_amount_metrics: pandas.DataFrame):
     import pandas as pd
+
     user_transaction_amount_metrics['amount_mean_24h_1h'] = user_transaction_amount_metrics['amount_mean_24h_1h'].fillna(0)
+    
     df = pd.DataFrame()
     df['transaction_amount_is_higher_than_average'] = (transaction_request['amount'] > user_transaction_amount_metrics['amount_mean_24h_1h']).astype('int64')
     return df

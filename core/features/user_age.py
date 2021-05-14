@@ -26,6 +26,7 @@ output_schema.add(StructField("user_age", LongType()))
 )
 def user_age(transaction_request: pandas.DataFrame, user_date_of_birth: pandas.DataFrame):
     import pandas as pd
+
     transaction_request['timestamp'] = pd.to_datetime(transaction_request['timestamp'])
     user_date_of_birth['user_date_of_birth'] = pd.to_datetime(user_date_of_birth['user_date_of_birth'])
 
