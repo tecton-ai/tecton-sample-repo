@@ -2,8 +2,8 @@ from tecton import FeatureService
 from fraud.features.user_transaction_amount_metrics import user_transaction_amount_metrics
 from fraud.features.user_transaction_counts import user_transaction_counts
 from fraud.features.transaction_amount_is_high import transaction_amount_is_high
-from fraud.features.user_date_of_birth import user_date_of_birth
-from fraud.features.user_age import user_age
+from core.features.user_date_of_birth import user_date_of_birth
+from core.features.user_age import user_age
 from fraud.features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
 # from fraud.features.user_has_good_credit import user_has_good_credit
 

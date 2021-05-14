@@ -1,8 +1,8 @@
 from tecton.feature_views import stream_window_aggregate_feature_view
 from tecton.feature_views.feature_view import Input
 from tecton import FeatureAggregation
-from global_entities import user
-from ads.ad_entities import ad
+from core.entities import user
+from ads.entities import ad
 from ads.data_sources.ad_impressions_stream import ad_impressions_stream
 from datetime import datetime
 
