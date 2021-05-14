@@ -1,0 +1,7 @@
+
+from typing import Optional
+
+def run() -> Optional[int]:
+    # No-op plan hook that returns None indicating no tests we run.
+    # See https://docs.tecton.ai/how-to/using_plan_hooks.html for more info.
+    return None
