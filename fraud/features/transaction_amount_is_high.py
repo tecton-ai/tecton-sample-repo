@@ -15,7 +15,7 @@ output_schema.add(StructField("transaction_amount_is_high", LongType()))
     inputs={"transaction_request": Input(transaction_request)},
     mode="pandas",
     output_schema=output_schema,
-    family="fraud_detection",
+    family="fraud",
     owner="matt@tecton.ai",
     tags={"release": "production"},
     description="Whether the transaction amount is considered high (over $10000)"

@@ -19,7 +19,7 @@ output_schema.add(StructField("user_age", LongType()))
     },
     mode="pandas",
     output_schema=output_schema,
-    family="fraud_detection",
+    family="fraud",
     owner="matt@tecton.ai",
     tags={"release": "production"},
     description="The user's age in days."

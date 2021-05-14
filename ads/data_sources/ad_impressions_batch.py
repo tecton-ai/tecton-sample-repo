@@ -8,7 +8,7 @@ ad_impressions_batch = BatchDataSource(
         timestamp_column_name='timestamp',
         date_partition_column='datestr'
     ),
-    family='ad_serving',
+    family='ads',
     tags={
         'release': 'production',
         'source': 'mobile'

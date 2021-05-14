@@ -8,7 +8,7 @@ from datetime import datetime
 
 @stream_window_aggregate_feature_view(
     inputs={"ad_impressions": Input(ad_impressions_stream)},
-    entities=[user, ad],
+    entities=[user],
     mode="spark_sql",
     aggregation_slide_period="1h",
     aggregations=[FeatureAggregation(column="impression", function="count", time_windows=["1h", "12h", "24h","72h","168h"])],
@@ -19,13 +19,12 @@ from datetime import datetime
     family='ads',
     tags={'release': 'production'},
     owner="matt@tecton.ai",
-    description="The count of impressions between a given user and a given ad"
+    description="The count of ad impressions for a user"
 )
-def user_ad_impression_counts(ad_impressions):
+def user_impression_counts(ad_impressions):
     return f"""
         select
             user_uuid as user_id,
-            ad_id,
             1 as impression,
             timestamp
         from

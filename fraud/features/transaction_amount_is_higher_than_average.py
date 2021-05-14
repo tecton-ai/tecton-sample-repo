@@ -19,7 +19,7 @@ output_schema.add(StructField("transaction_amount_is_higher_than_average", LongT
     },
     mode="pandas",
     output_schema=output_schema,
-    family="fraud_detection",
+    family="fraud",
     owner="matt@tecton.ai",
     tags={"release": "production"},
     description="The transaction amount is higher than the 1 day average."
