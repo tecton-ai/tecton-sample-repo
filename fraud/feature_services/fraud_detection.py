@@ -7,6 +7,7 @@ from core.features.user_age import user_age
 from fraud.features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
 # from fraud.features.user_has_good_credit import user_has_good_credit
 
+
 fraud_detection_feature_service = FeatureService(
     name='fraud_detection_feature_service',
     description='A FeatureService providing features for a model that predicts if a transaction is fraudulent.',
@@ -20,6 +21,7 @@ fraud_detection_feature_service = FeatureService(
         user_transaction_counts
     ]
 )
+
 
 # fraud_detection_feature_service_v2 = FeatureService(
 #     name='fraud_detection_feature_service:v2',

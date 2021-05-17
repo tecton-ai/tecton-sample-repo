@@ -1,5 +1,6 @@
 from tecton import HiveDSConfig, BatchDataSource
 
+
 users_batch = BatchDataSource(
     name="users_batch",
     batch_ds_config=HiveDSConfig(

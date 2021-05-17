@@ -5,12 +5,14 @@ from pyspark.sql.types import DoubleType, StructType, StructField, LongType
 from fraud.features.user_transaction_amount_metrics import user_transaction_amount_metrics
 import pandas
 
+
 request_schema = StructType()
 request_schema.add(StructField("amount", DoubleType()))
 transaction_request = RequestDataSource(request_schema=request_schema)
 
 output_schema = StructType()
 output_schema.add(StructField("transaction_amount_is_higher_than_average", LongType()))
+
 
 @on_demand_feature_view(
     inputs={
@@ -28,7 +30,7 @@ def transaction_amount_is_higher_than_average(transaction_request: pandas.DataFr
     import pandas as pd
 
     user_transaction_amount_metrics['amount_mean_24h_1h'] = user_transaction_amount_metrics['amount_mean_24h_1h'].fillna(0)
-    
+
     df = pd.DataFrame()
     df['transaction_amount_is_higher_than_average'] = (transaction_request['amount'] > user_transaction_amount_metrics['amount_mean_24h_1h']).astype('int64')
     return df

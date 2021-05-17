@@ -3,6 +3,7 @@ from core.entities import user
 from core.data_sources.users_batch import users_batch
 from datetime import datetime
 
+
 @batch_feature_view(
     inputs={"users": Input(users_batch)},
     entities=[user],

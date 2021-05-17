@@ -5,6 +5,7 @@ from core.entities import user
 from fraud.data_sources.transactions_stream import transactions_stream
 from datetime import datetime
 
+
 @stream_window_aggregate_feature_view(
     inputs={"transactions": Input(transactions_stream)},
     entities=[user],

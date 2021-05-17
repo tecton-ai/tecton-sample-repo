@@ -1,6 +1,7 @@
 from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource
 from tecton_spark.function_serialization import inlined
 
+
 @inlined
 def ad_stream_translator(df):
     from pyspark.sql.types import StructType, StringType, IntegerType, LongType, BooleanType
@@ -51,6 +52,7 @@ def ad_stream_translator(df):
           from_utc_timestamp("payload.timestamp", "UTC").alias("timestamp")
       )
     )
+
 
 ad_impressions_stream = StreamDataSource(
     name="ad_impressions_stream",

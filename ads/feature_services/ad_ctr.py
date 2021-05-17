@@ -6,6 +6,7 @@ from ads.features.user_impression_counts import user_impression_counts
 from core.features.user_date_of_birth import user_date_of_birth
 from core.features.user_age import user_age
 
+
 ad_ctr_feature_service = FeatureService(
     name='ad_ctr_feature_service',
     description='A FeatureService providing features for a model that predicts if a user will click an ad.',

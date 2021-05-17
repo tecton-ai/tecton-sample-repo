@@ -1,6 +1,7 @@
 from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource
 from tecton_spark.function_serialization import inlined
 
+
 @inlined
 def raw_data_deserialization(df):
     from pyspark.sql.functions import col, from_json, from_utc_timestamp, when
@@ -38,6 +39,7 @@ def raw_data_deserialization(df):
             from_utc_timestamp("payload.timestamp", "UTC").alias("timestamp")
         )
     )
+
 
 transactions_stream = StreamDataSource(
     name="transactions_stream",

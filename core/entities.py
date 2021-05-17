@@ -1,5 +1,6 @@
 from tecton import Entity
 
+
 user = Entity(
     name="User",
     default_join_keys=["user_id"],

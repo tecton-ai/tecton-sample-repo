@@ -3,6 +3,7 @@ from core.entities import user
 from fraud.data_sources.credit_scores_batch import credit_scores_batch
 from datetime import datetime
 
+
 # @batch_feature_view(
 #     inputs={"credit_scores": Input(credit_scores_batch)},
 #     entities=[user],

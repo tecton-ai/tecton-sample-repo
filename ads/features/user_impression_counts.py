@@ -6,6 +6,7 @@ from ads.entities import ad
 from ads.data_sources.ad_impressions_stream import ad_impressions_stream
 from datetime import datetime
 
+
 @stream_window_aggregate_feature_view(
     inputs={"ad_impressions": Input(ad_impressions_stream)},
     entities=[user],

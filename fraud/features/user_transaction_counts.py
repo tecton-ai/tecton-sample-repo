@@ -5,6 +5,7 @@ from core.entities import user
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime
 
+
 @batch_window_aggregate_feature_view(
     inputs={"transactions": Input(transactions_batch)},
     entities=[user],

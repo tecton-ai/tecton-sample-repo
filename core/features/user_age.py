@@ -5,12 +5,14 @@ from pyspark.sql.types import StringType, StructType, StructField, LongType
 from core.features.user_date_of_birth import user_date_of_birth
 import pandas
 
+
 request_schema = StructType()
 request_schema.add(StructField("timestamp", StringType()))
 transaction_request = RequestDataSource(request_schema=request_schema)
 
 output_schema = StructType()
 output_schema.add(StructField("user_age", LongType()))
+
 
 @on_demand_feature_view(
     inputs={
