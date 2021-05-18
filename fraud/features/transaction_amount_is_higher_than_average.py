@@ -27,7 +27,7 @@ output_schema.add(StructField("transaction_amount_is_higher_than_average", LongT
     description="The transaction amount is higher than the 1 day average."
 )
 # The Feature View name defaults to this function name, but can be overridden with a `name_override` param in the decorator above.
-# The parameters map to the `inputs` dict keys fromt he decorator above.
+# The parameters map to the `inputs` dict keys from the decorator above.
 def transaction_amount_is_higher_than_average(transaction_request: pandas.DataFrame, user_transaction_amount_metrics: pandas.DataFrame):
     import pandas as pd
 
