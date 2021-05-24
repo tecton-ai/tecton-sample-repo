@@ -1,4 +1,4 @@
-from tecton import Input, batch_feature_view
+from tecton import batch_feature_view, Input, NewDatabricksClusterConfig
 import core.entities as e
 from ads.data_sources.ad_impressions_batch import ad_impressions_batch
 from datetime import datetime
@@ -11,6 +11,10 @@ from datetime import datetime
     mode='spark_sql',
     ttl='1d',
     batch_schedule='1d',
+    batch_materialization=NewDatabricksClusterConfig(
+        instance_type='m5.xlarge',
+        number_of_workers=4
+    ),
     online=False,
     offline=True,
     feature_start_time=datetime(2021, 4, 1),
