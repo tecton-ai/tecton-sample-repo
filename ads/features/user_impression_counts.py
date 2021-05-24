@@ -24,10 +24,10 @@ from datetime import datetime
 )
 def user_impression_counts(ad_impressions):
     return f"""
-        select
+        SELECT
             user_uuid as user_id,
             1 as impression,
             timestamp
-        from
+        FROM
             {ad_impressions}
         """
