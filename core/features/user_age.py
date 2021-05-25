@@ -33,5 +33,5 @@ def user_age(request: pandas.DataFrame, user_date_of_birth: pandas.DataFrame):
     user_date_of_birth['user_date_of_birth'] = pd.to_datetime(user_date_of_birth['user_date_of_birth'], utc=True)
 
     df = pd.DataFrame()
-    df['user_age'] = (request['timestamp'] - user_date_of_birth['user_date_of_birth']).dt.days
+    df['user_age'] = (request['timestamp'] - user_date_of_birth['user_date_of_birth']).dt.days.astype('int64')
     return df
