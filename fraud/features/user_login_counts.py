@@ -4,14 +4,14 @@ from core.entities import user
 
 
 schema = StructType()
-schema.add(StructField("user_id", StringType()))
-schema.add(StructField("timestamp", TimestampType()))
-schema.add(StructField("user_login_count_7d", LongType()))
-schema.add(StructField("user_login_count_30d", LongType()))
+schema.add(StructField('user_id', StringType()))
+schema.add(StructField('timestamp', TimestampType()))
+schema.add(StructField('user_login_count_7d', LongType()))
+schema.add(StructField('user_login_count_30d', LongType()))
 
 
 user_login_counts = FeatureTable(
-    name="user_login_counts",
+    name='user_login_counts',
     entities=[user],
     schema=schema,
     online=True,

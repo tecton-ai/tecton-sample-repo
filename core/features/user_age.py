@@ -7,23 +7,23 @@ import pandas
 
 
 request_schema = StructType()
-request_schema.add(StructField("timestamp", StringType()))
+request_schema.add(StructField('timestamp', StringType()))
 request = RequestDataSource(request_schema=request_schema)
 
 output_schema = StructType()
-output_schema.add(StructField("user_age", LongType()))
+output_schema.add(StructField('user_age', LongType()))
 
 
 @on_demand_feature_view(
     inputs={
-        "request": Input(request),
-        "user_date_of_birth": Input(user_date_of_birth)
+        'request': Input(request),
+        'user_date_of_birth': Input(user_date_of_birth)
     },
-    mode="pandas",
+    mode='pandas',
     output_schema=output_schema,
-    family="core",
-    owner="matt@tecton.ai",
-    tags={"release": "production"},
+    family='core',
+    owner='matt@tecton.ai',
+    tags={'release': 'production'},
     description="The user's age in days."
 )
 def user_age(request: pandas.DataFrame, user_date_of_birth: pandas.DataFrame):

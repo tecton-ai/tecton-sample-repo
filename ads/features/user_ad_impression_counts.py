@@ -8,19 +8,19 @@ from datetime import datetime
 
 
 @stream_window_aggregate_feature_view(
-    inputs={"ad_impressions": Input(ad_impressions_stream)},
+    inputs={'ad_impressions': Input(ad_impressions_stream)},
     entities=[user, ad],
-    mode="spark_sql",
-    aggregation_slide_period="1h",
-    aggregations=[FeatureAggregation(column="impression", function="count", time_windows=["1h", "12h", "24h","72h","168h"])],
+    mode='spark_sql',
+    aggregation_slide_period='1h',
+    aggregations=[FeatureAggregation(column='impression', function='count', time_windows=['1h', '12h', '24h','72h','168h'])],
     online=True,
     offline=True,
-    batch_schedule="1d",
+    batch_schedule='1d',
     feature_start_time=datetime(2021, 1, 1),
     family='ads',
     tags={'release': 'production'},
-    owner="matt@tecton.ai",
-    description="The count of impressions between a given user and a given ad"
+    owner='matt@tecton.ai',
+    description='The count of impressions between a given user and a given ad'
 )
 def user_ad_impression_counts(ad_impressions):
     return f"""

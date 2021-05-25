@@ -7,25 +7,25 @@ from datetime import datetime
 
 
 @batch_window_aggregate_feature_view(
-    inputs={"transactions": Input(transactions_batch)},
+    inputs={'transactions': Input(transactions_batch)},
     entities=[user],
-    mode="spark_sql",
-    aggregation_slide_period="1d",
-    aggregations=[FeatureAggregation(column="transaction", function="count", time_windows=["24h","72h","168h", "960h"])],
+    mode='spark_sql',
+    aggregation_slide_period='1d',
+    aggregations=[FeatureAggregation(column='transaction', function='count', time_windows=['24h','72h','168h', '960h'])],
     online=True,
     offline=True,
     feature_start_time=datetime(2020, 10, 10),
     family='fraud',
     tags={'release': 'production'},
-    owner="matt@tecton.ai",
-    description="User transaction totals over a series of time windows, updated hourly."
+    owner='matt@tecton.ai',
+    description='User transaction totals over a series of time windows, updated hourly.'
 )
 def user_transaction_counts(transactions):
-    return f"""
+    return f'''
         SELECT
             nameorig as user_id,
             1 as transaction,
             timestamp
         FROM
             {transactions}
-        """
+        '''

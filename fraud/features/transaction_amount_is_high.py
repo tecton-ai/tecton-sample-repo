@@ -6,21 +6,21 @@ import pandas
 
 
 request_schema = StructType()
-request_schema.add(StructField("amount", DoubleType()))
+request_schema.add(StructField('amount', DoubleType()))
 transaction_request = RequestDataSource(request_schema=request_schema)
 
 output_schema = StructType()
-output_schema.add(StructField("transaction_amount_is_high", LongType()))
+output_schema.add(StructField('transaction_amount_is_high', LongType()))
 
 
 @on_demand_feature_view(
-    inputs={"transaction_request": Input(transaction_request)},
-    mode="pandas",
+    inputs={'transaction_request': Input(transaction_request)},
+    mode='pandas',
     output_schema=output_schema,
-    family="fraud",
-    owner="matt@tecton.ai",
-    tags={"release": "production"},
-    description="Whether the transaction amount is considered high (over $10000)"
+    family='fraud',
+    owner='matt@tecton.ai',
+    tags={'release': 'production'},
+    description='Whether the transaction amount is considered high (over $10000)'
 )
 def transaction_amount_is_high(transaction_request: pandas.DataFrame):
     import pandas as pd
