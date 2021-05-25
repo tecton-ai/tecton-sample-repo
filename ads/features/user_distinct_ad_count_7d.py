@@ -11,7 +11,10 @@ from datetime import datetime
     batch_schedule='1d',
     batch_materialization=NewDatabricksClusterConfig(
         instance_type='m5.xlarge',
-        number_of_workers=4
+        number_of_workers=4,
+        spark_config={
+            'spark.executor.memory': '5000m',
+        },
     ),
     online=True,
     offline=True,
