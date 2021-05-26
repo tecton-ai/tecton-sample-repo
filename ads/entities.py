@@ -10,6 +10,14 @@ ad = Entity(
     tags={'release': 'production'}
 )
 
+content = Entity(
+    name="content", 
+    join_keys=["content_id"],
+    description='Content ID',
+    family='ads',
+    owner='rohit@tecton.ai',
+    tags={'release': 'production'}
+)
 
 # partner_entity = Entity(name='PartnerWebsite', default_join_keys=['partner_id'], description='The partner website participating in the ad network.')
 # content_keyword_entity = Entity(name='ContentKeyword', default_join_keys=['content_keyword'], description='The keyword describing the content this ad is being placed alongside.')
