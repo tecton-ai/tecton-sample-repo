@@ -49,7 +49,7 @@ def fraudulent_transactions(transactions):
     family='fraud',
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
-    description='Number of fraudulent transactions'
+    description='Number of non-fraudulent transactions'
 )
 def non_fraudulent_transactions(transactions):
     return f'''
