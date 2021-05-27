@@ -34,3 +34,30 @@ def fraudulent_transactions(transactions):
             {transactions}
         WHERE isFraud != 0
         '''
+
+@stream_window_aggregate_feature_view(
+    inputs={'transactions': Input(transactions_stream)},
+    entities=[user],
+    mode='spark_sql',
+    aggregation_slide_period='continuous',
+    aggregations=[
+        FeatureAggregation(column='counter', function='count', time_windows=['1min', '5min', '1h'])
+    ],
+    online=True,
+    offline=True,
+    feature_start_time=datetime(2021, 5, 1),
+    family='fraud',
+    tags={'release': 'production'},
+    owner='kevin@tecton.ai',
+    description='Number of fraudulent transactions'
+)
+def non_fraudulent_transactions(transactions):
+    return f'''
+        SELECT
+            nameorig as user_id,
+            1 as counter,
+            timestamp
+        FROM
+            {transactions}
+        WHERE isFraud = 0
+        '''
