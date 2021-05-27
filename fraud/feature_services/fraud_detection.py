@@ -5,6 +5,7 @@ from fraud.features.transaction_amount_is_high import transaction_amount_is_high
 from core.features.user_date_of_birth import user_date_of_birth
 from core.features.user_age import user_age
 from fraud.features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
+from fraud.features.continuous_fraudulent_transactions_count import non_fraudulent_transactions, fraudulent_transactions
 from fraud.features.user_login_counts import user_login_counts
 # from fraud.features.user_has_good_credit import user_has_good_credit
 
@@ -36,3 +37,16 @@ fraud_detection_feature_service = FeatureService(
 #         user_transaction_counts,
 #     ]
 # )
+
+
+continuous_feature_service = FeatureService(
+    name='continuous_feature_service',
+    description='A FeatureService providing continuous features.',
+    family='fraud',
+    tags={'release': 'production'},
+    owner='kevin@tecton.ai',
+    features=[
+        non_fraudulent_transactions,
+        fraudulent_transactions,
+    ]
+)
