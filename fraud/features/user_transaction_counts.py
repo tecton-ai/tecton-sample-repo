@@ -1,6 +1,6 @@
 from tecton.feature_views import batch_window_aggregate_feature_view
 from tecton.feature_views.feature_view import Input
-from tecton import FeatureAggregation
+from tecton import FeatureAggregation, NewDatabricksClusterConfig
 from core.entities import user
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime
@@ -18,7 +18,8 @@ from datetime import datetime
     family='fraud',
     tags={'release': 'production'},
     owner='matt@tecton.ai',
-    description='User transaction totals over a series of time windows, updated hourly.'
+    description='User transaction totals over a series of time windows, updated hourly.',
+    batch_materialization=NewDatabricksClusterConfig(instance_type="r4.large", number_of_workers=3)
 )
 def user_transaction_counts(transactions):
     return f'''
