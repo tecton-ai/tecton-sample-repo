@@ -49,8 +49,7 @@ transactions_stream = StreamDataSource(
         default_initial_stream_position='latest',
         default_watermark_delay_threshold='30 minutes',
         timestamp_key='timestamp',
-        raw_stream_translator=raw_data_deserialization,
-        options={'roleArn': 'arn:aws:iam::472542229217:role/demo-cross-account-kinesis-ro'}
+        raw_stream_translator=raw_data_deserialization
     ),
     batch_ds_config=HiveDSConfig(
         database='fraud',

@@ -64,7 +64,6 @@ ad_impressions_stream = StreamDataSource(
         default_watermark_delay_threshold='1minutes',
         default_initial_stream_position='trim_horizon',
         deduplication_columns=[],
-        options={'roleArn': 'arn:aws:iam::472542229217:role/demo-cross-account-kinesis-ro'}
     ),
     batch_ds_config=HiveDSConfig(
         database='ad_impressions_2',

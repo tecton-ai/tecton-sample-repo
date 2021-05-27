@@ -1,8 +1,7 @@
-from tecton.feature_views import batch_feature_view, Input
+from tecton import batch_feature_view, Input
 from core.entities import user
 from fraud.data_sources.credit_scores_batch import credit_scores_batch
 from datetime import datetime
-
 
 # @batch_feature_view(
 #     inputs={'credit_scores': Input(credit_scores_batch)},
@@ -14,8 +13,6 @@ from datetime import datetime
 #     batch_schedule='1d',
 #     ttl='30days',
 #     family='fraud',
-#     tags={'release': 'production'},
-#     owner='matt@tecton.ai',
 #     description='Whether the user has a good credit score (over 670).'
 # )
 # def user_has_good_credit(credit_scores):
