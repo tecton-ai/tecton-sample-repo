@@ -19,7 +19,7 @@ from datetime import datetime
     tags={'release': 'production'},
     owner='matt@tecton.ai',
     description='User transaction totals over a series of time windows, updated hourly.',
-    batch_materialization=NewDatabricksClusterConfig(instance_type="r4.large", number_of_workers=3)
+    batch_materialization=NewDatabricksClusterConfig(instance_type="r5.large", number_of_workers=3)
 )
 def user_transaction_counts(transactions):
     return f'''
