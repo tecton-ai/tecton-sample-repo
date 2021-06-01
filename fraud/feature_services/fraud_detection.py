@@ -12,14 +12,11 @@ from fraud.features.user_login_counts import user_login_counts
 
 fraud_detection_feature_service = FeatureService(
     name='fraud_detection_feature_service',
-    description='A FeatureService providing features for a model that predicts if a transaction is fraudulent.',
-    family='fraud',
-    tags={'release': 'production'},
-    owner='matt@tecton.ai',
     features=[
         transaction_amount_is_high,
         transaction_amount_is_higher_than_average,
         user_transaction_amount_metrics,
+        fraudulent_transactions
     ]
 )
 
