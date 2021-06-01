@@ -6,6 +6,7 @@ from core.features.user_date_of_birth import user_date_of_birth
 from core.features.user_age import user_age
 from fraud.features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
 from fraud.features.user_login_counts import user_login_counts
+from fraud.features.transaction_bucketing import transaction_bucketing
 # from fraud.features.user_has_good_credit import user_has_good_credit
 
 
@@ -19,6 +20,7 @@ fraud_detection_feature_service = FeatureService(
         transaction_amount_is_high,
         transaction_amount_is_higher_than_average,
         user_transaction_amount_metrics,
+        transaction_bucketing
     ]
 )
 
