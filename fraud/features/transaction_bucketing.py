@@ -43,13 +43,9 @@ def tx_type_bucketed_transformation(transaction_request: pandas.DataFrame):
 # We combine the results of our two other transformers (type and amount bucketed) here in
 # a third transformer
 @transformation(mode='pandas')
-def merging_dfs(amount_bucketed_df: pandas.DataFrame, type_bucketed_df: pandas.DataFrame):
+def merge_dfs(df1: pandas.DataFrame, df2: pandas.DataFrame):
     import pandas as pd
-    response = pd.DataFrame()
-    response['amount'] = amount_bucketed_df['amount']
-    response['type'] = type_bucketed_df['type']
-    return response
-
+    return pd.concat([df1, df2], axis=1)
 
 # This on-demand feature view runs two different transformations in pipeline mode
 # and returns features drawn from both transformers: amount_bucketed and type_bucketed
@@ -64,7 +60,5 @@ def merging_dfs(amount_bucketed_df: pandas.DataFrame, type_bucketed_df: pandas.D
 )
 def transaction_bucketing(transaction_request: pandas.DataFrame):
     # We merge the results of the two transformations in a third transformation
-    return merging_dfs(
-        tx_amount_bucketed_transformation(transaction_request),
-        tx_type_bucketed_transformation(transaction_request))
-
+    return merge_dfs(tx_amount_bucketed_transformation(transaction_request),
+                     tx_type_bucketed_transformation(transaction_request))
