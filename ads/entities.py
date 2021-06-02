@@ -11,11 +11,20 @@ ad = Entity(
 )
 
 content = Entity(
-    name="content", 
+    name="content",
     join_keys=["content_id"],
     description='Content ID',
     family='ads',
     owner='rohit@tecton.ai',
+    tags={'release': 'production'}
+)
+
+auction = Entity(
+    name="Auction",
+    join_keys=["auction_id"],
+    description='Auction ID',
+    family='ads',
+    owner='derek@tecton.ai',
     tags={'release': 'production'}
 )
 
