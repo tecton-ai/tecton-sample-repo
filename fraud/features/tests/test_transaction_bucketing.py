@@ -13,7 +13,7 @@ def test_transaction_bucketing():
         [2, 'transfer'],
         [0, 'credit'],
         [4, 'debit']
-    ], columns=['amount_bucketed', 'type_bucketed'])
+    ], columns=['amount', 'type'])
 
     actual = transaction_bucketing.run(transaction_request=transaction_request)
     assert_frame_equal(actual, expected)
