@@ -4,8 +4,9 @@ from pathlib import Path
 from typing import Optional
 import pytest
 
-SPARK_FILE_NAME = "spark-2.4.7-bin-hadoop2.7"
-SPARK_TGZ = f"https://downloads.apache.org/spark/spark-2.4.7/{SPARK_FILE_NAME}.tgz"
+SPARK_VERSION = "2.4.8"
+SPARK_FILE_NAME = f"spark-{SPARK_VERSION}-bin-hadoop2.7"
+SPARK_TGZ = f"https://downloads.apache.org/spark/spark-{SPARK_VERSION}/{SPARK_FILE_NAME}.tgz"
 VIRTUAL_ENV_PATH = os.getenv("VIRTUAL_ENV")
 
 def is_valid_test_path(path) -> bool:
