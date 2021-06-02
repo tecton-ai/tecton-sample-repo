@@ -1,5 +1,4 @@
-from tecton import KinesisDSConfig, StreamDataSource
-from tecton.data_sources.file_data_source import FileDSConfig
+from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource
 from tecton_spark.function_serialization import inlined
 
 
@@ -52,10 +51,10 @@ transactions_stream = StreamDataSource(
         timestamp_key='timestamp',
         raw_stream_translator=raw_data_deserialization
     ),
-    batch_ds_config=FileDSConfig(
-        uri="s3://tecton-demo-data/fraud/transactions/*/*/*/*/*.parquet",
-        file_format="parquet",
-        timestamp_column_name='timestamp'
+    batch_ds_config=HiveDSConfig(
+        database='fraud',
+        table='fraud_transactions',
+        timestamp_column_name='timestamp',
     ),
     family='fraud',
     owner='matt@tecton.ai',
