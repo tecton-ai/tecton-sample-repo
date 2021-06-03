@@ -2,7 +2,7 @@ from tecton import Entity
 
 
 ad = Entity(
-    name='Ad',
+    name='ad',
     default_join_keys=['ad_id'],
     description='An ad',
     family='ads',
@@ -11,11 +11,20 @@ ad = Entity(
 )
 
 content = Entity(
-    name="content", 
+    name="content",
     join_keys=["content_id"],
     description='Content ID',
     family='ads',
     owner='rohit@tecton.ai',
+    tags={'release': 'production'}
+)
+
+user = Entity(
+    name='ads_user',
+    default_join_keys=['user_id'],
+    description='A user of the platform',
+    family='ads',
+    owner='matt@tecton.ai',
     tags={'release': 'production'}
 )
 
