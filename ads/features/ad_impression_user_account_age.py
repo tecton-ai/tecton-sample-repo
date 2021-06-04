@@ -21,7 +21,7 @@ from ads.entities import ad
     aggregations=[
         FeatureAggregation(column='days_since_signup', function='mean', time_windows=['12h', '24h', '72h']),
         FeatureAggregation(column='days_since_signup', function='max', time_windows=['12h', '24h', '72h'])
-    ]
+    ],
     description="Features based on time since user account created"
 )
 def ad_impression_user_account_age(ad_impressions, users):
