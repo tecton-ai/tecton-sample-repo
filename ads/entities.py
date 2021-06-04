@@ -19,6 +19,13 @@ content = Entity(
     tags={'release': 'production'}
 )
 
+auction = Entity(
+    name="auction",
+    join_keys=["auction_id"],
+    description='Auction ID',
+    family='ads',
+    owner='derek@tecton.ai',
+
 user = Entity(
     name='ads_user',
     default_join_keys=['user_id'],
