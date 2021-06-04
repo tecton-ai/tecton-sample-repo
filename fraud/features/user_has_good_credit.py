@@ -1,5 +1,5 @@
 from tecton import batch_feature_view, Input
-from core.entities import user
+from fraud.entities import user
 from fraud.data_sources.credit_scores_batch import credit_scores_batch
 from datetime import datetime
 

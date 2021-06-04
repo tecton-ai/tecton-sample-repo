@@ -2,10 +2,10 @@ from tecton import Entity
 
 
 user = Entity(
-    name='User',
+    name='fraud_user',
     default_join_keys=['user_id'],
     description='A user of the platform',
-    family='core',
+    family='fraud',
     owner='matt@tecton.ai',
     tags={'release': 'production'}
 )

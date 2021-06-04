@@ -1,7 +1,7 @@
 from tecton.feature_views import stream_window_aggregate_feature_view
 from tecton.feature_views.feature_view import Input
 from tecton import FeatureAggregation
-from core.entities import user
+from fraud.entities import user
 from fraud.data_sources.transactions_stream import transactions_stream
 from datetime import datetime
 

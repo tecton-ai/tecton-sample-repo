@@ -1,6 +1,6 @@
 from pyspark.sql.types import StructType, StructField, LongType, IntegerType, StringType, TimestampType
 from tecton import Entity, FeatureTable, DeltaConfig
-from core.entities import user
+from fraud.entities import user
 
 
 schema = StructType()
