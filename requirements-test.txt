@@ -1,5 +1,3 @@
 pytest
 findspark
-# This is dependent on the SDK being published to PyPI. It currently is only in the testing index,
-# but should be available soon.
 tecton[pyspark]

@@ -13,4 +13,4 @@ def test_user_ad_group_impression_count_7_days_transformer(spark_session):
 
     output = user_click_counts.run(spark_session, ad_impressions=input_df).collect()
     print(f"Output: {output}")
-    assert len(output) == 2 
+    assert len(output) == 2
