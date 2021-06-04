@@ -1,6 +1,6 @@
 from tecton import batch_window_aggregate_feature_view, Input, transformation, FeatureAggregation, NewDatabricksClusterConfig, const
-from core.entities import user
-from core.data_sources.users_batch import users_batch
+from fraud.entities import user
+from fraud.data_sources.fraud_users_batch import fraud_users_batch
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime
 
@@ -20,7 +20,7 @@ def account_age_at_transaction_time(transactions, users, entity_id_column, join_
 @batch_window_aggregate_feature_view(
     # Include both inputs that will be joined in the transformation
     inputs={'transactions': Input(transactions_batch),
-            'users': Input(users_batch)},
+            'users': Input(fraud_users_batch)},
     entities=[user],
     mode='pipeline',
     aggregation_slide_period='24h',
@@ -42,7 +42,7 @@ def user_transaction_destination_account_age(transactions, users):
 @batch_window_aggregate_feature_view(
     # Include both inputs that will be joined in the transformation
     inputs={'transactions': Input(transactions_batch),
-            'users': Input(users_batch)},
+            'users': Input(fraud_users_batch)},
     entities=[user],
     mode='pipeline',
     aggregation_slide_period='24h',
