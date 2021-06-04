@@ -5,6 +5,8 @@ from ads.data_sources.ad_impressions_batch import ad_impressions_batch
 from ads.data_sources.ad_users_batch import ad_users_batch
 from ads.entities import ad
 
+# This feature view joins together user and ad impression tables
+# to calculate features based on time since sign up.
 @batch_window_aggregate_feature_view(
     # Declaring the two inputs we will join for our features
     inputs={
