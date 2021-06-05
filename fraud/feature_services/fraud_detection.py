@@ -33,6 +33,7 @@ fraud_detection_feature_service = FeatureService(
 #         transaction_amount_is_high,
 #         transaction_amount_is_higher_than_average,
 #         user_transaction_amount_metrics,
+#         transaction_bucketing,
 #         user_transaction_counts,
 #     ]
 # )
