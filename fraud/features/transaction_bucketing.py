@@ -4,7 +4,7 @@ from pyspark.sql.types import StructType, StructField, StringType, LongType, Dou
 
 # Your spine dataframe or incoming request must include these features
 request_schema = StructType([
-    StructField('amount', LongType()),
+    StructField('amount', DoubleType()),
     StructField('type_CASH_IN', LongType()),
     StructField('type_CASH_OUT', LongType()),
     StructField('type_DEBIT', LongType()),
@@ -14,8 +14,8 @@ request_schema = StructType([
 
 # These are the columns that will be returned by this feature view
 output_schema = StructType([
-    StructField('amount', LongType()),
-    StructField('type', StringType())
+    StructField('amount_bucket', LongType()),
+    StructField('type_bucket', StringType())
 ])
 
 # Bucket the transaction amount by each $10,000 dollars
@@ -25,20 +25,21 @@ def tx_amount_bucketed_transformation(transaction_request: pandas.DataFrame):
     import pandas as pd
 
     response = pd.DataFrame()
-    response['amount'] = (transaction_request.amount / 10000).round().astype('long')
+    response['amount_bucket'] = (transaction_request.amount / 10000).round().astype('long')
     return response
 
 # Bucket the transaction type as credit, debit, or transfer
 # This is a reusable transformation you can use in multiple feature views
 @transformation(mode="pandas")
 def tx_type_bucketed_transformation(transaction_request: pandas.DataFrame):
+    import pandas as pd
     response = transaction_request
 
-    response['type'] = 'unknown'
-    response.loc[response.type_CASH_IN > 0, 'type'] = 'credit'
-    response.loc[response.type_CASH_OUT + response.type_DEBIT + response.type_PAYMENT > 0, 'type'] = 'debit'
-    response.loc[response.type_TRANSFER > 0, 'type'] = 'transfer'
-    return response[['type']]
+    response['type_bucket'] = 'unknown'
+    response.loc[response.type_CASH_IN > 0, 'type_bucket'] = 'credit'
+    response.loc[response.type_CASH_OUT + response.type_DEBIT + response.type_PAYMENT > 0, 'type_bucket'] = 'debit'
+    response.loc[response.type_TRANSFER > 0, 'type_bucket'] = 'transfer'
+    return response[['type_bucket']]
 
 # We combine the results of our two other transformers (type and amount bucketed) here in
 # a third transformer
