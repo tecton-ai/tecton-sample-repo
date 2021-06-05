@@ -1,5 +1,5 @@
 from tecton import batch_feature_view, Input, NewDatabricksClusterConfig
-from core.entities import user
+from ads.entities import user
 from ads.data_sources.ad_impressions_batch import ad_impressions_batch
 from datetime import datetime
 
@@ -29,7 +29,7 @@ def user_distinct_ad_count_7d(ad_impressions):
         SELECT
             user_uuid as user_id,
             count(distinct ad_id) as distinct_ad_count,
-            window(timestamp, '7 days', '1 day').end as timestamp
+            window(timestamp, '7 days', '1 day').end - INTERVAL 1 SECOND as timestamp
         FROM
             {ad_impressions}
         GROUP BY user_uuid, window(timestamp, '7 days', '1 day')

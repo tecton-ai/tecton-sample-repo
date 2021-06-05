@@ -31,8 +31,8 @@ def transaction_amount_is_higher_than_average(transaction_request: pandas.DataFr
 
     # This column is a feature in the 'user_transaction_amount_metrics' Feature View.
     # The feature values are null if there are no transactions in the 24h window so here we fill the nulls with 0.
-    user_transaction_amount_metrics['amount_mean_24h_1h'] = user_transaction_amount_metrics['amount_mean_24h_1h'].fillna(0)
+    user_transaction_amount_metrics['amount_mean_24h_continuous'] = user_transaction_amount_metrics['amount_mean_24h_continuous'].fillna(0)
 
     df = pd.DataFrame()
-    df['transaction_amount_is_higher_than_average'] = (transaction_request['amount'] > user_transaction_amount_metrics['amount_mean_24h_1h']).astype('int64')
+    df['transaction_amount_is_higher_than_average'] = (transaction_request['amount'] > user_transaction_amount_metrics['amount_mean_24h_continuous']).astype('int64')
     return df
