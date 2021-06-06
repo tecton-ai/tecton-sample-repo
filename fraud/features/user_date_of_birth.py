@@ -10,7 +10,8 @@ from datetime import datetime
     mode='pyspark',
     online=True,
     offline=True,
-    feature_start_time=datetime(2020, 1, 1),
+    # Note the timestamp is the signup date, hence the old start_time.
+    feature_start_time=datetime(2017,1, 1),
     batch_schedule='1d',
     ttl='3650days',
     family='fraud',
