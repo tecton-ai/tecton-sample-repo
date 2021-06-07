@@ -6,7 +6,7 @@ from ads.data_sources.ad_impressions_stream import ad_impressions_stream
 from datetime import datetime
 
 cluster_config = NewDatabricksClusterConfig(
-    instance_type='m4.xlarge',
+    instance_type='m4.4xlarge',
     number_of_workers=4,
     extra_pip_dependencies=["tensorflow==2.2.0"],
 )
@@ -16,25 +16,25 @@ cluster_config = NewDatabricksClusterConfig(
     entities=[content_keyword],
     mode='pyspark',
     aggregation_slide_period='continuous', # enable low latency streaming
-    aggregations=[FeatureAggregation(column='impression', function='count', time_windows=['1h', '12h', '24h','72h','168h'])],
+    aggregations=[FeatureAggregation(column='clicked', function='sum', time_windows=['1min', '5min'])],
     batch_materialization=cluster_config,
     streaming_materialization=cluster_config,
     online=True,
     offline=True,
-    feature_start_time=datetime(2021, 1, 1),
+    feature_start_time=datetime(2021, 6, 1),
     family='ads',
     tags={'release': 'production'},
     owner='ross@tecton.ai',
     description='The count of ad impressions for a content_keyword'
 )
-def content_keyword_impression_counts(ad_impressions):
+def content_keyword_click_counts(ad_impressions):
     from pyspark.sql import functions as F
     from pyspark.sql.functions import lit
-    from pyspark.sql.types import StringType
+    from pyspark.sql.types import IntegerType
 
-    def lowercase(s):
+    def absolute(x):
         import tensorflow as tf
-        return tf.strings.lower(s).numpy().decode('UTF-8')
+        return int(tf.math.abs(float(x)).numpy())
 
-    lowercase_udf = F.udf(lowercase, StringType())
-    return ad_impressions.select(lowercase_udf('content_keyword').alias('content_keyword'), 'timestamp').withColumn('impression', lit(1))
+    abs_udf = F.udf(absolute, IntegerType())
+    return ad_impressions.select('content_keyword', abs_udf('clicked').alias('clicked'), 'timestamp')
