@@ -35,3 +35,12 @@ user = Entity(
     owner='matt@tecton.ai',
     tags={'release': 'production'}
 )
+
+content_keyword = Entity(
+    name='ContentKeyword',
+    default_join_keys=['content_keyword'],
+    description='The keyword describing the content this ad is being placed alongside.',
+    family='ads',
+    owner='ross@tecton.ai',
+    tags={'release': 'production'}
+)
