@@ -49,6 +49,7 @@ continuous_feature_service = FeatureService(
     owner='kevin@tecton.ai',
     features=[
         non_fraudulent_transactions,
-        fraudulent_transactions
+        fraudulent_transactions,
+        last_transaction_amount_stream
     ]
 )
