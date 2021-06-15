@@ -8,6 +8,7 @@ from fraud.features.transaction_amount_is_higher_than_average import transaction
 from fraud.features.continuous_fraudulent_transactions_count import non_fraudulent_transactions, fraudulent_transactions
 from fraud.features.user_login_counts import user_login_counts
 from fraud.features.transaction_bucketing import transaction_bucketing
+from fraud.features.stream_transaction_features import last_transaction_amount_stream
 # from fraud.features.user_has_good_credit import user_has_good_credit
 
 
@@ -18,7 +19,8 @@ fraud_detection_feature_service = FeatureService(
         transaction_amount_is_higher_than_average,
         user_transaction_amount_metrics,
         transaction_bucketing,
-        user_transaction_counts
+        user_transaction_counts,
+        last_transaction_amount_stream
     ]
 )
 
@@ -47,6 +49,6 @@ continuous_feature_service = FeatureService(
     owner='kevin@tecton.ai',
     features=[
         non_fraudulent_transactions,
-        fraudulent_transactions,
+        fraudulent_transactions
     ]
 )
