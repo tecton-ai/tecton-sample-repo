@@ -8,7 +8,7 @@ from fraud.features.transaction_amount_is_higher_than_average import transaction
 from fraud.features.continuous_fraudulent_transactions_count import non_fraudulent_transactions, fraudulent_transactions
 from fraud.features.user_login_counts import user_login_counts
 from fraud.features.transaction_bucketing import transaction_bucketing
-from fraud.features.stream_transaction_features import last_transaction_amount_stream
+from fraud.features.stream_feature_views.last_transaction_amount_sql import last_transaction_amount_sql
 # from fraud.features.user_has_good_credit import user_has_good_credit
 
 
@@ -20,7 +20,7 @@ fraud_detection_feature_service = FeatureService(
         user_transaction_amount_metrics,
         transaction_bucketing,
         user_transaction_counts,
-        last_transaction_amount_stream
+        last_transaction_amount_sql
     ]
 )
 
@@ -50,6 +50,6 @@ continuous_feature_service = FeatureService(
     features=[
         non_fraudulent_transactions,
         fraudulent_transactions,
-        last_transaction_amount_stream
+        last_transaction_amount_sql
     ]
 )

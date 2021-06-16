@@ -15,7 +15,7 @@ from datetime import datetime
     family='fraud',
     description='Last user transaction amount (stream calculated)'
 )
-def last_transaction_amount_stream(transactions):
+def last_transaction_amount_sql(transactions):
     return f'''
         SELECT
             timestamp,
