@@ -1,11 +1,11 @@
 from tecton.feature_views import stream_window_aggregate_feature_view
 from tecton.feature_views.feature_view import Input
-from tecton import FeatureAggregation, NewDatabricksClusterConfig
+from tecton import FeatureAggregation, DatabricksClusterConfig
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions_stream import ad_impressions_stream
 from datetime import datetime
 
-cluster_config = NewDatabricksClusterConfig(
+cluster_config = DatabricksClusterConfig(
     instance_type='m4.4xlarge',
     number_of_workers=4,
     extra_pip_dependencies=["tensorflow==2.2.0"],
@@ -17,8 +17,8 @@ cluster_config = NewDatabricksClusterConfig(
     mode='pyspark',
     aggregation_slide_period='continuous', # enable low latency streaming
     aggregations=[FeatureAggregation(column='clicked', function='sum', time_windows=['1min', '5min'])],
-    batch_materialization=cluster_config,
-    streaming_materialization=cluster_config,
+    batch_cluster_config=cluster_config,
+    streaming_cluster_config=cluster_config,
     online=True,
     offline=True,
     feature_start_time=datetime(2021, 6, 1),

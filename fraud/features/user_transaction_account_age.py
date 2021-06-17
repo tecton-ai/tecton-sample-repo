@@ -1,4 +1,4 @@
-from tecton import batch_window_aggregate_feature_view, Input, transformation, FeatureAggregation, NewDatabricksClusterConfig, const
+from tecton import batch_window_aggregate_feature_view, Input, transformation, FeatureAggregation, DatabricksClusterConfig, const
 from fraud.entities import user
 from fraud.data_sources.fraud_users_batch import fraud_users_batch
 from fraud.data_sources.transactions_batch import transactions_batch
@@ -33,7 +33,7 @@ def account_age_at_transaction_time(transactions, users, entity_id_column, join_
     tags={'release': 'production'},
     owner='derek@tecton.ai',
     description='Features based on the age of accounts this user has transferred to. Users frequently transferring to newly created accounts may have been compromised.',
-    batch_materialization=NewDatabricksClusterConfig(instance_type="r5.large", number_of_workers=3)
+    batch_cluster_config=DatabricksClusterConfig(instance_type="r5.large", number_of_workers=3)
 )
 def user_transaction_destination_account_age(transactions, users):
     # Specify that our entity is the origination account, and calculating age of destinatio accounts
@@ -55,7 +55,7 @@ def user_transaction_destination_account_age(transactions, users):
     tags={'release': 'production'},
     owner='derek@tecton.ai',
     description='Features based on the age of accounts this user has received from. Users frequently receiving from new accounts may be fraudulent.',
-    batch_materialization=NewDatabricksClusterConfig(instance_type="r5.large", number_of_workers=3)
+    batch_cluster_config=DatabricksClusterConfig(instance_type="r5.large", number_of_workers=3)
 )
 def user_transaction_origin_account_age(transactions, users):
     # Specify that our entity is the destination account, and calculating age of origin accounts
