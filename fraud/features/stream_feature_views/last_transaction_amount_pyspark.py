@@ -6,7 +6,7 @@ from datetime import datetime
 @stream_feature_view(
     inputs={'transactions': Input(transactions_stream)},
     entities=[user],
-    mode='spark_sql',
+    mode='pyspark',
     online=False,
     offline=False,
     feature_start_time=datetime(2021, 5, 20),
@@ -15,12 +15,9 @@ from datetime import datetime
     family='fraud',
     description='Last user transaction amount (stream calculated)'
 )
-def last_transaction_amount_sql(transactions):
-    return f'''
-        SELECT
-            timestamp,
-            nameorig as user_id,
-            amount
-        FROM
-            {transactions}
-        '''
+def last_transaction_amount_pyspark(transactions):
+    from pyspark.sql import functions as f
+    return transactions \
+        .withColumnRenamed('nameorig', 'user_id') \
+        .select('timestamp', 'user_id', 'amount')
+
