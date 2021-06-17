@@ -28,5 +28,5 @@ def user_distinct_ad_count_7d(ad_impressions, context=materialization_context())
         GROUP BY
             user_uuid, window(timestamp, '7 days', '1 day')
         HAVING
-            '{context.feature_start_time_}'
+            timestamp >= '{context.feature_start_time_string}' AND timestamp < '{context.feature_end_time_string}'
         '''
