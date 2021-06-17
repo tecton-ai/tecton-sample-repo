@@ -10,7 +10,8 @@ from datetime import datetime
     inputs={'transactions': Input(transactions_stream)},
     entities=[user],
     mode='spark_sql',
-    aggregation_slide_period='continuous',
+    aggregation_slide_period='10m',
+    batch_schedule='1d',
     aggregations=[
         FeatureAggregation(column='amount', function='mean', time_windows=['1h', '12h', '24h','72h','168h', '960h']),
         FeatureAggregation(column='amount', function='sum', time_windows=['1h', '12h', '24h','72h','168h', '960h'])
@@ -20,8 +21,8 @@ from datetime import datetime
     feature_start_time=datetime(2020, 10, 10),
     family='fraud',
     tags={'release': 'production'},
-    owner='matt@tecton.ai',
-    description='Average transaction amount and total over a series of time windows, updated daily.'
+    owner='kevin@tecton.ai',
+    description='Transaction amount statistics and total over a series of time windows, updated hourly.'
 )
 def user_transaction_amount_metrics(transactions):
     return f'''

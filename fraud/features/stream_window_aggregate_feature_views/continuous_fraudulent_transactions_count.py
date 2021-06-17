@@ -16,8 +16,8 @@ from datetime import datetime
     aggregations=[
         FeatureAggregation(column='counter', function='count', time_windows=['1min', '5min', '1h'])
     ],
-    online=False,
-    offline=False,
+    online=True,
+    offline=True,
     feature_start_time=datetime(2020, 10, 10),
     family='fraud',
     tags={'release': 'production'},

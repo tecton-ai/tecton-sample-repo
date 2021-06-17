@@ -1,6 +1,6 @@
 from tecton import RequestDataSource, on_demand_feature_view, Input
 from pyspark.sql.types import DoubleType, StructType, StructField, LongType
-from fraud.features.user_transaction_amount_metrics import user_transaction_amount_metrics
+from fraud.features.stream_window_aggregate_feature_views.user_transaction_amount_metrics import user_transaction_amount_metrics
 import pandas
 
 # Defining the schema of a transaction request which will be used as an input
