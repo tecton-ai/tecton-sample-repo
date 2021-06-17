@@ -5,7 +5,8 @@ from fraud.features.transaction_amount_is_high import transaction_amount_is_high
 from fraud.features.user_date_of_birth import user_date_of_birth
 from fraud.features.user_age import user_age
 from fraud.features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
-from fraud.features.continuous_fraudulent_transactions_count import non_fraudulent_transactions, fraudulent_transactions
+from fraud.features.stream_window_aggregate_feature_views.continuous_fraudulent_transactions_count import *
+from fraud.features.stream_window_aggregate_feature_views.continuous_non_fraudulent_transactions_count import *
 from fraud.features.user_login_counts import user_login_counts
 from fraud.features.transaction_bucketing import transaction_bucketing
 from fraud.features.stream_feature_views.last_transaction_amount_sql import last_transaction_amount_sql
@@ -48,8 +49,8 @@ continuous_feature_service = FeatureService(
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
     features=[
-        non_fraudulent_transactions,
-        fraudulent_transactions,
+        continuous_non_fraudulent_transactions_count,
+        continuous_fraudulent_transactions_count,
         last_transaction_amount_sql
     ]
 )
