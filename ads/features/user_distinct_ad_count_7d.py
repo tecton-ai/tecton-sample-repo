@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input, materialization_context
+from tecton import batch_feature_view, Input, materialization_contexts, DatabricksClusterConfig
 from ads.entities import user
 from ads.data_sources.ad_impressions_batch import ad_impressions_batch
 from datetime import datetime
@@ -11,6 +11,13 @@ from datetime import datetime
     batch_schedule='1d',
     online=True,
     offline=True,
+    batch_cluster_config=DatabricksClusterConfig(
+        instance_type='m5.xlarge',
+        number_of_workers=4,
+        spark_config={
+            'spark.executor.memory': '5000m',
+        },
+    ),
     feature_start_time=datetime(2021, 4, 1),
     family='ad_serving',
     tags={'release': 'production'},
