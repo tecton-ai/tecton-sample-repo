@@ -20,8 +20,7 @@ fraud_detection_feature_service = FeatureService(
         transaction_amount_is_higher_than_average,
         user_transaction_amount_metrics,
         transaction_bucketing,
-        user_transaction_counts,
-        last_transaction_amount_sql
+        user_transaction_counts
     ]
 )
 
@@ -41,16 +40,16 @@ fraud_detection_feature_service = FeatureService(
 #     ]
 # )
 
-
-continuous_feature_service = FeatureService(
-    name='continuous_feature_service',
-    description='A FeatureService providing continuous features.',
-    family='fraud',
-    tags={'release': 'production'},
-    owner='kevin@tecton.ai',
-    features=[
-        continuous_non_fraudulent_transactions_count,
-        continuous_fraudulent_transactions_count,
-        last_transaction_amount_sql
-    ]
-)
+#
+# continuous_feature_service = FeatureService(
+#     name='continuous_feature_service',
+#     description='A FeatureService providing continuous features.',
+#     family='fraud',
+#     tags={'release': 'production'},
+#     owner='kevin@tecton.ai',
+#     features=[
+#         continuous_non_fraudulent_transactions_count,
+#         continuous_fraudulent_transactions_count,
+#         last_transaction_amount_sql
+#     ]
+# )
