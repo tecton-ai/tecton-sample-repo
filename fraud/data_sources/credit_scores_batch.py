@@ -6,6 +6,7 @@ credit_scores_batch = BatchDataSource(
     batch_ds_config=HiveDSConfig(
         database='demo_fraud',
         table='fraud_credit_scores',
+        timestamp_column_name='timestamp'
     ),
     family='fraud_detection',
     owner='matt@tecton.ai',
