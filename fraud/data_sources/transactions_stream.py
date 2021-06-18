@@ -53,7 +53,7 @@ transactions_stream = StreamDataSource(
         options={'roleArn': 'arn:aws:iam::472542229217:role/demo-cross-account-kinesis-ro'}
     ),
     batch_ds_config=HiveDSConfig(
-        database='fraud',
+        database='demo_fraud',
         table='fraud_transactions',
         timestamp_column_name='timestamp',
     ),
