@@ -1,6 +1,6 @@
 from tecton import RequestDataSource, on_demand_feature_view, Input
 from pyspark.sql.types import DoubleType, StructType, StructField, LongType
-from fraud.features.user_transaction_amount_metrics import user_transaction_amount_metrics
+from fraud.features.stream_window_aggregate_feature_views.user_transaction_amount_metrics import user_transaction_amount_metrics
 import pandas
 
 # Defining the schema of a transaction request which will be used as an input
@@ -31,8 +31,8 @@ def transaction_amount_is_higher_than_average(transaction_request: pandas.DataFr
 
     # This column is a feature in the 'user_transaction_amount_metrics' Feature View.
     # The feature values are null if there are no transactions in the 24h window so here we fill the nulls with 0.
-    user_transaction_amount_metrics['amount_mean_24h_1h'] = user_transaction_amount_metrics['amount_mean_24h_1h'].fillna(0)
+    user_transaction_amount_metrics['amount_mean_24h_10m'] = user_transaction_amount_metrics['amount_mean_24h_10m'].fillna(0)
 
     df = pd.DataFrame()
-    df['transaction_amount_is_higher_than_average'] = (transaction_request['amount'] > user_transaction_amount_metrics['amount_mean_24h_1h']).astype('int64')
+    df['transaction_amount_is_higher_than_average'] = (transaction_request['amount'] > user_transaction_amount_metrics['amount_mean_24h_10m']).astype('int64')
     return df

@@ -1,19 +1,20 @@
 from tecton.feature_views import batch_feature_view, Input
-from core.entities import user
-from core.data_sources.users_batch import users_batch
+from fraud.entities import user
+from fraud.data_sources.fraud_users_batch import fraud_users_batch
 from datetime import datetime
 
 
 @batch_feature_view(
-    inputs={'users': Input(users_batch)},
+    inputs={'users': Input(fraud_users_batch)},
     entities=[user],
     mode='pyspark',
     online=True,
     offline=True,
-    feature_start_time=datetime(2020, 1, 1),
+    # Note the timestamp is the signup date, hence the old start_time.
+    feature_start_time=datetime(2017,1, 1),
     batch_schedule='1d',
     ttl='3650days',
-    family='core',
+    family='fraud',
     tags={'release': 'production'},
     owner='matt@tecton.ai',
     description='User date of birth, entered at signup.',

@@ -1,13 +1,14 @@
 from tecton import HiveDSConfig, BatchDataSource
 
 
-users_batch = BatchDataSource(
+fraud_users_batch = BatchDataSource(
     name='users_batch',
     batch_ds_config=HiveDSConfig(
-        database='fraud',
-        table='fraud_users'
+        database='demo_fraud',
+        table='fraud_users',
+        timestamp_column_name='signup_date'
     ),
-    family='core',
+    family='fraud',
     owner='matt@tecton.ai',
     tags={'release': 'production'}
 )

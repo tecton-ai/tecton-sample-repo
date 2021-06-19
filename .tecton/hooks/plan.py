@@ -30,6 +30,7 @@ def run() -> Optional[int]:
 
     assert tecton_init.exists() and tecton_init.is_dir(), "hook.py must be run from a feature repo root initialized using 'tecton init'!"
 
+    # If testing a spark transformation, this code block sets up the local spark context
     spark_path = tecton_init / Path('spark')
     if not spark_path.exists():
         spark_path.mkdir()
