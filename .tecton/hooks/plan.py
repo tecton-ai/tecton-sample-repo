@@ -30,21 +30,22 @@ def run() -> Optional[int]:
 
     assert tecton_init.exists() and tecton_init.is_dir(), "hook.py must be run from a feature repo root initialized using 'tecton init'!"
 
-    # If testing a spark transformation, this code block sets up the local spark context
-    spark_path = tecton_init / Path('spark')
-    if not spark_path.exists():
-        spark_path.mkdir()
-        import requests
-        import tempfile
-        import tarfile
-        r = requests.get(SPARK_TGZ)
-        with tempfile.TemporaryFile(prefix="spark-", suffix=".tgz") as f:
-            f.write(r.content)
-            f.seek(0)
-            tarf = tarfile.open(fileobj=f, mode='r:gz')
-            tarf.extractall(path=str(tecton_init.resolve()))
-        new_spark_path = tecton_init / Path(SPARK_FILE_NAME)
-        new_spark_path.rename(spark_path)
+    # Here we download a Spark binary to run unit tests with local spark context.
+    # Uncomment to run the test in ads/features/tests/test_user_click_counts.py
+    # spark_path = tecton_init / Path('spark')
+    # if not spark_path.exists():
+    #     spark_path.mkdir()
+    #     import requests
+    #     import tempfile
+    #     import tarfile
+    #     r = requests.get(SPARK_TGZ)
+    #     with tempfile.TemporaryFile(prefix="spark-", suffix=".tgz") as f:
+    #         f.write(r.content)
+    #         f.seek(0)
+    #         tarf = tarfile.open(fileobj=f, mode='r:gz')
+    #         tarf.extractall(path=str(tecton_init.resolve()))
+    #     new_spark_path = tecton_init / Path(SPARK_FILE_NAME)
+    #     new_spark_path.rename(spark_path)
 
     tests = []
     tests.extend([str(p.resolve()) for p in Path(root_path).glob("**/*_test.py") if is_valid_test_path(p)])
