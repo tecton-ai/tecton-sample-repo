@@ -4,8 +4,8 @@ from pathlib import Path
 from typing import Optional
 import pytest
 
-SPARK_FILE_NAME = "spark-2.4.7-bin-hadoop2.7"
-SPARK_TGZ = f"https://downloads.apache.org/spark/spark-2.4.7/{SPARK_FILE_NAME}.tgz"
+SPARK_FILE_NAME = "spark-2.4.8-bin-hadoop2.7"
+SPARK_TGZ = f"https://downloads.apache.org/spark/spark-2.4.8/{SPARK_FILE_NAME}.tgz"
 VIRTUAL_ENV_PATH = os.getenv("VIRTUAL_ENV")
 
 def is_valid_test_path(path) -> bool:
@@ -29,20 +29,21 @@ def run() -> Optional[int]:
 
     assert tecton_init.exists() and tecton_init.is_dir(), "hook.py must be run from a feature repo root initialized using 'tecton init'!"
 
-    spark_path = tecton_init / Path('spark')
-    if not spark_path.exists():
-        spark_path.mkdir()
-        import requests
-        import tempfile
-        import tarfile
-        r = requests.get(SPARK_TGZ)
-        with tempfile.TemporaryFile(prefix="spark-", suffix=".tgz") as f:
-            f.write(r.content)
-            f.seek(0)
-            tarf = tarfile.open(fileobj=f, mode='r:gz')
-            tarf.extractall(path=str(tecton_init.resolve()))
-        new_spark_path = tecton_init / Path(SPARK_FILE_NAME)
-        new_spark_path.rename(spark_path)
+    # If testing a spark transformation, this code block sets up the local spark context
+    # spark_path = tecton_init / Path('spark')
+    # if not spark_path.exists():
+    #     spark_path.mkdir()
+    #     import requests
+    #     import tempfile
+    #     import tarfile
+    #     r = requests.get(SPARK_TGZ)
+    #     with tempfile.TemporaryFile(prefix="spark-", suffix=".tgz") as f:
+    #         f.write(r.content)
+    #         f.seek(0)
+    #         tarf = tarfile.open(fileobj=f, mode='r:gz')
+    #         tarf.extractall(path=str(tecton_init.resolve()))
+    #     new_spark_path = tecton_init / Path(SPARK_FILE_NAME)
+    #     new_spark_path.rename(spark_path)
 
     tests = []
     tests.extend([str(p.resolve()) for p in Path(root_path).glob("**/*_test.py") if is_valid_test_path(p)])
