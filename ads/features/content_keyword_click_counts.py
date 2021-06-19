@@ -18,7 +18,7 @@ cluster_config = DatabricksClusterConfig(
     aggregation_slide_period='continuous', # enable low latency streaming
     aggregations=[FeatureAggregation(column='clicked', function='sum', time_windows=['1min', '5min'])],
     batch_cluster_config=cluster_config,
-    streaming_cluster_config=cluster_config,
+    stream_cluster_config=cluster_config,
     online=True,
     offline=True,
     feature_start_time=datetime(2021, 6, 1),
