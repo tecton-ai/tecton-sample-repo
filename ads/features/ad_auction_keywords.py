@@ -1,6 +1,6 @@
 from tecton import transformation, Input, batch_feature_view, const
 from ads.entities import auction
-from ads.data_sources.ad_impressions_batch import ad_impressions_batch
+from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime
 
 # Create new column by splitting the string in an existing column.

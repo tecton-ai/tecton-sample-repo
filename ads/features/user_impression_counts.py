@@ -3,7 +3,7 @@ from tecton.feature_views.feature_view import Input
 from tecton import FeatureAggregation
 from ads.entities import user
 from ads.entities import ad
-from ads.data_sources.ad_impressions_stream import ad_impressions_stream
+from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime
 
 

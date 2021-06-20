@@ -1,4 +1,4 @@
-from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource
+from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource, BatchDataSource
 from tecton_spark.function_serialization import inlined
 
 
@@ -53,6 +53,13 @@ def ad_stream_translator(df):
       )
     )
 
+ad_impressions_hiveds = HiveDSConfig(
+        database='demo_ads',
+        table='impressions_batch',
+        timestamp_column_name='timestamp',
+        date_partition_column='datestr'
+    )
+
 
 ad_impressions_stream = StreamDataSource(
     name='ad_impressions_stream',
@@ -66,12 +73,17 @@ ad_impressions_stream = StreamDataSource(
         deduplication_columns=[],
         options={'roleArn': 'arn:aws:iam::472542229217:role/demo-cross-account-kinesis-ro'}
     ),
-    batch_ds_config=HiveDSConfig(
-        database='ad_impressions_2',
-        table='batch_events',
-        timestamp_column_name='timestamp',
-        date_partition_column='datestr'
-    ),
+    batch_ds_config=ad_impressions_hiveds,
+    family='ads',
+    tags={
+        'release': 'production',
+        'source': 'mobile'
+    }
+)
+
+ad_impressions_batch = BatchDataSource(
+    name='ad_impressions_batch',
+    batch_ds_config=ad_impressions_hiveds,
     family='ads',
     tags={
         'release': 'production',

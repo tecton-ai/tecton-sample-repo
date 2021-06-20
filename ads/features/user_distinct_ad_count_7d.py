@@ -1,6 +1,6 @@
 from tecton import batch_feature_view, Input, materialization_context, DatabricksClusterConfig
 from ads.entities import user
-from ads.data_sources.ad_impressions_batch import ad_impressions_batch
+from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime
 
 @batch_feature_view(
