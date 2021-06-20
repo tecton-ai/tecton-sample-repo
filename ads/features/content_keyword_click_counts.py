@@ -2,7 +2,7 @@ from tecton.feature_views import stream_window_aggregate_feature_view
 from tecton.feature_views.feature_view import Input
 from tecton import FeatureAggregation, DatabricksClusterConfig
 from ads.entities import content_keyword
-from ads.data_sources.ad_impressions_stream import ad_impressions_stream
+from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime
 
 cluster_config = DatabricksClusterConfig(

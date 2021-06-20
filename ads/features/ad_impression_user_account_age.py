@@ -1,7 +1,7 @@
 from datetime import datetime
 from tecton import FeatureAggregation, batch_window_aggregate_feature_view, Input
 
-from ads.data_sources.ad_impressions_batch import ad_impressions_batch
+from ads.data_sources.ad_impressions import ad_impressions_batch
 from ads.data_sources.ad_users_batch import ad_users_batch
 from ads.entities import ad
 
