@@ -67,8 +67,8 @@ ad_impressions_stream = StreamDataSource(
         options={'roleArn': 'arn:aws:iam::472542229217:role/demo-cross-account-kinesis-ro'}
     ),
     batch_ds_config=HiveDSConfig(
-        database='ad_impressions_2',
-        table='batch_events',
+        database='demo_ads',
+        table='impressions_batch',
         timestamp_column_name='timestamp',
         date_partition_column='datestr'
     ),
