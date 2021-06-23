@@ -7,7 +7,7 @@ from datetime import datetime
 @batch_feature_view(
     inputs={'credit_scores': Input(credit_scores_batch)},
     entities=[user],
-    mode='spark_sql',
+    mode='pyspark',
     online=True,
     offline=True,
     feature_start_time=datetime(2021, 1, 1),
@@ -16,12 +16,7 @@ from datetime import datetime
     family='fraud',
     description='Whether the user has a good credit score (over 670).'
 )
-def user_has_good_credit(credit_scores):
-    return f'''
-        SELECT
-            user_id,
-            IF (credit_score > 670, 1, 0) as user_has_good_credit,
-            date as timestamp
-        FROM
-            {credit_scores}
-        '''
+def user_has_good_credit_pyspark(credit_scores):
+    from pyspark.sql.functions import when, col
+    return credit_scores.withColumn('user_has_good_credit', when(col('credit_score') > 670, 1).otherwise(0)) \
+                        .select('user_id', 'user_has_good_credit', col('date').alias('timestamp'))
