@@ -54,7 +54,7 @@ transactions_stream = StreamDataSource(
     ),
     batch_ds_config=HiveDSConfig(
         database='demo_fraud',
-        table='fraud_transactions',
+        table='transactions',
         timestamp_column_name='timestamp',
     ),
     family='fraud',

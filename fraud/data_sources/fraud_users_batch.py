@@ -5,7 +5,7 @@ fraud_users_batch = BatchDataSource(
     name='users_batch',
     batch_ds_config=HiveDSConfig(
         database='demo_fraud',
-        table='fraud_users',
+        table='users',
         timestamp_column_name='signup_date'
     ),
     family='fraud',
