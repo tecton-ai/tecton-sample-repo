@@ -15,6 +15,6 @@ user_login_counts = FeatureTable(
     entities=[user],
     schema=schema,
     online=True,
-	offline=True,
-	ttl='30day'
+    offline=True,
+    ttl='30day'
 )
