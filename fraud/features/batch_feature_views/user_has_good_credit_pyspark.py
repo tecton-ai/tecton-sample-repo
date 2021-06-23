@@ -14,6 +14,8 @@ from datetime import datetime
     batch_schedule='1d',
     ttl='120d',
     family='fraud',
+    tags={'release': 'production'},
+    owner='matt@tecton.ai',
     description='Whether the user has a good credit score (over 670).'
 )
 def user_has_good_credit_pyspark(credit_scores):
