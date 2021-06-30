@@ -5,6 +5,7 @@ from fraud.features.stream_feature_views.last_transaction_amount_sql import last
 from fraud.features.on_demand_feature_views.transaction_amount_is_high import transaction_amount_is_high
 from fraud.features.on_demand_feature_views.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
 from fraud.features.batch_feature_views.user_distinct_merchant_transaction_count_30d import user_distinct_merchant_transaction_count_30d
+from fraud.features.stream_window_aggregate_feature_views.last_transactions import user_recent_transactions
 # from fraud.features.batch_feature_views.user_has_great_credit import user_has_great_credit
 
 fraud_detection_feature_service = FeatureService(
@@ -15,7 +16,8 @@ fraud_detection_feature_service = FeatureService(
         transaction_amount_is_higher_than_average,
         user_transaction_amount_metrics,
         user_transaction_counts,
-        user_distinct_merchant_transaction_count_30d
+        user_distinct_merchant_transaction_count_30d,
+        user_recent_transactions
     ]
 )
 
