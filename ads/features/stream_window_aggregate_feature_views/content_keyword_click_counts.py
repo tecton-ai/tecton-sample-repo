@@ -7,6 +7,7 @@ from datetime import datetime
 
 cluster_config = DatabricksClusterConfig(
     instance_type='m4.4xlarge',
+    instance_availability='on_demand',
     number_of_workers=4,
     extra_pip_dependencies=["tensorflow==2.2.0"],
 )
