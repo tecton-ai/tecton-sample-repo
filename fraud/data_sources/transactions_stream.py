@@ -40,16 +40,6 @@ def raw_data_deserialization(df):
         )
     )
 
-# Stream Options. Note that we tune kinesis here since this streaming
-# source is being used by low latency continuous Feature Views
-# These options avoid buffering in the spark kinesis connectors
-# so Tecton can receive stream events as they appear.
-stream_options = {
-    'roleArn': 'arn:aws:iam::472542229217:role/demo-cross-account-kinesis-ro',
-    'maxFetchDuration' : '200ms',
-    'maxFetchRate' : '2',
-    'minFetchPeriod' : '200ms'
-}
 
 transactions_stream = StreamDataSource(
     name='transactions_stream',
@@ -60,7 +50,7 @@ transactions_stream = StreamDataSource(
         default_watermark_delay_threshold='30 minutes',
         timestamp_key='timestamp',
         raw_stream_translator=raw_data_deserialization,
-        options=stream_options
+        options={'roleArn': 'arn:aws:iam::472542229217:role/demo-cross-account-kinesis-ro'}
     ),
     batch_ds_config=HiveDSConfig(
         database='demo_fraud',

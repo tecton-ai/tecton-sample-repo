@@ -12,7 +12,7 @@ from datetime import datetime
 #     offline=True,
 #     feature_start_time=datetime(2020, 10, 10),
 #     batch_schedule='1d',
-#     ttl='730days',
+#     ttl='30days',
 #     family='fraud',
 #     description='Whether the user has a great credit score (over 740).'
 # )
