@@ -16,8 +16,7 @@ fraud_detection_feature_service = FeatureService(
         transaction_amount_is_higher_than_average,
         user_transaction_amount_metrics,
         user_transaction_counts,
-        user_distinct_merchant_transaction_count_30d,
-        user_recent_transactions
+        user_distinct_merchant_transaction_count_30d
     ]
 )
 
