@@ -22,7 +22,7 @@ from datetime import datetime
     family='ad_serving',
     tags={'release': 'production'},
     owner='david@tecton.ai',
-    description='How many distinct advertisments a user has been shown in the last week'
+    description='How many distinct advertisements a user has been shown in the last week'
 )
 def user_distinct_ad_count_7d(ad_impressions, context=materialization_context()):
     return f'''
