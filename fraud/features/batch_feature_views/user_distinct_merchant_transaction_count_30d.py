@@ -11,7 +11,7 @@ def user_distinct_merchant_transaction_count_transformation(windowed_input_df):
     return f'''
         SELECT
             nameorig AS user_id,
-            COUNT(DISTINCT namedest) AS distinct_merchan_count,
+            COUNT(DISTINCT namedest) AS distinct_merchant_count,
             window_end AS timestamp
         FROM {windowed_input_df}
         GROUP BY
