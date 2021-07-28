@@ -8,18 +8,19 @@ def is_weekend(input_df, timestamp_column):
     from pyspark.sql.functions import dayofweek, col, to_timestamp
     return input_df.withColumn("is_weekend", dayofweek(to_timestamp(col(timestamp_column))).isin([1,7]).cast("int"))
 
-# This transformation input is the output of the tecton_sliding_window
-# transformation, which appends the window_end timestamp as the end of the
-# aggregation period.
+# Counts distinct merchant names for each user and window. The timestamp
+# for the feature is the end of the window.
+# window_input_df is created by passing the original input through
+# tecton_sliding_window transformation.
 @transformation(mode='spark_sql')
-def weekend_transaction_count_n_days(windowed_input_df, window_size):
+def weekend_transaction_count_n_days(window_input_df, window_size):
     return f'''
         SELECT
             nameorig as user_id,
             sum(is_weekend) as weekend_transaction_count_{window_size},
             window_end AS timestamp
         FROM
-            {windowed_input_df}
+            {window_input_df}
         GROUP BY
             user_id,
             window_end
@@ -40,11 +41,13 @@ def weekend_transaction_count_n_days(windowed_input_df, window_size):
     description='How many weekend transactions the user has made in the last 30 days.'
 )
 def user_weekend_transaction_count_30d(transactions_batch):
-    # Use the sliding_window_transformation to create trailing 30 day time windows.
-    # The slide_interval defaults to the batch_schedule (1 day).
+    timestamp_key = const("timestamp")
+    window_size = const("30d")
     return weekend_transaction_count_n_days(
+        # Use tecton_sliding_transformation to create trailing 30 day time windows.
+        # The slide_interval defaults to the batch_schedule (1 day).
         tecton_sliding_window(
-            is_weekend(transactions_batch, const("timestamp")),
-            timestamp_col=const("timestamp"),
-            window_size=const("30d")),
-        window_size=const("30d"))
+            is_weekend(transactions_batch, timestamp_key),
+            timestamp_key=timestamp_key,
+            window_size=window_size),
+        window_size=window_size)

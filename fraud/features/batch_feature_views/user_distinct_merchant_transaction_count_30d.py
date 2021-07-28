@@ -3,17 +3,18 @@ from fraud.entities import user
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime
 
-# This transformation input is the output of the tecton_sliding_window
-# transformation, which appends the window_end timestamp as the end of the
-# aggregation period.
+# Counts distinct merchant names for each user and window. The timestamp
+# for the feature is the end of the window.
+# window_input_df is created by passing the original input through
+# tecton_sliding_window transformation.
 @transformation(mode='spark_sql')
-def user_distinct_merchant_transaction_count_transformation(windowed_input_df):
+def user_distinct_merchant_transaction_count_transformation(window_input_df):
     return f'''
         SELECT
             nameorig AS user_id,
             COUNT(DISTINCT namedest) AS distinct_merchant_count,
             window_end AS timestamp
-        FROM {windowed_input_df}
+        FROM {window_input_df}
         GROUP BY
             nameorig,
             window_end
@@ -34,7 +35,9 @@ def user_distinct_merchant_transaction_count_transformation(windowed_input_df):
     description='How many transactions the user has made to distinct merchants in the last 30 days.'
 )
 def user_distinct_merchant_transaction_count_30d(transactions_batch):
-    # Use the sliding_window_transformation to create trailing 30 day time windows.
-    # The slide_interval defaults to the batch_schedule (1 day).
     return user_distinct_merchant_transaction_count_transformation(
-        tecton_sliding_window(transactions_batch, timestamp_col=const('timestamp'), window_size=const('30d')))
+        # Use tecton_sliding_transformation to create trailing 30 day time windows.
+        # The slide_interval defaults to the batch_schedule (1 day).
+        tecton_sliding_window(transactions_batch,
+            timestamp_key=const('timestamp'),
+            window_size=const('30d')))
