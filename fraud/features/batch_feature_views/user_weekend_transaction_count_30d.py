@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input, transformation, const, tecton_sliding_window
+from tecton import batch_feature_view, Input, transformation, const, tecton_sliding_window, BackfillConfig
 from fraud.entities import user
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime
@@ -35,6 +35,7 @@ def weekend_transaction_count_n_days(window_input_df, window_size):
     online=True,
     offline=True,
     feature_start_time=datetime(2021, 4, 1),
+    backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
     family='fraud',
     tags={'release': 'production'},
     owner='matt@tecton.ai',
