@@ -1,4 +1,4 @@
-from tecton import transformation, Input, batch_feature_view, const
+from tecton import transformation, Input, batch_feature_view, const, BackfillConfig
 from ads.entities import auction
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime
@@ -39,6 +39,7 @@ def keyword_stats(input_data, keyword_column):
     online=True,
     offline=True,
     feature_start_time=datetime(2020, 5, 1),
+    backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
     family='ads',
     owner='derek@tecton.ai',
     tags={'release': 'production'}

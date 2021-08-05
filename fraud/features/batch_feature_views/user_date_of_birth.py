@@ -1,4 +1,4 @@
-from tecton.feature_views import batch_feature_view, Input
+from tecton import batch_feature_view, Input, BackfillConfig
 from fraud.entities import user
 from fraud.data_sources.fraud_users_batch import fraud_users_batch
 from datetime import datetime
@@ -14,6 +14,7 @@ from datetime import datetime
     feature_start_time=datetime(2017,1, 1),
     batch_schedule='1d',
     ttl='3650days',
+    backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
     family='fraud',
     tags={'release': 'production'},
     owner='matt@tecton.ai',

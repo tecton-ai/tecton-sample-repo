@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input, tecton_sliding_window, transformation, const
+from tecton import batch_feature_view, Input, tecton_sliding_window, transformation, const, BackfillConfig
 from fraud.entities import user
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime
@@ -29,6 +29,7 @@ def user_distinct_merchant_transaction_count_transformation(window_input_df):
     online=True,
     offline=True,
     feature_start_time=datetime(2021, 4, 1),
+    backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
     family='fraud',
     tags={'release': 'production'},
     owner='matt@tecton.ai',

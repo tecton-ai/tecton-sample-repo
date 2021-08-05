@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input
+from tecton import batch_feature_view, Input, BackfillConfig
 from fraud.entities import user
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime
@@ -12,6 +12,7 @@ from datetime import datetime
     feature_start_time=datetime(2021, 5, 20),
     batch_schedule='1d',
     ttl='30days',
+    backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
     family='fraud',
     description='Last user transaction amount (batch calculated)'
 )
@@ -36,6 +37,7 @@ def last_transaction_amount(transactions):
 #     feature_start_time=datetime(2021, 5, 20),
 #     batch_schedule='1d',
 #     ttl='30days',
+#     backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
 #     family='fraud',
 #     description='Max user transaction amount'
 # )

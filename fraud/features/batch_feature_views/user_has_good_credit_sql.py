@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input, DatabricksClusterConfig
+from tecton import batch_feature_view, Input, DatabricksClusterConfig, BackfillConfig
 from fraud.entities import user
 from fraud.data_sources.credit_scores_batch import credit_scores_batch
 from datetime import datetime
@@ -17,6 +17,7 @@ from datetime import datetime
         spark_config = {"spark.executor.memory" : "12g"}
     ),
     ttl='120d',
+    backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
     family='fraud',
     tags={'release': 'production'},
     owner='derek@tecton.ai',
