@@ -21,7 +21,7 @@ from datetime import datetime
     family='fraud',
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
-    description='Transaction amount statistics and total over a series of time windows, updated hourly.'
+    description='Transaction amount statistics and total over a series of time windows, every 10 minutes.'
 )
 def user_transaction_amount_metrics(transactions):
     return f'''
