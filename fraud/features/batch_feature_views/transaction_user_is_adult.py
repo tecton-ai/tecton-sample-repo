@@ -21,15 +21,15 @@ from datetime import datetime
     family='fraud',
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
-    description='Whether the user had a good credit score (over 670) as of the time of a transaction.'
+    description='Whether the user performing the transaction is over 18 years old.'
 )
 def transaction_user_is_adult(users, transactions):
     return f'''
-        select 
-          timestamp, 
-          user_id,  
+        select
+          timestamp,
+          user_id,
           IF (datediff(timestamp, dob) > (18*365), 1, 0) as user_is_adult
-          
+
           from {transactions} t
           join {users} u on t.nameorig=u.user_id
     '''
