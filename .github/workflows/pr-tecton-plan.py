@@ -28,3 +28,6 @@ jobs:
     - name: Run tecton plan
       run: tecton plan --no-safety-check
       working-directory: feature_repo
+
+    - name: extra
+      run: echo "YAY"
