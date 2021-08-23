@@ -19,11 +19,8 @@ jobs:
       with:
         python-version: 3.7.10
 
-    - name: Install pypandoc for databricks-connect
-      run: pip install pypandoc
-
     - name: Install the Tecton CLI
-      run: pip install --no-cache-dir 'tecton[pyspark]'
+      run: pip install pypandoc && pip install 'tecton[pyspark]'
 
     - name: Run tecton plan
       run: tecton plan --no-safety-check
