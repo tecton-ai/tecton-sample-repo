@@ -18,7 +18,7 @@ output_schema.add(StructField('transaction_amount_is_high', LongType()))
     output_schema=output_schema,
     family='fraud',
     owner='matt@tecton.ai',
-    tags={'release': 'production'},
+    tags={'release': 'production', 'prevent-destroy': 'true', 'prevent-recreate': 'true'},
     description='Whether the transaction amount is considered high (over $10000)'
 )
 def transaction_amount_is_high(transaction_request: pandas.DataFrame):
