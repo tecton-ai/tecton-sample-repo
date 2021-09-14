@@ -16,7 +16,7 @@ from datetime import datetime
     ],
     online=True,
     offline=True,
-    feature_start_time=datetime(2021, 5, 1),
+    feature_start_time=datetime(2021, 6, 1),
     family='fraud',
     tags={'release': 'production'},
     owner='kevin@tecton.ai',

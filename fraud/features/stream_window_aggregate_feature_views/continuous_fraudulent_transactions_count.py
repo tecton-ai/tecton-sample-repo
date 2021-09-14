@@ -16,7 +16,7 @@ from datetime import datetime
     ],
     online=True,
     offline=True,
-    feature_start_time=datetime(2020, 10, 10),
+    feature_start_time=datetime(2021, 6, 1),
     family='fraud',
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
@@ -32,4 +32,3 @@ def continuous_fraudulent_transactions_count(transactions):
             {transactions}
         WHERE isFraud != 0
         '''
-

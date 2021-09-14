@@ -12,6 +12,7 @@ ad_ctr_feature_service = FeatureService(
     family='ads',
     tags={'release': 'production'},
     owner='matt@tecton.ai',
+    online_serving_enabled=False,
     features=[
         user_ctr_7d,
         user_click_counts,
