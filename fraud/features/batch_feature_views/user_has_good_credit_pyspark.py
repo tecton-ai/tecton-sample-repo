@@ -8,8 +8,8 @@ from datetime import datetime
     inputs={'credit_scores': Input(credit_scores_batch)},
     entities=[user],
     mode='pyspark',
-    online=True,
-    offline=True,
+    online=False,
+    offline=False,
     feature_start_time=datetime(2021, 1, 1),
     batch_schedule='1d',
     batch_cluster_config = DatabricksClusterConfig(
