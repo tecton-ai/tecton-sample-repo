@@ -9,8 +9,8 @@ from datetime import datetime
     mode='spark_sql',
     ttl='1d',
     batch_schedule='1d',
-    online=True,
-    offline=True,
+    online=False,
+    offline=False,
     batch_cluster_config=DatabricksClusterConfig(
         instance_type='m5.xlarge',
         number_of_workers=4,
