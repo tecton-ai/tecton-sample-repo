@@ -23,7 +23,7 @@ def user_distinct_ad_count_transformation(window_input_df):
 @batch_feature_view(
     inputs={'ad_impressions': Input(ad_impressions_batch, window='7d')},
     entities=[user],
-    mode='spark_sql',
+    mode='pipeline',
     ttl='1d',
     batch_schedule='1d',
     online=False,
