@@ -4,9 +4,8 @@ from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime
 
 # Counts distinct ad ids for each user and window. The timestamp
-# for the feature is the end of the window.
-# window_input_df is created by passing the original input through
-# tecton_sliding_window transformation.
+# for the feature is the end of the window, which is set by using
+# the tecton_sliding_window transformation
 @transformation(mode='spark_sql')
 def user_distinct_ad_count_transformation(window_input_df):
     return f'''
