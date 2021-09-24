@@ -3,19 +3,14 @@ from fraud.entities import user
 from fraud.data_sources.credit_scores_batch import credit_scores_batch
 from datetime import datetime
 
-
 # @batch_feature_view(
 #     inputs={'credit_scores': Input(credit_scores_batch)},
 #     entities=[user],
 #     mode='spark_sql',
 #     online=True,
 #     offline=True,
-#     feature_start_time=datetime(2020, 10, 10),
+#     feature_start_time=datetime(2021, 1, 1),
 #     batch_schedule='1d',
-#     batch_cluster_config = DatabricksClusterConfig(
-#         instance_type = 'm5.2xlarge',
-#         spark_config = {"spark.executor.memory" : "12g"}
-#     ),
 #     ttl='30days',
 #     backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
 #     family='fraud',
