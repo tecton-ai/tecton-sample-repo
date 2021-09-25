@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input, DatabricksClusterConfig, BackfillConfig
+from tecton import batch_feature_view, Input, BackfillConfig
 from fraud.entities import user
 from fraud.data_sources.credit_scores_batch import credit_scores_batch
 from datetime import datetime
@@ -12,10 +12,6 @@ from datetime import datetime
     offline=False,
     feature_start_time=datetime(2021, 1, 1),
     batch_schedule='1d',
-    batch_cluster_config = DatabricksClusterConfig(
-        instance_type = 'm5.2xlarge',
-        spark_config = {"spark.executor.memory" : "12g"}
-    ),
     ttl='120d',
     backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
     family='fraud',
