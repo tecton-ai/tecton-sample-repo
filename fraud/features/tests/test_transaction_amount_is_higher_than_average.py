@@ -9,6 +9,6 @@ def test_transaction_amount_is_higher_than_average():
     user_transaction_amount_metrics = pd.DataFrame({'amount_mean_24h_10m': [42, 10002, 3435]})
 
     actual = transaction_amount_is_higher_than_average.run(transaction_request=transaction_request, user_transaction_amount_metrics=user_transaction_amount_metrics)
-    expected = pd.DataFrame({'transaction_amount_is_higher_than_average': [1, 0, 1]})
+    expected = pd.DataFrame({'transaction_amount_is_higher_than_average': [True, False, True]})
 
     assert_frame_equal(actual, expected)
