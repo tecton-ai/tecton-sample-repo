@@ -1,5 +1,5 @@
 from tecton import RequestDataSource, on_demand_feature_view, Input
-from pyspark.sql.types import DoubleType, StructType, StructField, LongType
+from pyspark.sql.types import BooleanType, DoubleType, StructType, StructField
 from fraud.features.stream_window_aggregate_feature_views.user_transaction_amount_metrics import user_transaction_amount_metrics
 import pandas
 
@@ -10,7 +10,7 @@ transaction_request = RequestDataSource(request_schema=request_schema)
 
 # Schema of the output feature value(s)
 output_schema = StructType()
-output_schema.add(StructField('transaction_amount_is_higher_than_average', LongType()))
+output_schema.add(StructField('transaction_amount_is_higher_than_average', BooleanType()))
 
 # This On-Demand Feature View compares request data ('amount')
 # to a feature ('amount_mean_24h') from a pre-computed Feature View ('user_transaction_amount_metrics').
@@ -34,5 +34,5 @@ def transaction_amount_is_higher_than_average(transaction_request: pandas.DataFr
     user_transaction_amount_metrics['amount_mean_24h_10m'] = user_transaction_amount_metrics['amount_mean_24h_10m'].fillna(0)
 
     df = pd.DataFrame()
-    df['transaction_amount_is_higher_than_average'] = (transaction_request['amount'] > user_transaction_amount_metrics['amount_mean_24h_10m']).astype('int64')
+    df['transaction_amount_is_higher_than_average'] = transaction_request['amount'] > user_transaction_amount_metrics['amount_mean_24h_10m']
     return df
