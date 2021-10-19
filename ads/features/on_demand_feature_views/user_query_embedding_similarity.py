@@ -30,7 +30,7 @@ def user_query_embedding_similarity(request: pandas.DataFrame, user_embedding: p
     from numpy.linalg import norm
 
     @np.vectorize
-    def cosine_similarity(a, b):
+    def cosine_similarity(a: np.ndarray, b: np.ndarray):
         # Handle the case where there is no precomputed user embedding.
         if a is None or b is None:
             return -1.0
