@@ -1,11 +1,11 @@
 from tecton import RequestDataSource, Input, on_demand_feature_view
-from pyspark.sql.types import StructType, StructField, DoubleType, ArrayType
+from pyspark.sql.types import StructType, StructField, FloatType, ArrayType, DoubleType
 from fraud.features.feature_tables.user_embeddings import user_embeddings
 import pandas
 
 
 request_schema = StructType()
-request_schema.add(StructField('query_embedding', ArrayType(DoubleType())))
+request_schema.add(StructField('query_embedding', ArrayType(FloatType())))
 request = RequestDataSource(request_schema=request_schema)
 
 output_schema = StructType()
@@ -20,7 +20,7 @@ output_schema.add(StructField('cosine_similarity', DoubleType()))
     mode='pandas',
     output_schema=output_schema,
     family='fraud',
-    owner='matt@tecton.ai',
+    owner='jake@tecton.ai',
     tags={'release': 'production'},
     description="Computes the cosine similarity between a query embedding and a precomputed user embedding."
 )
@@ -38,6 +38,8 @@ def user_query_embedding_similarity(request: pandas.DataFrame, user_embedding: p
         return np.dot(a, b)/(norm(a)*norm(b))
 
     df = pd.DataFrame()
-    df["cosine_similarity"] = cosine_similarity(user_embedding["user_embedding"], request["query_embedding"])
+    df["cosine_similarity"] = (
+        cosine_similarity(user_embedding["user_embedding"], request["query_embedding"]).astype('float64')
+    )
 
     return df
