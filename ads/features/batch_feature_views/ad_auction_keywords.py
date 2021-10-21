@@ -20,8 +20,8 @@ def keyword_stats(input_data, keyword_column):
     SELECT
         auction_id,
         timestamp,
+        {keyword_column} AS keyword_list,
         size({keyword_column}) AS num_keywords,
-        concat_ws(",", {keyword_column}) AS keyword_list,
         array_contains({keyword_column}, "bitcoin") AS keyword_contains_bitcoin
     FROM {input_data}
     """
