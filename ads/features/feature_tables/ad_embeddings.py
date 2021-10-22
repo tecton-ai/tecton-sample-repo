@@ -3,10 +3,11 @@ from tecton import Entity, FeatureTable, DeltaConfig
 from ads.entities import ad
 
 
-schema = StructType()
-schema.add(StructField('ad_id', StringType()))
-schema.add(StructField('timestamp', TimestampType()))
-schema.add(StructField('ad_embedding', ArrayType(FloatType())))
+schema = StructType([
+    StructField('ad_id', StringType()),
+    StructField('timestamp', TimestampType()),
+    StructField('ad_embedding', ArrayType(FloatType()))
+])
 
 
 ad_embeddings = FeatureTable(

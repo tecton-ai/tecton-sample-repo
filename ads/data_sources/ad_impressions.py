@@ -4,28 +4,27 @@ from tecton_spark.function_serialization import inlined
 
 @inlined
 def ad_stream_translator(df):
-    from pyspark.sql.types import StructType, StringType, IntegerType, LongType, BooleanType
+    from pyspark.sql.types import StructType, StructField, StringType, IntegerType, LongType, BooleanType
     from pyspark.sql.functions import from_json, col, from_utc_timestamp, when
 
-    payload_schema = (
-        StructType()
-        .add('clicked', StringType(), False)
-        .add('auction_id', StringType(), False)
-        .add('num_ads_bid', StringType(), False)
-        .add('ad_id', StringType(), False)
-        .add('ad_campaign_id', StringType(), False)
-        .add('partner_domain_name', StringType(), False)
-        .add('content_keyword', StringType(), False)
-        .add('ad_content_id', StringType(), False)
-        .add('ad_group_id', StringType(), False)
-        .add('ad_display_placement', StringType(), False)
-        .add('ad_destination_domain_id', StringType(), False)
-        .add('partner_id', StringType(), False)
-        .add('is_pwa', StringType(), False)
-        .add('user_uuid', StringType(), False)
-        .add('timestamp', StringType(), False)
-        .add('datestr', StringType(), True)
-    )
+    payload_schema = StructType([
+        StructField('clicked', StringType(), False),
+        StructField('auction_id', StringType(), False),
+        StructField('num_ads_bid', StringType(), False),
+        StructField('ad_id', StringType(), False),
+        StructField('ad_campaign_id', StringType(), False),
+        StructField('partner_domain_name', StringType(), False),
+        StructField('content_keyword', StringType(), False),
+        StructField('ad_content_id', StringType(), False),
+        StructField('ad_group_id', StringType(), False),
+        StructField('ad_display_placement', StringType(), False),
+        StructField('ad_destination_domain_id', StringType(), False),
+        StructField('partner_id', StringType(), False),
+        StructField('is_pwa', StringType(), False),
+        StructField('user_uuid', StringType(), False),
+        StructField('timestamp', StringType(), False),
+        StructField('datestr', StringType(), True),
+    ])
 
     return (
       df.selectExpr('cast (data as STRING) jsonData')

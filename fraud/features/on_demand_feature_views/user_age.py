@@ -4,12 +4,14 @@ from fraud.features.batch_feature_views.user_date_of_birth import user_date_of_b
 import pandas
 
 
-request_schema = StructType()
-request_schema.add(StructField('timestamp', StringType()))
+request_schema = StructType([
+    StructField('timestamp', StringType())
+])
 request = RequestDataSource(request_schema=request_schema)
 
-output_schema = StructType()
-output_schema.add(StructField('user_age', LongType()))
+output_schema = StructType([
+    StructField('user_age', LongType())
+])
 
 
 @on_demand_feature_view(
