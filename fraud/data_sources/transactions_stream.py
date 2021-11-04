@@ -61,6 +61,7 @@ transactions_stream = StreamDataSource(
         database='demo_fraud',
         table='transactions',
         timestamp_column_name='timestamp',
+        # Setting the datetime partition columns significantly speeds up queries from Hive tables.
         datetime_partition_columns=partition_columns,
     ),
     family='fraud',
