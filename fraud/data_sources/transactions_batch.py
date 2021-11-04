@@ -4,7 +4,6 @@ partition_columns = [
     DatetimePartitionColumn(column_name="partition_0", datepart="year", zero_padded=True),
     DatetimePartitionColumn(column_name="partition_1", datepart="month", zero_padded=True),
     DatetimePartitionColumn(column_name="partition_2", datepart="day", zero_padded=True),
-    DatetimePartitionColumn(column_name="partition_3", datepart="hour", zero_padded=True),
 ]
 
 transactions_batch = BatchDataSource(
