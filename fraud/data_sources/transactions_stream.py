@@ -1,4 +1,4 @@
-from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource
+from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource, DatetimePartitionColumn
 from tecton_spark.function_serialization import inlined
 
 
@@ -40,6 +40,11 @@ def raw_data_deserialization(df):
         )
     )
 
+partition_columns = [
+    DatetimePartitionColumn(column_name="partition_0", datepart="year", zero_padded=True),
+    DatetimePartitionColumn(column_name="partition_1", datepart="month", zero_padded=True),
+    DatetimePartitionColumn(column_name="partition_2", datepart="day", zero_padded=True),
+]
 
 transactions_stream = StreamDataSource(
     name='transactions_stream',
@@ -56,6 +61,8 @@ transactions_stream = StreamDataSource(
         database='demo_fraud',
         table='transactions',
         timestamp_column_name='timestamp',
+        # Setting the datetime partition columns significantly speeds up queries from Hive tables.
+        datetime_partition_columns=partition_columns,
     ),
     family='fraud',
     owner='matt@tecton.ai',
