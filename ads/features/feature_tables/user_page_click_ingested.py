@@ -8,11 +8,13 @@ from ads.entities import content
 
 # Schema that will be used for ingesting every row
 # in the feature table.
-schema = StructType()
-schema.add(StructField("content_id", StringType()))
-schema.add(StructField("page_id", StringType()))
-schema.add(StructField("clicked", LongType()))
-schema.add(StructField("timestamp", TimestampType()))
+schema = StructType([
+    StructField("content_id", StringType()),
+    StructField("page_id", StringType()),
+    StructField("clicked", LongType()),
+    StructField("timestamp", TimestampType()),
+])
+
 
 # Feature Table Definition.
 # Online and Offline Materialization is enabled

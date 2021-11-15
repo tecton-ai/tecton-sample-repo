@@ -6,9 +6,10 @@ from ads.features.stream_window_aggregate_feature_views.user_impression_counts i
 import pandas
 
 
-output_schema = StructType()
-output_schema.add(StructField('user_ctr_7d', DoubleType()))
-output_schema.add(StructField('user_ctr_7d_scaled', DoubleType()))
+output_schema = StructType([
+    StructField('user_ctr_7d', DoubleType()),
+    StructField('user_ctr_7d_scaled', DoubleType())
+])
 
 
 @on_demand_feature_view(

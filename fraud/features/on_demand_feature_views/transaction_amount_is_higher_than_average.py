@@ -4,13 +4,15 @@ from fraud.features.stream_window_aggregate_feature_views.user_transaction_amoun
 import pandas
 
 # Schema of the input to the OnDemandFeatureView
-request_schema = StructType()
-request_schema.add(StructField('amount', DoubleType()))
+request_schema = StructType([
+    StructField('amount', DoubleType())
+])
 transaction_request = RequestDataSource(request_schema=request_schema)
 
 # Schema of the output feature value(s)
-output_schema = StructType()
-output_schema.add(StructField('transaction_amount_is_higher_than_average', BooleanType()))
+output_schema = StructType([
+    StructField('transaction_amount_is_higher_than_average', BooleanType())
+])
 
 # This On-Demand Feature View compares request data ('amount')
 # to a feature ('amount_mean_24h') from a pre-computed Feature View ('user_transaction_amount_metrics').

@@ -3,11 +3,12 @@ from tecton import Entity, FeatureTable, DeltaConfig
 from fraud.entities import user
 
 
-schema = StructType()
-schema.add(StructField('user_id', StringType()))
-schema.add(StructField('timestamp', TimestampType()))
-schema.add(StructField('user_login_count_7d', LongType()))
-schema.add(StructField('user_login_count_30d', LongType()))
+schema = StructType([
+    StructField('user_id', StringType()),
+    StructField('timestamp', TimestampType()),
+    StructField('user_login_count_7d', LongType()),
+    StructField('user_login_count_30d', LongType()),
+])
 
 
 user_login_counts = FeatureTable(

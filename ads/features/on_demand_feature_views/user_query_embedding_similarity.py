@@ -4,12 +4,14 @@ from ads.features.feature_tables.user_embeddings import user_embeddings
 import pandas
 
 
-request_schema = StructType()
-request_schema.add(StructField('query_embedding', ArrayType(FloatType())))
+request_schema = StructType([
+    StructField('query_embedding', ArrayType(FloatType()))
+])
 request = RequestDataSource(request_schema=request_schema)
 
-output_schema = StructType()
-output_schema.add(StructField('cosine_similarity', DoubleType()))
+output_schema = StructType([
+    StructField('cosine_similarity', DoubleType())
+])
 
 
 @on_demand_feature_view(

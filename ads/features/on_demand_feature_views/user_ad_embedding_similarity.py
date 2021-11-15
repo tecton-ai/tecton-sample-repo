@@ -4,9 +4,9 @@ from ads.features.feature_tables.user_embeddings import user_embeddings
 from ads.features.feature_tables.ad_embeddings import ad_embeddings
 import pandas
 
-output_schema = StructType()
-output_schema.add(StructField('cosine_similarity', DoubleType()))
-
+output_schema = StructType([
+    StructField('cosine_similarity', DoubleType())
+])
 
 @on_demand_feature_view(
     inputs={
