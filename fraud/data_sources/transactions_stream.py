@@ -7,20 +7,19 @@ def raw_data_deserialization(df):
     from pyspark.sql.functions import col, from_json, from_utc_timestamp, when
     from pyspark.sql.types import StructType, StructField, StringType, DoubleType, TimestampType, BooleanType, IntegerType
 
-    payload_schema = (
-      StructType()
-            .add('amount', StringType(), False)
-            .add('nameOrig', StringType(), False)
-            .add('nameDest', StringType(), False)
-            .add('isFraud', StringType(), False)
-            .add('isFlaggedFraud', StringType(), False)
-            .add('type_CASH_IN', StringType(), False)
-            .add('type_CASH_OUT', StringType(), False)
-            .add('type_DEBIT', StringType(), False)
-            .add('type_PAYMENT', StringType(), False)
-            .add('type_TRANSFER', StringType(), False)
-            .add('timestamp', StringType(), False)
-    )
+    payload_schema = StructType([
+        StructField('amount', StringType(), False),
+        StructField('nameOrig', StringType(), False),
+        StructField('nameDest', StringType(), False),
+        StructField('isFraud', StringType(), False),
+        StructField('isFlaggedFraud', StringType(), False),
+        StructField('type_CASH_IN', StringType(), False),
+        StructField('type_CASH_OUT', StringType(), False),
+        StructField('type_DEBIT', StringType(), False),
+        StructField('type_PAYMENT', StringType(), False),
+        StructField('type_TRANSFER', StringType(), False),
+        StructField('timestamp', StringType(), False),
+    ])
 
     return (
         df.selectExpr('cast (data as STRING) jsonData')
