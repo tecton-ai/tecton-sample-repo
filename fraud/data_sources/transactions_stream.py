@@ -1,8 +1,5 @@
 from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource, DatetimePartitionColumn
-from tecton_spark.function_serialization import inlined
 
-
-@inlined
 def raw_data_deserialization(df):
     from pyspark.sql.functions import col, from_json, from_utc_timestamp, when
     from pyspark.sql.types import StructType, StructField, StringType, DoubleType, TimestampType, BooleanType, IntegerType
