@@ -1,8 +1,5 @@
 from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource, BatchDataSource
-from tecton_spark.function_serialization import inlined
 
-
-@inlined
 def ad_stream_translator(df):
     from pyspark.sql.types import StructType, StructField, StringType, IntegerType, LongType, BooleanType
     from pyspark.sql.functions import from_json, col, from_utc_timestamp, when
