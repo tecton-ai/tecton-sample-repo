@@ -8,8 +8,8 @@ from datetime import datetime
     inputs={'users': Input(fraud_users_batch)},
     entities=[user],
     mode='pyspark',
-    online=False,
-    offline=False,
+    online=True,
+    offline=True,
     # Note the timestamp is the signup date, hence the old start_time.
     feature_start_time=datetime(2017,1, 1),
     batch_schedule='1d',
