@@ -22,7 +22,7 @@ jobs:
       run: pip install pypandoc
 
     - name: Install the Tecton CLI
-      run: pip install --no-cache-dir 'tecton[pyspark]'
+      run: pip install --no-cache-dir 'tecton[pyspark]==0.3.0b18'
 
     - name: Run tecton test
       run: tecton test
