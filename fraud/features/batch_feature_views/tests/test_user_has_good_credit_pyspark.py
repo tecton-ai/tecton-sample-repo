@@ -3,6 +3,9 @@ import pyspark
 from fraud.features.batch_feature_views.user_has_good_credit_pyspark import user_has_good_credit_pyspark
 
 
+# The `tecton_pytest_spark_session` is a PyTest fixture that provides a
+# Tecton-defined PySpark session for testing Spark transformations and feature
+# views.
 def test_monthly_impression_count(tecton_pytest_spark_session):
     mock_data = [
         ('user_id1', "2020-10-28 05:02:11", 700),
