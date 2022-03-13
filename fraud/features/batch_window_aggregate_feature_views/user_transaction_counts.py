@@ -1,6 +1,6 @@
 from tecton.feature_views import batch_window_aggregate_feature_view
 from tecton.feature_views.feature_view import Input
-from tecton import FeatureAggregation
+from tecton import FeatureAggregation, MonitoringConfig
 from fraud.entities import user
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime
@@ -15,6 +15,7 @@ from datetime import datetime
     online=True,
     offline=True,
     feature_start_time=datetime(2020, 10, 10),
+    monitoring=MonitoringConfig(alert_email="derek@tecton.ai", monitor_freshness=True),
     family='fraud',
     tags={'release': 'production'},
     owner='matt@tecton.ai',
