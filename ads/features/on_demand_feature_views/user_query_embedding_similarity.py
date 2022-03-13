@@ -19,15 +19,14 @@ output_schema = StructType([
         'request': Input(request),
         'user_embedding': Input(user_embeddings)
     },
-    mode='pandas',
+    mode='python',
     output_schema=output_schema,
     family='fraud',
     owner='jake@tecton.ai',
     tags={'release': 'production'},
     description="Computes the cosine similarity between a query embedding and a precomputed user embedding."
 )
-def user_query_embedding_similarity(request: pandas.DataFrame, user_embedding: pandas.DataFrame):
-    import pandas as pd
+def user_query_embedding_similarity(request, user_embedding):
     import numpy as np
     from numpy.linalg import norm
 
@@ -39,9 +38,6 @@ def user_query_embedding_similarity(request: pandas.DataFrame, user_embedding: p
 
         return np.dot(a, b)/(norm(a)*norm(b))
 
-    df = pd.DataFrame()
-    df["cosine_similarity"] = (
-        cosine_similarity(user_embedding["user_embedding"], request["query_embedding"]).astype('float64')
-    )
-
-    return df
+    result = {}
+    result["cosine_similarity"] = cosine_similarity(user_embedding["user_embedding"], request["query_embedding"]).astype('float64')
+    return result
