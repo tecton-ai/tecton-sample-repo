@@ -13,15 +13,14 @@ output_schema = StructType([
         'ad_embedding': Input(ad_embeddings),
         'user_embedding': Input(user_embeddings)
     },
-    mode='pandas',
+    mode='python',
     output_schema=output_schema,
     family='fraud',
     owner='jake@tecton.ai',
     tags={'release': 'production'},
     description="Computes the cosine similarity between a precomputed ad embedding and a precomputed user embedding."
 )
-def user_ad_embedding_similarity(ad_embedding: pandas.DataFrame, user_embedding: pandas.DataFrame):
-    import pandas as pd
+def user_ad_embedding_similarity(ad_embedding, user_embedding):
     import numpy as np
     from numpy.linalg import norm
 
@@ -33,9 +32,6 @@ def user_ad_embedding_similarity(ad_embedding: pandas.DataFrame, user_embedding:
 
         return np.dot(a, b)/(norm(a)*norm(b))
 
-    df = pd.DataFrame()
-    df["cosine_similarity"] = (
-        cosine_similarity(user_embedding["user_embedding"], ad_embedding["ad_embedding"]).astype('float64')
-    )
-
-    return df
+    result = {}
+    result["cosine_similarity"] = cosine_similarity(user_embedding["user_embedding"], ad_embedding["ad_embedding"]).astype('float64')
+    return result

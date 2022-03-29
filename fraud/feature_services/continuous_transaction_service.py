@@ -9,6 +9,7 @@ continuous_feature_service = FeatureService(
     family='fraud',
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
+    online_serving_enabled=False,
     features=[
         continuous_non_fraudulent_transactions_count,
         continuous_fraudulent_transactions_count,
