@@ -14,16 +14,13 @@ from datetime import datetime
     aggregations=[
         FeatureAggregation(column='counter', function='count', time_windows=['1min', '5min', '1h'])
     ],
-    online=True,
-    offline=True,
+    online=False,
+    offline=False,
     feature_start_time=datetime(2021, 6, 1),
     family='fraud',
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
-    description='Number of non-fraudulent transactions',
-    monitoring=MonitoringConfig(monitor_freshness=True,
-                                expected_feature_freshness="1h",
-                                alert_email="kevin@tecton.ai")
+    description='Number of non-fraudulent transactions'
 )
 def continuous_non_fraudulent_transactions_count(transactions):
     return f'''

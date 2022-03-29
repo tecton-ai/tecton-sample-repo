@@ -1,4 +1,4 @@
-from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource, BatchDataSource
+from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource, BatchDataSource, DatetimePartitionColumn
 
 def ad_stream_translator(df):
     from pyspark.sql.types import StructType, StructField, StringType, IntegerType, LongType, BooleanType
@@ -53,7 +53,9 @@ ad_impressions_hiveds = HiveDSConfig(
         database='demo_ads',
         table='impressions_batch',
         timestamp_column_name='timestamp',
-        date_partition_column='datestr'
+        datetime_partition_columns = [
+            DatetimePartitionColumn(column_name="datestr", datepart="date", zero_padded=True)
+        ]
     )
 
 

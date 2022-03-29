@@ -1,4 +1,4 @@
-from tecton import stream_window_aggregate_feature_view, Input, FeatureAggregation
+from tecton import stream_window_aggregate_feature_view, Input, FeatureAggregation, DatabricksClusterConfig, MonitoringConfig
 from fraud.entities import user
 from fraud.data_sources.transactions_stream import transactions_stream
 from datetime import datetime
@@ -18,6 +18,8 @@ from datetime import datetime
     online=True,
     offline=True,
     feature_start_time=datetime(2020, 10, 10),
+    monitoring=MonitoringConfig(alert_email="derek@tecton.ai", monitor_freshness=True),
+    stream_cluster_config=DatabricksClusterConfig(number_of_workers=1),
     family='fraud',
     tags={'release': 'production'},
     owner='kevin@tecton.ai',

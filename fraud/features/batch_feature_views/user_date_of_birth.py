@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input, BackfillConfig
+from tecton import batch_feature_view, Input, BackfillConfig, MonitoringConfig
 from fraud.entities import user
 from fraud.data_sources.fraud_users_batch import fraud_users_batch
 from datetime import datetime
@@ -8,13 +8,14 @@ from datetime import datetime
     inputs={'users': Input(fraud_users_batch)},
     entities=[user],
     mode='pyspark',
-    online=False,
-    offline=False,
+    online=True,
+    offline=True,
     # Note the timestamp is the signup date, hence the old start_time.
     feature_start_time=datetime(2017,1, 1),
     batch_schedule='1d',
     ttl='3650days',
     backfill_config=BackfillConfig("multiple_batch_schedule_intervals_per_job"),
+    monitoring=MonitoringConfig(alert_email="derek@tecton.ai", monitor_freshness=False),
     family='fraud',
     tags={'release': 'production'},
     owner='matt@tecton.ai',
