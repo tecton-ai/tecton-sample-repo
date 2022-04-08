@@ -8,8 +8,7 @@ from fraud.features.batch_feature_views.user_has_good_credit_pyspark import user
 # The `tecton_pytest_spark_session` is a PyTest fixture that provides a
 # Tecton-defined PySpark session for testing Spark transformations and feature
 # views.
-@pytest.mark.skipif(os.getenv("JAVA_HOME") == None,
-    reason="Requires JDK installation and $JAVA_HOME env variable to run.")
+@pytest.mark.skip(reason="Requires JDK installation and $JAVA_HOME env variable to run.")
 def test_monthly_impression_count(tecton_pytest_spark_session):
     mock_data = [
         ('user_id1', "2020-10-28 05:02:11", 700),
