@@ -20,8 +20,8 @@ from datetime import datetime, timedelta
     description='Transaction amount statistics and total over a series of time windows, updated every 10 minutes.',
     aggregation_interval=timedelta(minutes=10),
     aggregations=[
-        Aggregation(column='amount', function='mean', time_windows=['1h', '12h', '24h','72h']),
-        Aggregation(column='amount', function='sum', time_windows=['1h', '12h', '24h','72h'])
+        Aggregation(column='amount', function='mean', time_windows=[timedelta(hours=1), timedelta(hours=12), timedelta(hours=24)]),
+        Aggregation(column='amount', function='sum', time_windows=[timedelta(hours=1), timedelta(hours=12), timedelta(hours=24)])
     ]
 )
 def user_transaction_amount_metrics(transactions):
