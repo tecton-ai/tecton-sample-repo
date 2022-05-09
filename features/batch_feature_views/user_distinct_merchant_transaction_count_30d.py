@@ -18,11 +18,11 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     description='How many transactions the user has made to distinct merchants in the last 30 days.'
 )
-def user_distinct_merchant_transaction_count_30d(transactions_batch):
+def user_distinct_merchant_transaction_count_30d(context, transactions_batch):
     return f'''
         SELECT
             nameorig AS user_id,
-            MAX(timestamp) as timestamp,
+            {context.end_time} - INTERVAL 1 MICROSECOND as timestamp,
             COUNT(DISTINCT namedest) AS distinct_merchant_transaction_count_30d,
         FROM {transactions_batch}
         GROUP BY
