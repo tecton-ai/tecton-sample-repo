@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 
 @batch_feature_view(
-    sources=[FilteredSource(users), FilteredSource(transactions_batch)],
+    sources=[users, FilteredSource(transactions_batch)],
     entities=[user],
     mode='spark_sql',
     online=False,
