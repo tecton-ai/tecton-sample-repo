@@ -1,4 +1,4 @@
-from tecton.feature_views import batch_feature_view, FilteredSource, Aggregation
+from tecton import batch_feature_view, FilteredSource, Aggregation
 from entities import user
 from data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
