@@ -10,8 +10,8 @@ def test_transaction_amount_is_higher_than_average():
     expected_results = [True, False, True, False]
     for test_amount,test_transaction_amount_metric,expected_result in zip(test_amounts,test_transaction_amount_metrics,expected_results):
         transaction_request = {'amount': test_amount}
-        user_transaction_amount_metrics = {'amount_mean_24h_10m': test_transaction_amount_metric}
+        user_transaction_lagging_averages = {'amount_mean_24h_10m': test_transaction_amount_metric}
         expected = {'transaction_amount_is_higher_than_average': expected_result}
 
-        actual = transaction_amount_is_higher_than_average.run(transaction_request=transaction_request, user_transaction_amount_metrics=user_transaction_amount_metrics)
+        actual = transaction_amount_is_higher_than_average.run(transaction_request=transaction_request, user_transaction_lagging_averages=user_transaction_lagging_averages)
         assert expected == actual

@@ -1,5 +1,5 @@
-from tecton import on_demand_feature_view, RequestSource, Field
-from tecton.types import String, Int64
+from tecton import on_demand_feature_view, RequestSource
+from tecton.types import String, Int64, Field
 from features.batch_feature_views.user_date_of_birth import user_date_of_birth
 
 

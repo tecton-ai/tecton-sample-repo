@@ -5,13 +5,14 @@ from datetime import datetime, timedelta
 
 
 @stream_feature_view(
-    sources=[FilteredSource(transactions_stream)],
+    source=FilteredSource(transactions_stream),
     entities=[user],
     mode='pyspark',
-    online=False,
+    online=True,
     offline=False,
     feature_start_time=datetime(2021, 5, 20),
-    batch_schedule=timedelta(days=1),
+    schedule_interval=timedelta(days=1),
+    ttl=timedelta(days=30),
     owner='matt@tecton.ai',
     tags={'release': 'production'},
     description='Last user transaction amount (stream calculated)'

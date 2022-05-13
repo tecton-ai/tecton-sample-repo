@@ -1,6 +1,7 @@
 from tecton import Entity, FeatureTable
-from tecton.types import String, Timestamp, Int64
-from fraud.entities import user
+from tecton.types import String, Timestamp, Int64, Field
+from entities import user
+from datetime import timedelta
 
 
 schema = [
@@ -16,7 +17,8 @@ user_login_counts = FeatureTable(
     schema=schema,
     online=False,
     offline=True,
+    ttl=timedelta(days=7),
     owner='derek@tecton.ai',
     tags={'release': 'production'},
-    description='User login counts over time.'
+    description='User login counts over time.',
 )

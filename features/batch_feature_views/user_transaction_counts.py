@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, FilteredSource, Aggregation
+from tecton import batch_feature_view, FilteredSource, FeatureAggregation
 from entities import user
 from data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
     description='User transaction totals over a series of time windows, updated daily.',
     aggregation_interval=timedelta(days=1),
     aggregations=[
-        Aggregation(column='transaction', function='count', time_windows=[timedelta(days=1), timedelta(days=3), timedelta(days=7)])
+        FeatureAggregation(column='transaction', function='count', time_windows=[timedelta(days=1), timedelta(days=3), timedelta(days=7)])
     ]
 )
 def user_transaction_counts(transactions):

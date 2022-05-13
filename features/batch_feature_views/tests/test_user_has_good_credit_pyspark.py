@@ -2,7 +2,7 @@ import datetime
 import os
 import pyspark
 import pytest
-from fraud.features.batch_feature_views.user_has_good_credit_pyspark import user_has_good_credit_pyspark
+from features.batch_feature_views.user_has_good_credit import user_has_good_credit_pyspark
 
 
 # The `tecton_pytest_spark_session` is a PyTest fixture that provides a

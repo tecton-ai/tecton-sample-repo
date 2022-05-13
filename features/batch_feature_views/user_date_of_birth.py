@@ -11,10 +11,11 @@ from datetime import datetime, timedelta
     online=True,
     offline=True,
     feature_start_time=datetime(2017,1, 1),
-    batch_schedule=timedelta(days=1),
+    schedule_interval=timedelta(days=1),
     owner='derek@tecton.ai',
     tags={'release': 'production'},
     description='User date of birth, entered at signup.',
+    ttl=timedelta(days=10 * 365),
 )
 def user_date_of_birth(users):
     from pyspark.sql import functions as f

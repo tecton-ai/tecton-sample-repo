@@ -10,7 +10,7 @@ credit_scores = BatchSource(
         datetime_partition_columns = [
             DatetimePartitionColumn(column_name="date", datepart="date", zero_padded=True)
         ]
-    )
+    ),
     owner='matt@tecton.ai',
     tags={'release': 'production'},
     description='Users credit scores batch data source'

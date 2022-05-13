@@ -8,10 +8,11 @@ from datetime import datetime, timedelta
     sources=[FilteredSource(credit_scores)],
     entities=[user],
     mode='pyspark',
-    online=False,
+    online=True,
     offline=False,
     feature_start_time=datetime(2021, 1, 1),
-    batch_schedule=timedelta(days=1),
+    schedule_interval=timedelta(days=1),
+    ttl=timedelta(days=30),
     owner='matt@tecton.ai',
     tags={'release': 'production'},
     description='Whether the user has a good credit score (over 670).'

@@ -1,11 +1,11 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation
+from tecton import stream_feature_view, FilteredSource, FeatureAggregation, AggregationMode
 from entities import user
 from data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
 
 
 @stream_feature_view(
-    sources=[FilteredSource(transactions_stream)],
+    source=FilteredSource(transactions_stream),
     entities=[user],
     mode='spark_sql',
     online=False,
@@ -14,9 +14,9 @@ from datetime import datetime, timedelta
     owner='kevin@tecton.ai',
     tags={'release': 'production'},
     description='Continuous count of non-fraudulent transactions',
-    aggregation_interval=timedelta(minutes=0),
+    aggregation_mode=AggregationMode.CONTINUOUS,
     aggregations=[
-        Aggregation(column='counter', function='count', time_windows=['1min', '5min', '1h'])
+        FeatureAggregation(column='counter', function='count', time_windows=[timedelta(minutes=1), timedelta(minutes=5), timedelta(hours=1)])
     ]
 )
 def user_continuous_non_fraudulent_transactions_count(transactions):

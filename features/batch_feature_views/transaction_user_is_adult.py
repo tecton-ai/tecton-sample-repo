@@ -1,7 +1,7 @@
 from tecton import batch_feature_view, FilteredSource
 from entities import user
 from data_sources.users import users
-from data_sources.transactions_batch import transactions_batch
+from data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
 
 
@@ -12,12 +12,13 @@ from datetime import datetime, timedelta
     online=False,
     offline=False,
     feature_start_time=datetime(2021, 1, 1),
-    batch_schedule=timedelta(days=1),
+    schedule_interval=timedelta(days=1),
+    ttl=timedelta(days=30),
     owner='kevin@tecton.ai',
     tags={'release': 'production'},
-    description='Whether the user performing the transaction is over 18 years old.'
+    description='Whether the user performing the transaction is over 18 years old.',
 )
-def transaction_user_is_adult(users, transactions_batch):
+def transaction_user_is_adult(users, transactions):
     return f'''
         select
             user_id,

@@ -1,5 +1,5 @@
-from tecton import StreamSource, HiveConfig, KinesisConfig, DatetimePartitionColumn
-
+from tecton import StreamSource, BatchSource, HiveConfig, KinesisConfig, DatetimePartitionColumn
+from datetime import timedelta
 
 def stream_data_transformer(df):
     from pyspark.sql.functions import col, from_json, from_utc_timestamp, when
@@ -48,7 +48,7 @@ transactions_batch = BatchSource(
     batch_config=HiveConfig(
         database='demo_fraud',
         table='transactions',
-        timestamp_column_name='timestamp',
+        timestamp_field='timestamp',
         datetime_partition_columns=partition_columns,
     ),
     owner='matt@tecton.ai',
@@ -62,7 +62,7 @@ transactions_stream = StreamSource(
         stream_name='transaction_events',
         region='us-west-2',
         initial_stream_position='latest',
-        watermark_delay_threshold='24 hours',
+        watermark_delay_threshold=timedelta(hours=24),
         timestamp_field='timestamp',
         post_processor=stream_data_transformer,
         options={'roleArn': 'arn:aws:iam::472542229217:role/demo-cross-account-kinesis-ro'}
@@ -70,7 +70,7 @@ transactions_stream = StreamSource(
     batch_config=HiveConfig(
         database='demo_fraud',
         table='transactions',
-        timestamp_column_name='timestamp',
+        timestamp_field='timestamp',
         datetime_partition_columns=partition_columns,
     ),
     owner='matt@tecton.ai',
