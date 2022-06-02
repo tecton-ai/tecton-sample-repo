@@ -17,7 +17,7 @@ from datetime import datetime, timedelta
     ],
     online=False,
     offline=False,
-    feature_start_time=datetime(2020, 10, 10),
+    feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
     description='Most recent 10 transaction amounts of a user'

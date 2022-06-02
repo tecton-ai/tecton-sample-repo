@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
     ],
     online=True,
     offline=True,
-    feature_start_time=datetime(2020, 10, 10),
+    feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
     description='Transaction amount statistics and total over a series of time windows, updated every 10 minutes.'
