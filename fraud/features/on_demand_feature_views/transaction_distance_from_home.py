@@ -2,10 +2,6 @@ from tecton import RequestSource, on_demand_feature_view
 from tecton.types import String, Timestamp, Float64, Field
 from fraud.features.batch_features.user_home_location import user_home_location
 
-# On-Demand Feature Views require enabling Snowpark.
-# Contact Tecton for assistance in enabling this feature.
-
-
 request_schema = [
     Field('lat', Float64),
     Field('long', Float64),

@@ -2,9 +2,6 @@ from tecton import RequestSource, on_demand_feature_view
 from tecton.types import String, Timestamp, Int64, Field
 from fraud.features.batch_features.user_date_of_birth import user_date_of_birth
 
-# On-Demand Feature Views require enabling Snowpark.
-# Contact Tecton for assistance in enabling this feature.
-
 
 request_schema = [Field('timestamp', String)]
 request = RequestSource(schema=request_schema)
