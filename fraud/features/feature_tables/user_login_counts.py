@@ -1,15 +1,15 @@
-from pyspark.sql.types import StructType, StructField, LongType, IntegerType, StringType, TimestampType
-from tecton import Entity, FeatureTable, DeltaConfig
+from tecton import Entity, FeatureTable
+from tecton.types import String, Timestamp, Int64, Field
 from fraud.entities import user
+from datetime import timedelta
 
 
-schema = StructType([
-    StructField('user_id', StringType()),
-    StructField('timestamp', TimestampType()),
-    StructField('user_login_count_7d', LongType()),
-    StructField('user_login_count_30d', LongType()),
-])
-
+schema = [
+    Field('user_id', String),
+    Field('timestamp', Timestamp),
+    Field('user_login_count_7d', Int64),
+    Field('user_login_count_30d', Int64),
+]
 
 user_login_counts = FeatureTable(
     name='user_login_counts',
@@ -17,6 +17,8 @@ user_login_counts = FeatureTable(
     schema=schema,
     online=False,
     offline=True,
-    ttl='30day',
-    owner='derek@tecton.ai'
+    ttl=timedelta(days=7),
+    owner='derek@tecton.ai',
+    tags={'release': 'production'},
+    description='User login counts over time.',
 )
