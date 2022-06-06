@@ -18,19 +18,13 @@ output_schema = [Field('dist_km', Float64)]
 def transaction_distance_from_home(request, user_home_location):
     from math import sin, cos, sqrt, atan2, radians
 
-    user_lat = user_home_location['lat']
-    user_long = user_home_location['long']
-
-    transaction_lat = request['lat']
-    transaction_long = request['long']
+    user_lat = radians(user_home_location['lat'])
+    user_long = radians(user_home_location['long'])
+    transaction_lat = radians(request['lat'])
+    transaction_long = radians(request['long'])
 
     # approximate radius of earth in km
     R = 6373.0
-
-    user_lat = radians(52.2296756)
-    user_long = radians(21.0122287)
-    transaction_lat = radians(52.406374)
-    transaction_long = radians(16.9251681)
 
     dlon = transaction_long - user_long
     dlat = transaction_lat - user_lat
