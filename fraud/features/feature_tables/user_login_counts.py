@@ -15,7 +15,7 @@ user_login_counts = FeatureTable(
     name='user_login_counts',
     entities=[user],
     schema=schema,
-    online=False,
+    online=True,
     offline=True,
     ttl=timedelta(days=7),
     owner='derek@tecton.ai',
