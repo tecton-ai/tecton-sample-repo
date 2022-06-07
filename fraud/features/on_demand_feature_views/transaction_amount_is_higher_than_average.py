@@ -13,5 +13,5 @@ output_schema = [Field('transaction_amount_is_higher_than_average', Bool)]
     description='The transaction amount is higher than the 1 day average.'
 )
 def transaction_amount_is_higher_than_average(transaction_request, user_transaction_amount_metrics):
-    amount_mean = 0 if user_transaction_amount_metrics['amt_mean_1d_10m'] == None else user_transaction_amount_metrics['amt_mean_1d_10m']
+    amount_mean = 0 if user_transaction_amount_metrics['amt_mean_1d_10m'] is None else user_transaction_amount_metrics['amt_mean_1d_10m']
     return {'transaction_amount_is_higher_than_average': transaction_request['amt'] > amount_mean}
