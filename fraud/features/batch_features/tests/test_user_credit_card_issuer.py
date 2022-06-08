@@ -8,7 +8,7 @@ from fraud.features.batch_features.user_credit_card_issuer import user_credit_ca
 # Tecton-defined PySpark session for testing Spark transformations and feature
 # views.
 @pytest.mark.skip(reason="Requires JDK installation and $JAVA_HOME env variable to run.")
-def test_user_distinct_merchant_transaction_count_30d(tecton_pytest_spark_session):
+def test_user_credit_card_issuer(tecton_pytest_spark_session):
     input_pandas_df = pandas.DataFrame({
         "user_id": ["user_1", "user_2", "user_3", "user_4"],
         "signup_timestamp": [datetime(2022, 5, 1)] * 4,
