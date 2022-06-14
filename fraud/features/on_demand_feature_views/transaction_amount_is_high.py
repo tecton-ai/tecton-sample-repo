@@ -1,28 +1,16 @@
-from tecton import RequestDataSource, Input, on_demand_feature_view
-from pyspark.sql.types import DoubleType, StructType, StructField, LongType
+from tecton import RequestSource, on_demand_feature_view
+from tecton.types import Float64, Field, Bool
 
-request_schema = StructType([
-    StructField('amount', DoubleType())
-])
-transaction_request = RequestDataSource(request_schema=request_schema)
+request_schema = [Field('amt', Float64)]
+transaction_request = RequestSource(schema=request_schema)
+output_schema = [Field('transaction_amount_is_high', Bool)]
 
-output_schema = StructType([
-    StructField('transaction_amount_is_high', LongType())
-])
-
-
-# This On-Demand Feature View evaluates a transaction amount and declares it as "high", if it's higher than 10,000
+# An example of an on-demand feature view that depends only on a request source.
 @on_demand_feature_view(
-    inputs={'transaction_request': Input(transaction_request)},
+    sources=[transaction_request],
     mode='python',
-    output_schema=output_schema,
-    family='fraud',
-    owner='matt@tecton.ai',
-    tags={'release': 'production'},
-    description='Whether the transaction amount is considered high (over $10000)'
+    schema=output_schema,
+    description='The transaction amount is higher than $100.'
 )
 def transaction_amount_is_high(transaction_request):
-
-    result = {}
-    result['transaction_amount_is_high'] = int(transaction_request['amount'] >= 10000)
-    return result
+    return {'transaction_amount_is_high': transaction_request['amt'] > 100}

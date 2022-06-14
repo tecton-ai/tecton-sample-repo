@@ -1,37 +1,24 @@
-from tecton import RequestDataSource, Input, on_demand_feature_view
-from pyspark.sql.types import StringType, StructType, StructField, LongType
-from fraud.features.batch_feature_views.user_date_of_birth import user_date_of_birth
+from tecton import RequestSource, on_demand_feature_view
+from tecton.types import String, Timestamp, Int64, Field
+from fraud.features.batch_features.user_date_of_birth import user_date_of_birth
 
-request_schema = StructType([
-    StructField('timestamp', StringType())
-])
-request = RequestDataSource(request_schema=request_schema)
 
-output_schema = StructType([
-    StructField('user_age', LongType())
-])
-
+request_schema = [Field('timestamp', String)]
+request = RequestSource(schema=request_schema)
+output_schema = [Field('user_age', Int64)]
 
 @on_demand_feature_view(
-    inputs={
-        'request': Input(request),
-        'user_date_of_birth': Input(user_date_of_birth)
-    },
+    sources=[request, user_date_of_birth],
     mode='python',
-    output_schema=output_schema,
-    family='fraud',
-    owner='matt@tecton.ai',
-    tags={'release': 'production'},
+    schema=output_schema,
     description="The user's age in days."
 )
 def user_age(request, user_date_of_birth):
     from datetime import datetime, date
 
     request_datetime = datetime.fromisoformat(request['timestamp']).replace(tzinfo=None)
-    dob_datetime = datetime.fromisoformat(user_date_of_birth['user_date_of_birth'])
+    dob_datetime = datetime.fromisoformat(user_date_of_birth['USER_DATE_OF_BIRTH'])
 
     td = request_datetime - dob_datetime
 
-    result = {}
-    result['user_age'] = td.days
-    return result
+    return {'user_age': td.days}

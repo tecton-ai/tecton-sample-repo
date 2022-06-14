@@ -1,27 +1,18 @@
-from tecton import RequestDataSource, Input, on_demand_feature_view
-from pyspark.sql.types import StructType, StructField, FloatType, ArrayType, DoubleType
+from tecton import RequestSource, on_demand_feature_view
+from tecton.types import Field, Array, Float64
 from ads.features.feature_tables.user_embeddings import user_embeddings
-import pandas
 
 
-request_schema = StructType([
-    StructField('query_embedding', ArrayType(FloatType()))
-])
-request = RequestDataSource(request_schema=request_schema)
+request_schema = [Field('query_embedding', Array(Float64))]
+request = RequestSource(schema=request_schema)
 
-output_schema = StructType([
-    StructField('cosine_similarity', DoubleType())
-])
+output_schema = [Field('cosine_similarity', Float64)]
 
 
 @on_demand_feature_view(
-    inputs={
-        'request': Input(request),
-        'user_embedding': Input(user_embeddings)
-    },
+    sources=[request, user_embeddings],
     mode='python',
-    output_schema=output_schema,
-    family='fraud',
+    schema=output_schema,
     owner='jake@tecton.ai',
     tags={'release': 'production'},
     description="Computes the cosine similarity between a query embedding and a precomputed user embedding."
@@ -30,7 +21,6 @@ def user_query_embedding_similarity(request, user_embedding):
     import numpy as np
     from numpy.linalg import norm
 
-    @np.vectorize
     def cosine_similarity(a: np.ndarray, b: np.ndarray):
         # Handle the case where there is no precomputed user embedding.
         if a is None or b is None:

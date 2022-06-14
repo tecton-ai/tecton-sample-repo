@@ -1,4 +1,5 @@
-from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource, BatchDataSource, DatetimePartitionColumn
+from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
+from datetime import timedelta
 
 def ad_stream_translator(df):
     from pyspark.sql.types import StructType, StructField, StringType, IntegerType, LongType, BooleanType
@@ -49,40 +50,38 @@ def ad_stream_translator(df):
       )
     )
 
-ad_impressions_hiveds = HiveDSConfig(
+ad_impressions_hive_config = HiveConfig(
         database='demo_ads',
         table='impressions_batch',
-        timestamp_column_name='timestamp',
+        timestamp_field='timestamp',
         datetime_partition_columns = [
             DatetimePartitionColumn(column_name="datestr", datepart="date", zero_padded=True)
         ]
     )
 
 
-ad_impressions_stream = StreamDataSource(
+ad_impressions_stream = StreamSource(
     name='ad_impressions_stream',
-    stream_ds_config=KinesisDSConfig(
+    stream_config=KinesisConfig(
         stream_name='ad-impressions-2',
         region='us-west-2',
-        raw_stream_translator=ad_stream_translator,
-        timestamp_key='timestamp',
-        default_watermark_delay_threshold='24 hours',
-        default_initial_stream_position='trim_horizon',
+        post_processor=ad_stream_translator,
+        timestamp_field='timestamp',
+        watermark_delay_threshold=timedelta(hours=24),
+        initial_stream_position='trim_horizon',
         deduplication_columns=[],
         options={'roleArn': 'arn:aws:iam::472542229217:role/demo-cross-account-kinesis-ro'}
     ),
-    batch_ds_config=ad_impressions_hiveds,
-    family='ads',
+    batch_config=ad_impressions_hive_config,
     tags={
         'release': 'production',
         'source': 'mobile'
     }
 )
 
-ad_impressions_batch = BatchDataSource(
+ad_impressions_batch = BatchSource(
     name='ad_impressions_batch',
-    batch_ds_config=ad_impressions_hiveds,
-    family='ads',
+    batch_config=ad_impressions_hive_config,
     tags={
         'release': 'production',
         'source': 'mobile'

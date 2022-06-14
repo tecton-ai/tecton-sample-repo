@@ -1,21 +1,15 @@
-from tecton import RequestDataSource, Input, on_demand_feature_view
-from pyspark.sql.types import StructType, StructField, FloatType, ArrayType, DoubleType
+from tecton import on_demand_feature_view
+from tecton.types import Field, Float64
 from ads.features.feature_tables.user_embeddings import user_embeddings
 from ads.features.feature_tables.ad_embeddings import ad_embeddings
 import pandas
 
-output_schema = StructType([
-    StructField('cosine_similarity', DoubleType())
-])
+output_schema = [Field('cosine_similarity', Float64)]
 
 @on_demand_feature_view(
-    inputs={
-        'ad_embedding': Input(ad_embeddings),
-        'user_embedding': Input(user_embeddings)
-    },
+    sources=[ad_embeddings, user_embeddings],
     mode='python',
-    output_schema=output_schema,
-    family='fraud',
+    schema=output_schema,
     owner='jake@tecton.ai',
     tags={'release': 'production'},
     description="Computes the cosine similarity between a precomputed ad embedding and a precomputed user embedding."
@@ -24,7 +18,6 @@ def user_ad_embedding_similarity(ad_embedding, user_embedding):
     import numpy as np
     from numpy.linalg import norm
 
-    @np.vectorize
     def cosine_similarity(a: np.ndarray, b: np.ndarray):
         # Handle the case where one or both entities do not have a precomputed embedding.
         if a is None or b is None:

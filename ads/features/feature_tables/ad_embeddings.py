@@ -1,13 +1,13 @@
-from pyspark.sql.types import StructType, StructField, FloatType, ArrayType, StringType, TimestampType
+from tecton.types import Field, String, Timestamp, Array, Float64
 from tecton import Entity, FeatureTable, DeltaConfig
 from ads.entities import ad
+from datetime import timedelta
 
-
-schema = StructType([
-    StructField('ad_id', StringType()),
-    StructField('timestamp', TimestampType()),
-    StructField('ad_embedding', ArrayType(FloatType()))
-])
+schema = [
+    Field('ad_id', String),
+    Field('timestamp', Timestamp),
+    Field('ad_embedding', Array(Float64))
+]
 
 
 ad_embeddings = FeatureTable(
@@ -16,7 +16,7 @@ ad_embeddings = FeatureTable(
     schema=schema,
     online=True,
     offline=True,
-    ttl='10day',
+    ttl=timedelta(days=10),
     description='Precomputed ad embeddings pushed into Tecton.',
     owner='jake@tecton.ai'
 )
