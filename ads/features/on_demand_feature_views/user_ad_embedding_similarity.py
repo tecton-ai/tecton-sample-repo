@@ -18,7 +18,6 @@ def user_ad_embedding_similarity(ad_embedding, user_embedding):
     import numpy as np
     from numpy.linalg import norm
 
-    @np.vectorize
     def cosine_similarity(a: np.ndarray, b: np.ndarray):
         # Handle the case where one or both entities do not have a precomputed embedding.
         if a is None or b is None:

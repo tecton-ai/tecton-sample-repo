@@ -21,7 +21,6 @@ def user_query_embedding_similarity(request, user_embedding):
     import numpy as np
     from numpy.linalg import norm
 
-    @np.vectorize
     def cosine_similarity(a: np.ndarray, b: np.ndarray):
         # Handle the case where there is no precomputed user embedding.
         if a is None or b is None:
