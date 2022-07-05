@@ -20,7 +20,6 @@ fraud_detection_feature_service = FeatureService(
 # # fraud_detection_feature_service_v2 = FeatureService(
 # #     name='fraud_detection_feature_service:v2',
 # #     description='A FeatureService providing features for a model that predicts if a transaction is fraudulent.',
-# #     family='fraud',
 # #     tags={'release': 'production'},
 # #     features=[
 # #         user_has_great_credit, # New feature
