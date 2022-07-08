@@ -1,5 +1,5 @@
 from pyspark.sql.types import StructType, StructField, FloatType, ArrayType, StringType, TimestampType
-from tecton import Entity, FeatureTable, DeltaConfig
+from tecton.compat import Entity, FeatureTable, DeltaConfig
 from ads.entities import user
 
 

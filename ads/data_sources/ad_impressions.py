@@ -1,4 +1,4 @@
-from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource, BatchDataSource, DatetimePartitionColumn
+from tecton.compat import HiveDSConfig, KinesisDSConfig, StreamDataSource, BatchDataSource, DatetimePartitionColumn
 
 def ad_stream_translator(df):
     from pyspark.sql.types import StructType, StructField, StringType, IntegerType, LongType, BooleanType

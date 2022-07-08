@@ -1,6 +1,6 @@
-from tecton.feature_views import batch_window_aggregate_feature_view
-from tecton.feature_views.feature_view import Input
-from tecton import FeatureAggregation, MonitoringConfig
+from tecton.compat import batch_window_aggregate_feature_view
+from tecton.compat import Input
+from tecton.compat import FeatureAggregation, MonitoringConfig
 from fraud.entities import user
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime

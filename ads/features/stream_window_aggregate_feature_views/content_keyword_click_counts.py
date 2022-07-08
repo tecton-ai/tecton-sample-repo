@@ -1,6 +1,6 @@
-from tecton import stream_window_aggregate_feature_view
-from tecton import Input
-from tecton import FeatureAggregation, DatabricksClusterConfig
+from tecton.compat import stream_window_aggregate_feature_view
+from tecton.compat import Input
+from tecton.compat import FeatureAggregation, DatabricksClusterConfig
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime

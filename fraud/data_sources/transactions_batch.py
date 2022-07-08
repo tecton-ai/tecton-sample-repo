@@ -1,4 +1,4 @@
-from tecton import HiveDSConfig, BatchDataSource, DatetimePartitionColumn
+from tecton.compat import HiveDSConfig, BatchDataSource, DatetimePartitionColumn
 
 partition_columns = [
     DatetimePartitionColumn(column_name="partition_0", datepart="year", zero_padded=True),

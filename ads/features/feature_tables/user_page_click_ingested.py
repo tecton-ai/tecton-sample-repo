@@ -3,7 +3,7 @@ from pyspark.sql.types import StringType
 from pyspark.sql.types import StructField
 from pyspark.sql.types import StructType
 from pyspark.sql.types import TimestampType
-from tecton.feature_table.feature_table import FeatureTable
+from tecton.compat import FeatureTable
 from ads.entities import content
 
 # Schema that will be used for ingesting every row

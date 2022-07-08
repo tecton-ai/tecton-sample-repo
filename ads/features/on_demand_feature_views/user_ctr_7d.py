@@ -1,5 +1,5 @@
-from tecton import on_demand_feature_view
-from tecton import Input
+from tecton.compat import on_demand_feature_view
+from tecton.compat import Input
 from pyspark.sql.types import DoubleType, StructType, StructField
 from ads.features.stream_window_aggregate_feature_views.user_click_counts import user_click_counts
 from ads.features.stream_window_aggregate_feature_views.user_impression_counts import user_impression_counts

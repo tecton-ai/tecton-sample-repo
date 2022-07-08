@@ -1,4 +1,4 @@
-from tecton import RequestDataSource, Input, on_demand_feature_view
+from tecton.compat import RequestDataSource, Input, on_demand_feature_view
 from pyspark.sql.types import DoubleType, StructType, StructField, LongType
 
 request_schema = StructType([

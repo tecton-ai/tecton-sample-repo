@@ -1,4 +1,4 @@
-from tecton import HiveDSConfig, KinesisDSConfig, StreamDataSource, DatetimePartitionColumn
+from tecton.compat import HiveDSConfig, KinesisDSConfig, StreamDataSource, DatetimePartitionColumn
 
 def raw_data_deserialization(df):
     from pyspark.sql.functions import col, from_json, from_utc_timestamp, when

@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input, tecton_sliding_window, transformation, const, BackfillConfig
+from tecton.compat import batch_feature_view, Input, tecton_sliding_window, transformation, const, BackfillConfig
 from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime

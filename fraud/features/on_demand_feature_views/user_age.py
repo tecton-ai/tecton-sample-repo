@@ -1,4 +1,4 @@
-from tecton import RequestDataSource, Input, on_demand_feature_view
+from tecton.compat import RequestDataSource, Input, on_demand_feature_view
 from pyspark.sql.types import StringType, StructType, StructField, LongType
 from fraud.features.batch_feature_views.user_date_of_birth import user_date_of_birth
 

@@ -1,4 +1,4 @@
-from tecton import RequestDataSource, Input, on_demand_feature_view
+from tecton.compat import RequestDataSource, Input, on_demand_feature_view
 from pyspark.sql.types import StructType, StructField, FloatType, ArrayType, DoubleType
 from ads.features.feature_tables.user_embeddings import user_embeddings
 import pandas

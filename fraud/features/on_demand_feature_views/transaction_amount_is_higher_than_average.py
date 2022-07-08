@@ -1,4 +1,4 @@
-from tecton import RequestDataSource, on_demand_feature_view, Input
+from tecton.compat import RequestDataSource, on_demand_feature_view, Input
 from pyspark.sql.types import BooleanType, DoubleType, StructType, StructField
 from fraud.features.stream_window_aggregate_feature_views.user_transaction_amount_metrics import user_transaction_amount_metrics
 

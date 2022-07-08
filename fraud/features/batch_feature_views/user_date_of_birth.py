@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input, BackfillConfig, MonitoringConfig
+from tecton.compat import batch_feature_view, Input, BackfillConfig, MonitoringConfig
 from fraud.entities import user
 from fraud.data_sources.fraud_users_batch import fraud_users_batch
 from datetime import datetime

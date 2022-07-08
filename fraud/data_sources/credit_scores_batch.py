@@ -1,4 +1,4 @@
-from tecton import HiveDSConfig, BatchDataSource, DatetimePartitionColumn
+from tecton.compat import HiveDSConfig, BatchDataSource, DatetimePartitionColumn
 
 
 credit_scores_batch = BatchDataSource(

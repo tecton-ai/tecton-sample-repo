@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Input, tecton_sliding_window, transformation, const, BackfillConfig, MonitoringConfig
+from tecton.compat import batch_feature_view, Input, tecton_sliding_window, transformation, const, BackfillConfig, MonitoringConfig
 from fraud.entities import user
 from fraud.data_sources.transactions_batch import transactions_batch
 from datetime import datetime

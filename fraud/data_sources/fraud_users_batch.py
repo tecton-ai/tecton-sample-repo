@@ -1,4 +1,4 @@
-from tecton import HiveDSConfig, BatchDataSource, DatetimePartitionColumn
+from tecton.compat import HiveDSConfig, BatchDataSource, DatetimePartitionColumn
 
 
 fraud_users_batch = BatchDataSource(

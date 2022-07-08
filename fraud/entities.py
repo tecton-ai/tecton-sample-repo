@@ -1,4 +1,4 @@
-from tecton import Entity
+from tecton.compat import Entity
 
 
 user = Entity(

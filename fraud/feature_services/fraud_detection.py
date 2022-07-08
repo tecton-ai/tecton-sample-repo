@@ -1,4 +1,4 @@
-from tecton import FeatureService
+from tecton.compat import FeatureService
 from fraud.features.stream_window_aggregate_feature_views.user_transaction_amount_metrics import user_transaction_amount_metrics
 from fraud.features.batch_window_aggregate_feature_views.user_transaction_counts import user_transaction_counts
 from fraud.features.stream_feature_views.last_transaction_amount_sql import last_transaction_amount_sql
