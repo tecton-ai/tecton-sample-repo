@@ -25,6 +25,8 @@ def merchant_distinct_daily_customers(transactions_batch, context=materializatio
     return f'''
         SELECT
             merchant,
+            -- Use the timestamp of the last transaction of the day as the timestamp for the row. Any timestamp from
+            -- the correct day will work. Tecton uses this timestamp to determine which period this data belongs to.
             MAX(timestamp) as timestamp,
             COUNT(DISTINCT user_id) as num_daily_distinct_customers
         FROM {transactions_batch}
