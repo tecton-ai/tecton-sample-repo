@@ -35,6 +35,8 @@ aggregations = reduce(lambda l, r: l + r, aggregations)
 # This feature view produces aggregate metrics for each purchase category in a user's transaction history, e.g. how much
 # has the user spent on "health_fitness" in the past 30 days. This feature view creates two aggregate features for each
 # of the 14 categories for a total of 28 features.
+#
+# An equivalent feature view can be implemented in spark SQL using the PIVOT clause.
 @batch_feature_view(
     sources=[FilteredSource(transactions_batch)],
     entities=[user],
