@@ -36,6 +36,6 @@ content_keyword = Entity(
     name='ContentKeyword',
     join_keys=['content_keyword'],
     description='The keyword describing the content this ad is being placed alongside.',
-    owner='ross@tecton.ai',
+    owner='ravi@tecton.ai',
     tags={'release': 'production'}
 )
