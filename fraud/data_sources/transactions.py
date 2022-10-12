@@ -44,6 +44,11 @@ batch_config = HiveConfig(
     table='transactions',
     timestamp_field='timestamp',
     datetime_partition_columns=partition_columns,
+    # Data in demo_fraud_v2.transactions lands slightly after the real wall time, e.g. the partition for Nov 4 may not
+    # land until Nov 5 00:30:00. Delay materialization jobs by one hour to accommodate this upstream data delay. This
+    # delay will be reflected in training data generation for batch feature views to reflect its impact on online
+    # freshness.
+    data_delay=timedelta(hours=1),
 )
 
 
