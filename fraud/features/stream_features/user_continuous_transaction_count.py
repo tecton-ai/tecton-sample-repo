@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, AggregationMode
+from tecton import stream_feature_view, FilteredSource, Aggregation, AggregationMode, DatabricksClusterConfig
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
@@ -16,7 +16,8 @@ from datetime import datetime, timedelta
         Aggregation(column='transaction', function='count', time_window=timedelta(minutes=30)),
         Aggregation(column='transaction', function='count', time_window=timedelta(hours=1))
     ],
-    online=True,
+    stream_compute=DatabricksClusterConfig(number_of_workers=0, instance_type='m5.large'),
+    online=False,
     offline=True,
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
