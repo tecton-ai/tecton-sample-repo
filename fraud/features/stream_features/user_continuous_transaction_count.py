@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
         Aggregation(column='transaction', function='count', time_window=timedelta(minutes=30)),
         Aggregation(column='transaction', function='count', time_window=timedelta(hours=1))
     ],
-    online=True,
+    online=False,
     offline=True,
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},

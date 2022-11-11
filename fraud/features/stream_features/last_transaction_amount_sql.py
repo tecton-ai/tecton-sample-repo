@@ -7,12 +7,12 @@ from datetime import datetime, timedelta
     source=transactions_stream,
     entities=[user],
     mode='spark_sql',
-    online=True,
+    online=False,
     offline=True,
     feature_start_time=datetime(2022, 5, 1),
     batch_schedule=timedelta(days=1),
     ttl=timedelta(days=30),
-    description='Last user transaction amount (stream calculated)'
+    description='Last user transaction amount (stream calculated)',
 )
 def last_transaction_amount_sql(transactions):
     return f'''
