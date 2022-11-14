@@ -1,0 +1,57 @@
+{
+  "objectDiffs": [
+    {
+      "transitionType": "RECREATE",
+      "objectMetadata": {
+        "name": "ad_impressions_stream",
+        "objectType": "DATA_SOURCE"
+      }
+    },
+    {
+      "transitionType": "RECREATE",
+      "objectMetadata": {
+        "name": "content_keyword_click_counts",
+        "objectType": "FEATURE_VIEW",
+        "owner": "ravi@tecton.ai",
+        "description": "The count of ad impressions for a content_keyword"
+      }
+    },
+    {
+      "transitionType": "RECREATE",
+      "objectMetadata": {
+        "name": "user_ad_impression_counts",
+        "objectType": "FEATURE_VIEW",
+        "owner": "matt@tecton.ai",
+        "description": "The count of impressions between a given user and a given ad"
+      }
+    },
+    {
+      "transitionType": "RECREATE",
+      "objectMetadata": {
+        "name": "user_click_counts",
+        "objectType": "FEATURE_VIEW",
+        "owner": "matt@tecton.ai",
+        "description": "The count of ad clicks for a user"
+      }
+    },
+    {
+      "transitionType": "RECREATE",
+      "objectMetadata": {
+        "name": "user_impression_counts",
+        "objectType": "FEATURE_VIEW",
+        "owner": "matt@tecton.ai",
+        "description": "The count of ad impressions for a user"
+      }
+    },
+    {
+      "transitionType": "RECREATE",
+      "objectMetadata": {
+        "name": "ad_ctr_feature_service",
+        "objectType": "FEATURE_SERVICE",
+        "owner": "matt@tecton.ai",
+        "description": "A FeatureService providing features for a model that predicts if a user will click an ad."
+      }
+    }
+  ],
+  "planId": "a559c075958240b8979c98cdae4a7784"
+}
