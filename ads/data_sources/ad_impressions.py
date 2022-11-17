@@ -1,6 +1,32 @@
-from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
+from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn, PushSource
 from datetime import timedelta
+from tecton.types import Field, Int64, String, Timestamp
 
+
+
+# BATCH SOURCE
+ad_impressions_hive_config = HiveConfig(
+        database='demo_ads',
+        table='impressions_batch',
+        timestamp_field='timestamp',
+        datetime_partition_columns = [
+            DatetimePartitionColumn(column_name="datestr", datepart="date", zero_padded=True)
+        ]
+    )
+
+
+ad_impressions_batch = BatchSource(
+    name='ad_impressions_batch',
+    batch_config=ad_impressions_hive_config,
+    tags={
+        'release': 'production',
+        'source': 'mobile'
+    }
+)
+
+
+
+# STREAM SOURCE
 def ad_stream_translator(df):
     from pyspark.sql.types import StructType, StructField, StringType, IntegerType, LongType, BooleanType
     from pyspark.sql.functions import from_json, col, from_utc_timestamp, when
@@ -50,15 +76,6 @@ def ad_stream_translator(df):
       )
     )
 
-ad_impressions_hive_config = HiveConfig(
-        database='demo_ads',
-        table='impressions_batch',
-        timestamp_field='timestamp',
-        datetime_partition_columns = [
-            DatetimePartitionColumn(column_name="datestr", datepart="date", zero_padded=True)
-        ]
-    )
-
 
 ad_impressions_stream = StreamSource(
     name='ad_impressions_stream',
@@ -79,11 +96,20 @@ ad_impressions_stream = StreamSource(
     }
 )
 
-ad_impressions_batch = BatchSource(
-    name='ad_impressions_batch',
+
+# PUSH SOURCE
+input_schema = [
+    Field(name='content_keyword', dtype=String),
+    Field(name='timestamp', dtype=Timestamp),
+    Field(name='clicked', dtype=Int64),
+]
+
+click_event_source = PushSource(
+    name="click_event_source",
+    schema=input_schema,
     batch_config=ad_impressions_hive_config,
-    tags={
-        'release': 'production',
-        'source': 'mobile'
-    }
+    description="Sample Push Source for click events",
+    owner="pooja@tecton.ai",
+    tags={'release': 'staging'}
 )
+
