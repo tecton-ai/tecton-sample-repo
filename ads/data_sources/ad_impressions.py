@@ -98,17 +98,32 @@ ad_impressions_stream = StreamSource(
 
 
 # PUSH SOURCE
+
+# Sample PushSource with a batch_config
 input_schema = [
     Field(name='content_keyword', dtype=String),
     Field(name='timestamp', dtype=Timestamp),
     Field(name='clicked', dtype=Int64),
 ]
-
-click_event_source = PushSource(
-    name="click_event_source",
+keyword_click_source = PushSource(
+    name="keyword_click_source",
     schema=input_schema,
     batch_config=ad_impressions_hive_config,
     description="Sample Push Source for click events",
+    owner="pooja@tecton.ai",
+    tags={'release': 'staging'}
+)
+
+# Sample PushSource with no batch_config
+user_schema = [
+    Field(name='user_id', dtype=String),
+    Field(name='timestamp', dtype=Timestamp),
+    Field(name='clicked', dtype=Int64),
+]
+user_click_source = PushSource(
+    name="user_event_source",
+    schema=user_schema,
+    description="Sample Push Source for user clicks",
     owner="pooja@tecton.ai",
     tags={'release': 'staging'}
 )
