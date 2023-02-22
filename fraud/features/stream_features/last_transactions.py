@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
     aggregation_interval=timedelta(minutes=10),  # Defines how frequently feature values get updated in the online store
     batch_schedule=timedelta(days=1), # Defines how frequently batch jobs are scheduled to ingest into the offline store
     aggregations=[
-        Aggregation(column='amt', function=last_distinct(10), time_window=timedelta(hours=1))
+        Aggregation(column='amt', function=last_distinct(10), time_window=timedelta(hours=1), name="amt_lastn10_1h_10m")
     ],
     online=False,
     offline=False,
