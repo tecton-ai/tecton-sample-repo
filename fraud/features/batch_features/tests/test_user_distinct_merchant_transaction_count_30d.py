@@ -17,8 +17,7 @@ def test_user_distinct_merchant_transaction_count_30d(tecton_pytest_spark_sessio
     input_spark_df = tecton_pytest_spark_session.createDataFrame(input_pandas_df)
 
     # Simulate materializing features for May 1st.
-    output = user_distinct_merchant_transaction_count_30d.run(
-        spark=tecton_pytest_spark_session,
+    output = user_distinct_merchant_transaction_count_30d.local_run(
         start_time=datetime(2022, 5, 1),
         end_time=datetime(2022, 5, 2),
         transactions_batch=input_spark_df)

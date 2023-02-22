@@ -15,5 +15,5 @@ def test_transaction_amount_is_high(amount, expected):
     transaction_request = {'amt': amount}
     expected = {'transaction_amount_is_high': expected}
 
-    actual = transaction_amount_is_high.run(transaction_request=transaction_request)
+    actual = transaction_amount_is_high.local_run(transaction_request=transaction_request)
     assert expected == actual
