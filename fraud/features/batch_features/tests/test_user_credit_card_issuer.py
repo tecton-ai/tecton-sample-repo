@@ -17,7 +17,7 @@ def test_user_credit_card_issuer(tecton_pytest_spark_session):
     input_spark_df = tecton_pytest_spark_session.createDataFrame(input_pandas_df)
 
     # Simulate materializing features for May 1st.
-    output = user_credit_card_issuer.run(
+    output = user_credit_card_issuer.local_run(
         spark=tecton_pytest_spark_session,
         start_time=datetime(2022, 5, 1),
         end_time=datetime(2022, 5, 2),
