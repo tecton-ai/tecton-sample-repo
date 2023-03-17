@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, AggregationMode
+from tecton import stream_feature_view, FilteredSource, Aggregation, StreamProcessingMode
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
     source=FilteredSource(transactions_stream),
     entities=[user],
     mode='spark_sql',
-    aggregation_mode=AggregationMode.CONTINUOUS,
+    stream_processing_mode=StreamProcessingMode.CONTINUOUS,
     aggregations=[
         Aggregation(column='transaction', function='count', time_window=timedelta(minutes=1)),
         Aggregation(column='transaction', function='count', time_window=timedelta(minutes=30)),
@@ -19,6 +19,7 @@ from datetime import datetime, timedelta
     online=False,
     offline=True,
     feature_start_time=datetime(2022, 5, 1),
+    prevent_destroy=False,  # Set to True to prevent accidental destructive changes or downtime.
     tags={'release': 'production'},
     owner='david@tecton.ai',
     description='Number of transactions a user has made recently'

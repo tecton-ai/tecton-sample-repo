@@ -15,6 +15,7 @@ from datetime import datetime, timedelta
     batch_schedule=timedelta(days=1),
     ttl=timedelta(days=3650),
     timestamp_field='signup_timestamp',
+    prevent_destroy=False,  # Set to True to prevent accidental destructive changes or downtime.
     tags={'release': 'production'},
     owner='matt@tecton.ai',
     description='User credit card issuer derived from the user credit card number.',

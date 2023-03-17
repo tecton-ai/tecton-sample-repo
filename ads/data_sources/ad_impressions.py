@@ -1,5 +1,29 @@
-from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
+from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn, PushSource
 from datetime import timedelta
+from tecton.types import Field, Int64, String, Timestamp
+
+
+
+ad_impressions_hive_config = HiveConfig(
+        database='demo_ads',
+        table='impressions_batch',
+        timestamp_field='timestamp',
+        datetime_partition_columns = [
+            DatetimePartitionColumn(column_name="datestr", datepart="date", zero_padded=True)
+        ]
+    )
+
+
+ad_impressions_batch = BatchSource(
+    name='ad_impressions_batch',
+    batch_config=ad_impressions_hive_config,
+    tags={
+        'release': 'production',
+        'source': 'mobile'
+    }
+)
+
+
 
 def ad_stream_translator(df):
     from pyspark.sql.types import StructType, StructField, StringType, IntegerType, LongType, BooleanType
@@ -50,15 +74,6 @@ def ad_stream_translator(df):
       )
     )
 
-ad_impressions_hive_config = HiveConfig(
-        database='demo_ads',
-        table='impressions_batch',
-        timestamp_field='timestamp',
-        datetime_partition_columns = [
-            DatetimePartitionColumn(column_name="datestr", datepart="date", zero_padded=True)
-        ]
-    )
-
 
 ad_impressions_stream = StreamSource(
     name='ad_impressions_stream',
@@ -79,11 +94,34 @@ ad_impressions_stream = StreamSource(
     }
 )
 
-ad_impressions_batch = BatchSource(
-    name='ad_impressions_batch',
+
+input_schema = [
+    Field(name='content_keyword', dtype=String),
+    Field(name='timestamp', dtype=Timestamp),
+    Field(name='clicked', dtype=Int64),
+]
+keyword_click_source = PushSource(
+    name="keyword_click_source",
+    schema=input_schema,
     batch_config=ad_impressions_hive_config,
-    tags={
-        'release': 'production',
-        'source': 'mobile'
-    }
+    description="""
+        A push source for synchronous, online ingestion of ad-click events with content keyword metadata. Contains a 
+        batch config for backfilling and offline training data generation.
+    """,
+    owner="pooja@tecton.ai",
+    tags={'release': 'staging'}
 )
+
+user_schema = [
+    Field(name='user_id', dtype=String),
+    Field(name='timestamp', dtype=Timestamp),
+    Field(name='clicked', dtype=Int64),
+]
+user_click_push_source = PushSource(
+    name="user_event_source",
+    schema=user_schema,
+    description="A push source for synchronous, online ingestion of ad-click events with user info.",
+    owner="pooja@tecton.ai",
+    tags={'release': 'staging'}
+)
+
