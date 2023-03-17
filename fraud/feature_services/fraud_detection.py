@@ -8,6 +8,7 @@ from fraud.features.batch_features.merchant_fraud_rate import merchant_fraud_rat
 
 fraud_detection_feature_service = FeatureService(
     name='fraud_detection_feature_service',
+    prevent_destroy=False,  # Set to True for production services to prevent accidental destructive changes or downtime.
     features=[
         transaction_amount_is_higher_than_average,
         user_transaction_amount_metrics,
