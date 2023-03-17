@@ -1,12 +1,15 @@
 from datetime import timedelta, datetime
 from tecton import StreamFeatureView, Aggregation
 from ads.entities import user
-from ads.data_sources.ad_impressions import user_click_source
+from ads.data_sources.ad_impressions import user_click_push_source
 
-# Sample StreamFeatureView with PushSource and no batch
-user_click_counts_wafv = StreamFeatureView(
+# Windowed aggregations of user-keyed ad-click count events using the Tecton Stream Ingest API.
+#
+# See the documentation:
+# https://docs.tecton.ai/using-the-ingestion-api/#creating-a-stream-feature-view-with-a-push-source
+user_click_counts_push = StreamFeatureView(
     name="user_click_counts_wafv",
-    source=user_click_source,
+    source=user_click_push_source,
     entities=[user],
     online=True,
     offline=True,

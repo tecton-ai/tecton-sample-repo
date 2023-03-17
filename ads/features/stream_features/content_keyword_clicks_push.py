@@ -3,8 +3,11 @@ from tecton import StreamFeatureView, FilteredSource
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import keyword_click_source
 
-# Sample StreamFeatureView with PushSource
-keyword_clicks_fv = StreamFeatureView(
+# Windowed aggregations of key-word grouped click count events using the Tecton Stream Ingest API.
+#
+# See the documentation:
+# https://docs.tecton.ai/using-the-ingestion-api/#creating-a-stream-feature-view-with-a-push-source
+content_keyword_click_counts_push = StreamFeatureView(
     name="keyword_clicks_fv",
     source=FilteredSource(keyword_click_source),
     entities=[content_keyword],

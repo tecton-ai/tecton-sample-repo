@@ -4,7 +4,6 @@ from tecton.types import Field, Int64, String, Timestamp
 
 
 
-# BATCH SOURCE
 ad_impressions_hive_config = HiveConfig(
         database='demo_ads',
         table='impressions_batch',
@@ -26,7 +25,6 @@ ad_impressions_batch = BatchSource(
 
 
 
-# STREAM SOURCE
 def ad_stream_translator(df):
     from pyspark.sql.types import StructType, StructField, StringType, IntegerType, LongType, BooleanType
     from pyspark.sql.functions import from_json, col, from_utc_timestamp, when
@@ -97,9 +95,6 @@ ad_impressions_stream = StreamSource(
 )
 
 
-# PUSH SOURCE
-
-# Sample PushSource with a batch_config
 input_schema = [
     Field(name='content_keyword', dtype=String),
     Field(name='timestamp', dtype=Timestamp),
@@ -109,21 +104,23 @@ keyword_click_source = PushSource(
     name="keyword_click_source",
     schema=input_schema,
     batch_config=ad_impressions_hive_config,
-    description="Sample Push Source for click events",
+    description="""
+        A push source for synchronous, online ingestion of ad-click events with content keyword metadata. Contains a 
+        batch config for backfilling and offline training data generation.
+    """,
     owner="pooja@tecton.ai",
     tags={'release': 'staging'}
 )
 
-# Sample PushSource with no batch_config
 user_schema = [
     Field(name='user_id', dtype=String),
     Field(name='timestamp', dtype=Timestamp),
     Field(name='clicked', dtype=Int64),
 ]
-user_click_source = PushSource(
+user_click_push_source = PushSource(
     name="user_event_source",
     schema=user_schema,
-    description="Sample Push Source for user clicks",
+    description="A push source for synchronous, online ingestion of ad-click events with user info.",
     owner="pooja@tecton.ai",
     tags={'release': 'staging'}
 )
