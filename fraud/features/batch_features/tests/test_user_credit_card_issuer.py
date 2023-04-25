@@ -7,9 +7,9 @@ import pytest
 from fraud.features.batch_features.user_credit_card_issuer import user_credit_card_issuer
 
 
-# The `tecton_pytest_spark_session` is a PyTest fixture that provides a
-# Tecton-defined PySpark session for testing Spark transformations and feature
-# views.
+# The `tecton_pytest_spark_session` is a PyTest fixture that provides a Tecton-defined PySpark session for testing
+# Spark transformations and feature views. This session can be configured as needed by the user. If an entirely new
+# session is needed, then you can create your own and set it with `tecton.set_tecton_spark_session()`.
 @pytest.mark.skipif(os.environ.get("TECTON_TEST_SPARK") is None, reason="Requires JDK installation and $JAVA_HOME env variable to run, so we skip unless user sets the `TECTON_TEST_SPARK` env var.")
 def test_user_credit_card_issuer(tecton_pytest_spark_session):
     input_pandas_df = pandas.DataFrame({
@@ -34,3 +34,10 @@ def test_user_credit_card_issuer(tecton_pytest_spark_session):
     })
 
     pandas.testing.assert_frame_equal(actual, expected)
+
+
+@pytest.fixture(scope='module', autouse=True)
+def configure_spark_session(tecton_pytest_spark_session):
+    # Custom configuration for the spark session. In this case, configure the timezone so that we don't need to specify
+    # a timezone for every datetime in the mock data.
+    tecton_pytest_spark_session.conf.set("spark.sql.session.timeZone", "UTC")
