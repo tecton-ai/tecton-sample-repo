@@ -50,9 +50,12 @@ def test_user_recent_transactions(my_custom_spark_session):
 @pytest.fixture(scope='module')
 def my_custom_spark_session():
     """Returns a custom spark session configured for use in Tecton unit testing."""
+    with resources.path("tecton_spark.jars", "tecton-udfs-spark-3.jar") as path:
+        tecton_udf_jar_path = str(path)
+
     spark = (
         SparkSession.builder.appName("my_custom_spark_session")
-        .config("spark.jars", get_udf_jar_path())
+        .config("spark.jars", tecton_udf_jar_path)
         # This short-circuit's Spark's attempt to auto-detect a hostname for the master address, which can lead to
         # errors on hosts with "unusual" hostnames that Spark believes are invalid.
         .config("spark.driver.host", "localhost")
@@ -64,9 +67,3 @@ def my_custom_spark_session():
         yield spark
     finally:
         spark.stop()
-
-
-def get_udf_jar_path():
-    """Returns the path to jars used by Tecton Spark UDFs."""
-    with resources.path("tecton_spark.jars", "tecton-udfs-spark-3.jar") as p:
-        return str(p)
