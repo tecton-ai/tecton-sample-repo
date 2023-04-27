@@ -1,8 +1,10 @@
 from datetime import timedelta, datetime
-from tecton import StreamFeatureView, FilteredSource, stream_feature_view, FeatureService, BatchTriggerType
+from tecton import FilteredSource, stream_feature_view, BatchTriggerType, DatabricksClusterConfig
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import keyword_click_source
 from tecton.types import Field, Int64, String, Timestamp
+
+db_config = DatabricksClusterConfig(dbr_version="10.4.x-scala2.12")
 
 def _get_ds_schema_for_fv():
     return [
@@ -26,7 +28,8 @@ def _get_ds_schema_for_fv():
     owner='pooja@tecton.ai',
     description='The ad clicks for a content keyword',
     schema=_get_ds_schema_for_fv(),
-    batch_trigger=BatchTriggerType.MANUAL
+    batch_trigger=BatchTriggerType.MANUAL,
+    batch_compute=db_config,
 )
 def content_keyword_click_counts_push_pandas(click_event_source):
     click_event_source = click_event_source[click_event_source["clicked"] > 0]
