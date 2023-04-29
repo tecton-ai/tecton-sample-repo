@@ -24,3 +24,4 @@ user_click_counts_push = StreamFeatureView(
     owner='pooja@tecton.ai',
     description='The count of ad clicks for a user'
 )
+
