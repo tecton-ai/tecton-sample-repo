@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 
 @batch_feature_view(
-    sources=[FilteredSource(ad_impressions_batch)],
+    sources=[FilteredSource(ad_impressions_batch, start_time_offset=timedelta(days=-6))],
     entities=[user],
     mode='spark_sql',
     ttl=timedelta(days=1),
