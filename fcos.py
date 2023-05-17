@@ -2,7 +2,7 @@ from tecton import spark_batch_config
 from tecton import BatchSource
 
 @spark_batch_config(supports_time_filtering=True)
-def transaction_created_processor(spark, filter_context):
+def my_spark_batch_config(spark, filter_context):
     from pyspark.sql.functions import col
 
     df = spark.sql(
@@ -23,4 +23,4 @@ def transaction_created_processor(spark, filter_context):
             df = df.where(col(ts_column) < filter_context.end_time)
     return df
 
-mock_batch_source = BatchSource(name="ds", batch_config=transaction_created_processor)
+my_batch_source = BatchSource(name="my_batch_source", batch_config=my_spark_batch_config)

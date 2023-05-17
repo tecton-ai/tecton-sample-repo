@@ -4,9 +4,10 @@ import pytest
 import pandas
 
 from pyspark.sql.functions import col
+from tecton import FilterContext
 
 from tests.test_utils import write_table, assert_frame_equivalent
-from fcos import mock_batch_source
+from fcos import my_spark_batch_config
 
 
 @pytest.fixture(scope="class", autouse=True)
@@ -24,11 +25,13 @@ def create_spark_data(my_custom_spark_session):
     df = df.withColumn("created_at", col("created_at").cast("timestamp"))
     write_table(my_custom_spark_session, df, database='my_database', table='transactions')
 
-def test_spark_batch_config():
-    mock_batch_source.validate() # Will call the Tecton backend.
-    actual = mock_batch_source.get_dataframe(start_time=datetime(2023, 4, 15, tzinfo=timezone.utc) , end_time=datetime(2023, 4, 16, tzinfo=timezone.utc)).to_pandas()
+def test_spark_batch_config(my_custom_spark_session):
+    filter_context = FilterContext(
+        start_time=datetime(2023, 4, 15, tzinfo=timezone.utc),
+        end_time=datetime(2023, 4, 16, tzinfo=timezone.utc)
+    )
 
-    print(actual)
+    actual = my_spark_batch_config(my_custom_spark_session, filter_context).toPandas()
 
     expected = pandas.DataFrame({
         "user_uuid": ["1", "1", "2", "2"],
