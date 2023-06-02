@@ -1,28 +1,28 @@
 from tecton import Entity
 
 
-ad = Entity(
-    name='ad',
-    join_keys=['ad_id'],
-    description='An ad',
-    owner='matt@tecton.ai',
-    tags={'release': 'production'}
-)
-
-content = Entity(
-    name="content",
-    join_keys=["content_id"],
-    description='Content ID',
-    owner='rohit@tecton.ai',
-    tags={'release': 'production'}
-)
-
-auction = Entity(
-    name="auction",
-    join_keys=["auction_id"],
-    description='Auction ID',
-    owner='derek@tecton.ai',
-)
+# ad = Entity(
+#     name='ad',
+#     join_keys=['ad_id'],
+#     description='An ad',
+#     owner='matt@tecton.ai',
+#     tags={'release': 'production'}
+# )
+#
+# content = Entity(
+#     name="content",
+#     join_keys=["content_id"],
+#     description='Content ID',
+#     owner='rohit@tecton.ai',
+#     tags={'release': 'production'}
+# )
+#
+# auction = Entity(
+#     name="auction",
+#     join_keys=["auction_id"],
+#     description='Auction ID',
+#     owner='derek@tecton.ai',
+# )
 
 user = Entity(
     name='ads_user',

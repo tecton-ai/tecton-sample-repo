@@ -2,8 +2,6 @@ from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, Datetim
 from datetime import timedelta
 from tecton.types import Field, Int64, String, Timestamp
 
-
-
 ad_impressions_hive_config = HiveConfig(
         database='demo_ads',
         table='impressions_batch',
