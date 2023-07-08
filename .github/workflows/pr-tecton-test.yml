@@ -13,16 +13,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Set up Python 3.7.10
-      uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
-        python-version: 3.7.10
+        python-version: '3.9'
+        cache: 'pip'
 
-    - name: Install pypandoc for Spark install
-      run: pip install pypandoc
-
-    - name: Install the Tecton CLI
-      run: pip install --no-cache-dir 'tecton[pyspark]==0.3.0b18'
+    - run: pip install -r requirements-test.txt
 
     - name: Run tecton test
       run: tecton test
+      env:
+        # Set the `TECTON_TEST_SPARK` var since the Tecton sample repo skips
+        # tests if this variable is not set.
+        TECTON_TEST_SPARK: 1
