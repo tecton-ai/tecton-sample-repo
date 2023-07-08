@@ -4,8 +4,10 @@ on:
   push
 
 jobs:
-  build:
+  plan:
     runs-on: ubuntu-latest
+    outputs:
+      planid: ${{ steps.planid.outputs.planid }}
     env:
       TECTON_API_KEY: ${{ secrets.TECTON_API_KEY }}
       API_SERVICE: https://app.tecton.ai/api
@@ -19,3 +21,18 @@ jobs:
 
     - name: Run tecton plan
       run: tecton plan | tee output.log
+
+    - name: Extract plan output
+      id: planid
+      run: |
+        PLANID=$(cat output.log | perl -wne  '/Generated plan ID is ([0-9a-f]+)/i and print $1')
+        echo "planid=$PLANID" >> "$GITHUB_OUTPUT"
+
+
+  apply:
+    runs-on: ubuntu-latest
+    needs: plan
+    steps:
+      - env:
+          PLANID: ${{needs.plan.outputs.planid}}
+        run: echo "$PLANID"
