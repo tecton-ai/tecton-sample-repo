@@ -18,7 +18,7 @@ def test_user_recent_transactions(my_custom_spark_session):
     input_pandas_df = pandas.DataFrame({
         "user_id": ["user_1", "user_1", "user_1", "user_2"],
         "timestamp": [datetime(2022, 5, 1)] * 4,
-        "amt": [100, 200, 300, 400],
+        "amt": [100, 200, 300, 40],
         "partition_0": ["2022"] * 4,
         "partition_1": ["05"] * 4,
         "partition_2": ["01"] * 4,
