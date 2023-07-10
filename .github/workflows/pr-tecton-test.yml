@@ -2,7 +2,7 @@ name: Tecton Feature Repo Test
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, "0.7" ]
 
 jobs:
   build:
