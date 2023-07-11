@@ -1,6 +1,6 @@
 from tecton import RequestSource, on_demand_feature_view
 from tecton.types import Field, Array, Float64
-from tecton import FeatureService, RemoteComputeConfig
+from tecton import FeatureService
 
 
 request_schema = [Field('query_embedding', Array(Float64))]
@@ -31,9 +31,7 @@ ad_ctr_feature_service = FeatureService(
     tags={'release': 'production'},
     owner='t-rex@tecton.ai',
     online_serving_enabled=True,
-    online_compute=RemoteComputeConfig(),
     features=[
         user_query_embedding_similarity
     ],
-
 )
