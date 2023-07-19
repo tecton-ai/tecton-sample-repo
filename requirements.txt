@@ -1,1 +1,1 @@
-tecton[pyspark]==0.7.0b42
+tecton[pyspark]==0.7.0rc1
