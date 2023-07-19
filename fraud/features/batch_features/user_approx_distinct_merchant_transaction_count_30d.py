@@ -18,7 +18,6 @@ from datetime import datetime, timedelta
     aggregations=[
         Aggregation(column='merchant', function=approx_count_distinct(), time_window=timedelta(days=30))
     ],
-    owner='david@tecton.ai',
     tags={'release': 'production'},
     description='How many transactions the user has made to distinct merchants in the last 30 days.'
 )
