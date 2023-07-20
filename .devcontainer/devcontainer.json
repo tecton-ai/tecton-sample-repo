@@ -1,0 +1,12 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/python:3.9",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "11"
+    }
+  },
+  "containerEnv": {
+    "TECTON_TEST_SPARK": "1"
+  },
+  "postCreateCommand": "pip install -r requirements.txt"
+}
