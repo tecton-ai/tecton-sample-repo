@@ -1,8 +1,11 @@
 {
-    "image":"mcr.microsoft.com/devcontainers/universal:2",
-    "features": {
-        "ghcr.io/devcontainers/features/java:1": {
-            "version": "11"
-        }
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "11"
     }
+  },
+  "containerEnv": {
+    "TECTON_TEST_SPARK": "1"
+  }
 }
