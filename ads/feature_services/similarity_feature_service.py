@@ -11,7 +11,6 @@ similarity_feature_service = FeatureService(
     on_demand_environment="tecton-python-extended:0.1",
     online_serving_enabled=True,
     features=[
-       fuzzy_similarity,
-       permutations_combinations
+       fuzzy_similarity
     ],
 )
