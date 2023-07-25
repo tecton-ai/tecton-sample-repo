@@ -15,7 +15,6 @@ from datetime import datetime, timedelta
     aggregations=[
         Aggregation(column='amt', function=approx_percentile(percentile=0.5), time_window=timedelta(days=30)),
     ],
-    ttl=timedelta(days=30),
     description='Median transaction amount for a user over the last 30 days'
 )
 def user_median_transaction_amount_30d(transactions_batch):
