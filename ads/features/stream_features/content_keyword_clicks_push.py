@@ -15,6 +15,7 @@ content_keyword_click_counts_push = StreamFeatureView(
     offline=True,
     feature_start_time=datetime(2023, 1, 1),
     batch_schedule=timedelta(days=1),
+    manual_trigger_backfill_end_time=datetime(2023, 5, 1),
     ttl=timedelta(days=30),
     tags={'release': 'production'},
     owner='pooja@tecton.ai',
