@@ -2,6 +2,7 @@ from tecton import stream_feature_view, FilteredSource, Aggregation, StreamProce
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 # The following defines a continuous streaming feature
 # It counts the number of non-fraudulent transactions per user over a 1min, 5min and 1h time window
@@ -22,7 +23,9 @@ from datetime import datetime, timedelta
     prevent_destroy=False,  # Set to True to prevent accidental destructive changes or downtime.
     tags={'release': 'production'},
     owner='david@tecton.ai',
-    description='Number of transactions a user has made recently'
+    description='Number of transactions a user has made recently',
+    batch_compute=dataproc_config,
+    stream_compute=dataproc_config,
 )
 def user_continuous_transaction_count(transactions):
     return f'''

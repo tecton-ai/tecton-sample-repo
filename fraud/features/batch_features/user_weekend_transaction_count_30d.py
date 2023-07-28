@@ -2,6 +2,7 @@ from tecton import batch_feature_view, FilteredSource, Aggregation
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 def is_weekend(input_df, timestamp_column):
     from pyspark.sql.functions import dayofweek, col, to_timestamp
@@ -19,7 +20,8 @@ def is_weekend(input_df, timestamp_column):
     offline=False,
     feature_start_time=datetime(2022, 5, 1),
     tags={'cost-center': 'finance'},
-    description='How many weekend transactions the user has made in the last 30 days.'
+    description='How many weekend transactions the user has made in the last 30 days.',
+    batch_compute=dataproc_config,
 )
 def user_weekend_transaction_count_30d(transactions_batch):
     return is_weekend(transactions_batch, "timestamp") \

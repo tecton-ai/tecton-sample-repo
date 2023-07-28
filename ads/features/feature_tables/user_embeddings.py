@@ -2,6 +2,7 @@ from tecton.types import Field, String, Timestamp, Array, Float64
 from tecton import Entity, FeatureTable, DeltaConfig
 from ads.entities import user
 from datetime import timedelta
+from configs import dataproc_config
 
 
 schema = [
@@ -19,5 +20,6 @@ user_embeddings = FeatureTable(
     offline=True,
     ttl=timedelta(days=10),
     description='Precomputed user embeddings pushed into Tecton.',
-    owner='jake@tecton.ai'
+    owner='jake@tecton.ai',
+    batch_compute=dataproc_config,
 )

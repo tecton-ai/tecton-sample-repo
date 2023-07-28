@@ -2,6 +2,7 @@ from tecton import batch_feature_view
 from fraud.entities import user
 from fraud.data_sources.fraud_users import fraud_users_batch
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 
 @batch_feature_view(
@@ -17,7 +18,8 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='matt@tecton.ai',
     description='User date of birth, entered at signup.',
-    timestamp_field='signup_timestamp'
+    timestamp_field='signup_timestamp',
+    batch_compute=dataproc_config,
 )
 def user_home_location(fraud_users_batch):
     return f'''

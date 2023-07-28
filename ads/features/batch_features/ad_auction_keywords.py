@@ -2,6 +2,7 @@ from tecton import transformation, FilteredSource, batch_feature_view, const
 from ads.entities import auction
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 # Create new column by splitting the string in an existing column.
 @transformation(mode="spark_sql")
@@ -38,7 +39,8 @@ def keyword_stats(input_data, keyword_column):
     offline=False,
     feature_start_time=datetime(2022, 5, 1),
     owner='derek@tecton.ai',
-    tags={'release': 'production'}
+    tags={'release': 'production'},
+    batch_compute=dataproc_config,
     )
 def auction_keywords(ad_impressions):
     split_keywords = str_split(ad_impressions, const("content_keyword"), const("keywords"), const("\' \'"))

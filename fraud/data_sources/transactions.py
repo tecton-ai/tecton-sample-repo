@@ -1,9 +1,30 @@
-from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
+from tecton import spark_stream_config, FileConfig, HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
+import os
 from datetime import timedelta
+from utils import access_secret_version
 
-def raw_data_deserialization(df):
-    from pyspark.sql.functions import col, from_json, from_utc_timestamp, when
-    from pyspark.sql.types import StructType, StructField, StringType, DoubleType, TimestampType, BooleanType, IntegerType
+batch_config = FileConfig(
+    timestamp_field='timestamp',
+    # Data in demo_fraud_v2.transactions lands slightly after the real wall time, e.g. the partition for Nov 4 may not
+    # land until Nov 5 00:30:00. Delay materialization jobs by one hour to accommodate this upstream data delay. This
+    # delay will be reflected in training data generation for batch feature views to reflect its impact on online
+    # freshness.
+    uri="gs://tecton-sample-data/topics/demo_fraud_v2",
+    file_format="json",
+    data_delay=timedelta(hours=1),
+)
+
+confluent_bootstrap_servers = os.environ.get('CONFLUENT_BOOTSTRAP_SERVERS', 'pkc-lgk0v.us-west1.gcp.confluent.cloud:9092')
+confluent_topic = os.environ.get('CONFLUENT_TOPIC', 'demo_fraud_v2')
+
+@spark_stream_config()
+def fraud_stream_config(spark):
+    import os
+    from pyspark.sql.functions import from_json, col, from_utc_timestamp
+    from pyspark.sql.types import StructType, StructField, StringType, DoubleType
+
+    confluent_api_key = access_secret_version('CONFLUENT_API_KEY')
+    confluent_secret = access_secret_version('CONFLUENT_SECRET')
 
     payload_schema = StructType([
         StructField('user_id', StringType(), False),
@@ -17,9 +38,26 @@ def raw_data_deserialization(df):
         StructField('timestamp', StringType(), False),
     ])
 
-    return (
-        df.selectExpr('cast (data as STRING) jsonData')
-        .select(from_json('jsonData', payload_schema).alias('payload'))
+    from pyspark.sql.functions import to_date
+
+    stream_df = (
+        spark.readStream.format("kafka")
+        .option("kafka.bootstrap.servers", confluent_bootstrap_servers)
+        .option("failOnDataLoss", "false")
+        .option("subscribe", confluent_topic)
+        .option("startingOffsets", "latest")
+        .option("kafka.security.protocol", "SASL_SSL")
+        .option(
+            "kafka.sasl.jaas.config",
+            "org.apache.kafka.common.security.plain.PlainLoginModule required username='{}' password='{}';".format(
+                confluent_api_key, confluent_secret
+            ),
+        )
+        .option("kafka.ssl.endpoint.identification.algorithm", "https")
+        .option("kafka.sasl.mechanism", "PLAIN")
+        .load()
+        .selectExpr("timestamp", "cast (value as STRING) jsonData")
+        .select("timestamp", from_json("jsonData", payload_schema).alias("payload"))
         .select(
             col('payload.user_id').alias('user_id'),
             col('payload.transaction_id').alias('transaction_id'),
@@ -31,38 +69,14 @@ def raw_data_deserialization(df):
             col('payload.merch_long').cast('double').alias('merch_long'),
             from_utc_timestamp('payload.timestamp', 'UTC').alias('timestamp')
         )
+
     )
-
-partition_columns = [
-    DatetimePartitionColumn(column_name="partition_0", datepart="year", zero_padded=True),
-    DatetimePartitionColumn(column_name="partition_1", datepart="month", zero_padded=True),
-    DatetimePartitionColumn(column_name="partition_2", datepart="day", zero_padded=True),
-]
-
-batch_config = HiveConfig(
-    database='demo_fraud_v2',
-    table='transactions',
-    timestamp_field='timestamp',
-    datetime_partition_columns=partition_columns,
-    # Data in demo_fraud_v2.transactions lands slightly after the real wall time, e.g. the partition for Nov 4 may not
-    # land until Nov 5 00:30:00. Delay materialization jobs by one hour to accommodate this upstream data delay. This
-    # delay will be reflected in training data generation for batch feature views to reflect its impact on online
-    # freshness.
-    data_delay=timedelta(hours=1),
-)
-
+    watermark = "{} seconds".format(timedelta(hours=24).seconds)
+    return stream_df.withWatermark("timestamp", watermark)
 
 transactions_stream = StreamSource(
     name='transactions_stream',
-    stream_config=KinesisConfig(
-        stream_name='tecton-demo-fraud-data-stream',
-        region='us-west-2',
-        initial_stream_position='latest',
-        watermark_delay_threshold=timedelta(hours=24),
-        timestamp_field='timestamp',
-        post_processor=raw_data_deserialization,
-        options={'roleArn': 'arn:aws:iam::706752053316:role/tecton-demo-fraud-data-cross-account-kinesis-ro'}
-    ),
+    stream_config=fraud_stream_config,
     batch_config=batch_config,
     owner='david@tecton.ai',
     tags={'release': 'production'}

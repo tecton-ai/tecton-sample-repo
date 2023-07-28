@@ -2,6 +2,7 @@ from tecton import stream_feature_view, Aggregation, FilteredSource
 from ads.entities import ad, user
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 
 @stream_feature_view(
@@ -20,7 +21,9 @@ from datetime import datetime, timedelta
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
     owner='matt@tecton.ai',
-    description='The count of impressions between a given user and a given ad'
+    description='The count of impressions between a given user and a given ad',
+    batch_compute=dataproc_config,
+    stream_compute=dataproc_config,
 )
 def user_ad_impression_counts(ad_impressions):
     return f"""

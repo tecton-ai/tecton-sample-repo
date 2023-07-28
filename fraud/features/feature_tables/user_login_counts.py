@@ -2,6 +2,7 @@ from tecton import Entity, FeatureTable
 from tecton.types import String, Timestamp, Int64, Field
 from fraud.entities import user
 from datetime import timedelta
+from configs import dataproc_config
 
 
 schema = [
@@ -21,4 +22,5 @@ user_login_counts = FeatureTable(
     owner='derek@tecton.ai',
     tags={'release': 'production'},
     description='User login counts over time.',
+    batch_compute=dataproc_config,
 )

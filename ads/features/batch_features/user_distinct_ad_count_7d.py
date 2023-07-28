@@ -2,6 +2,7 @@ from tecton import batch_feature_view, FilteredSource, materialization_context
 from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 
 @batch_feature_view(
@@ -16,7 +17,8 @@ from datetime import datetime, timedelta
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production', 'usecase': 'ads'},
     owner='david@tecton.ai',
-    description='How many distinct advertisements a user has been shown in the last week'
+    description='How many distinct advertisements a user has been shown in the last week',
+    batch_compute=dataproc_config,
 )
 def user_distinct_ad_count_7d(ad_impressions, context=materialization_context()):
     return f'''

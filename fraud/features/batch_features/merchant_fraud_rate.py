@@ -2,6 +2,7 @@ from tecton import batch_feature_view, Aggregation, FilteredSource
 from fraud.entities import merchant
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 
 @batch_feature_view(
@@ -17,7 +18,8 @@ from datetime import datetime, timedelta
         Aggregation(column='is_fraud', function='mean', time_window=timedelta(days=90))
     ],
     feature_start_time=datetime(2022, 5, 1),
-    description='The merchant fraud rate over series of time windows, updated daily.'
+    description='The merchant fraud rate over series of time windows, updated daily.',
+    batch_compute=dataproc_config,
 )
 def merchant_fraud_rate(transactions_batch):
     return f'''

@@ -2,12 +2,9 @@ from tecton import stream_feature_view, FilteredSource, Aggregation, DatabricksC
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta
+from configs import make_custom_config, KAFKA
 
-cluster_config = DatabricksClusterConfig(
-    instance_type='m4.4xlarge',
-    number_of_workers=4,
-    extra_pip_dependencies=["tensorflow==2.2.0"],
-)
+cluster_config = make_custom_config(jar_packages=[KAFKA], pip_packages=["tensorflow==2.2.0"], jar_file_uris=[])
 
 @stream_feature_view(
     source=FilteredSource(ad_impressions_stream),

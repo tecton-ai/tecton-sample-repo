@@ -2,6 +2,7 @@ from tecton import batch_feature_view, FilteredSource, materialization_context
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 
 # This feature view is an example of a "custom aggregation" using `incremental_backfills=True`. This allows users to
@@ -21,7 +22,8 @@ from datetime import datetime, timedelta
     ttl=timedelta(days=2),
     owner='david@tecton.ai',
     tags={'release': 'production'},
-    description='How many transactions the user has made to distinct merchants in the last 30 days.'
+    description='How many transactions the user has made to distinct merchants in the last 30 days.',
+    batch_compute=dataproc_config,
 )
 def user_distinct_merchant_transaction_count_30d(transactions_batch, context=materialization_context()):
     return f'''

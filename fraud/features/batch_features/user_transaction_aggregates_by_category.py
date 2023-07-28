@@ -3,6 +3,7 @@ from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
 from functools import reduce
+from configs import dataproc_config
 
 CATEGORIES = [
     'gas_transport',
@@ -46,7 +47,8 @@ aggregations = reduce(lambda l, r: l + r, aggregations)
     online=False,
     offline=False,
     feature_start_time=datetime(2022, 7, 1),
-    description='User transaction aggregate metrics split by purchase category.'
+    description='User transaction aggregate metrics split by purchase category.',
+    batch_compute=dataproc_config,
 )
 def user_transaction_aggregates_by_category(transactions_df):
     from pyspark.sql.functions import col, when

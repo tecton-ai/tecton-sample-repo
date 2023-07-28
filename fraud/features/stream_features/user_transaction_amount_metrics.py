@@ -2,6 +2,7 @@ from tecton import stream_feature_view, FilteredSource, Aggregation
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 
 # The following defines several sliding time window aggregations over a user's transaction amounts
@@ -24,7 +25,9 @@ from datetime import datetime, timedelta
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
     owner='kevin@tecton.ai',
-    description='Transaction amount statistics and total over a series of time windows, updated every 10 minutes.'
+    description='Transaction amount statistics and total over a series of time windows, updated every 10 minutes.',
+    batch_compute=dataproc_config,
+    stream_compute=dataproc_config,
 )
 def user_transaction_amount_metrics(transactions):
     return f'''

@@ -2,6 +2,7 @@ from tecton import batch_feature_view, FilteredSource, Aggregation
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 
 @batch_feature_view(
@@ -19,7 +20,8 @@ from datetime import datetime, timedelta
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
     owner='matt@tecton.ai',
-    description='User transaction totals over a series of time windows, updated daily.'
+    description='User transaction totals over a series of time windows, updated daily.',
+    batch_compute=dataproc_config,
 )
 def user_transaction_counts(transactions):
     return f'''

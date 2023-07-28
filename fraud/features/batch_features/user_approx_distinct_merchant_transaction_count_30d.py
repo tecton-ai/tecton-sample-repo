@@ -3,6 +3,7 @@ from tecton.aggregation_functions import approx_count_distinct
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
+from configs import dataproc_config
 
 
 # This feature view is a simpler way to implement the features in user_distinct_merchant_transaction_count_30d.
@@ -19,7 +20,8 @@ from datetime import datetime, timedelta
         Aggregation(column='merchant', function=approx_count_distinct(), time_window=timedelta(days=30))
     ],
     tags={'release': 'production'},
-    description='How many transactions the user has made to distinct merchants in the last 30 days.'
+    description='How many transactions the user has made to distinct merchants in the last 30 days.',
+    batch_compute=dataproc_config,
 )
 def user_approx_distinct_merchant_transaction_count_30d(transactions_batch):
     return f'''
