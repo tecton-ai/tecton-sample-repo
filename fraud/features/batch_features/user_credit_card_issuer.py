@@ -1,27 +1,22 @@
-from tecton import batch_feature_view
-from fraud.entities import user
-from fraud.data_sources.fraud_users import fraud_users_batch
+from tecton import batch_feature_view, FilteredSource
+from entities import user
+from data_sources.customers import customers
 from datetime import datetime, timedelta
 
-
 @batch_feature_view(
-    sources=[fraud_users_batch],
+    sources=[FilteredSource(customers)],
     entities=[user],
-    mode='spark_sql',
-    online=False,
-    offline=False,
-    # Note the timestamp is the signup date, hence the old start_time.
-    feature_start_time=datetime(2017, 1, 1),
+    mode="spark_sql",
+    online=True,
+    offline=True,
+    feature_start_time=datetime(2016, 1, 1),
     batch_schedule=timedelta(days=1),
     ttl=timedelta(days=3650),
-    timestamp_field='signup_timestamp',
-    prevent_destroy=False,  # Set to True to prevent accidental destructive changes or downtime.
-    tags={'release': 'production'},
-    owner='matt@tecton.ai',
-    description='User credit card issuer derived from the user credit card number.',
+    timestamp_field="signup_timestamp",
+    description="User credit card issuer derived from the user credit card number.",
 )
-def user_credit_card_issuer(fraud_users_batch):
-    return f'''
+def user_credit_card_issuer(customers):
+    return f"""
         SELECT
             user_id,
             signup_timestamp,
@@ -30,7 +25,7 @@ def user_credit_card_issuer(fraud_users_batch):
                 WHEN '5' THEN 'MasterCard'
                 WHEN '6' THEN 'Discover'
                 ELSE 'other'
-            END as credit_card_issuer
+            END as user_credit_card_issuer
         FROM
-            {fraud_users_batch}
-        '''
+            {customers}
+        """
