@@ -100,8 +100,20 @@ input_schema = [
     Field(name='timestamp', dtype=Timestamp),
     Field(name='clicked', dtype=Int64),
 ]
-keyword_click_source = PushSource(
-    name="keyword_click_source",
+keyword_push_source_redis = PushSource(
+    name="keyword_push_source_redis",
+    schema=input_schema,
+    batch_config=ad_impressions_hive_config,
+    description="""
+        A push source for synchronous, online ingestion of ad-click events with content keyword metadata. Contains a 
+        batch config for backfilling and offline training data generation.
+    """,
+    owner="pooja@tecton.ai",
+    tags={'release': 'staging'}
+)
+
+keyword_push_source_dynamo = PushSource(
+    name="keyword_push_source_dynamo",
     schema=input_schema,
     batch_config=ad_impressions_hive_config,
     description="""
@@ -117,8 +129,15 @@ user_schema = [
     Field(name='timestamp', dtype=Timestamp),
     Field(name='clicked', dtype=Int64),
 ]
-user_click_push_source = PushSource(
-    name="user_event_source",
+user_push_source_redis = PushSource(
+    name="user_push_source_redis",
+    schema=user_schema,
+    description="A push source for synchronous, online ingestion of ad-click events with user info.",
+    owner="pooja@tecton.ai",
+    tags={'release': 'staging'}
+)
+user_push_source_dynamo = PushSource(
+    name="user_push_source_dynamo",
     schema=user_schema,
     description="A push source for synchronous, online ingestion of ad-click events with user info.",
     owner="pooja@tecton.ai",

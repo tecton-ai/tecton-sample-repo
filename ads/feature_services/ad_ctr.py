@@ -1,20 +1,17 @@
 from tecton import FeatureService
-from ads.features.stream_features.user_ad_impression_counts import user_ad_impression_counts
-from ads.features.stream_features.user_click_counts import user_click_counts
-from ads.features.stream_features.user_impression_counts import user_impression_counts
-from ads.features.batch_features.user_distinct_ad_count_7d import user_distinct_ad_count_7d
+
+from ads.features.stream_features.user_push_dynamo import user_push_dynamo_no_transform
+from ads.features.stream_features.keyword_push_dynamo import keyword_push_dynamo_wafv
 
 
-ad_ctr_feature_service = FeatureService(
-    name='ad_ctr_feature_service',
+ad_ctr_dynamo_feature_service = FeatureService(
+    name='ad_ctr_dynamo_feature_service',
     description='A FeatureService providing features for a model that predicts if a user will click an ad.',
     tags={'release': 'production'},
     owner='matt@tecton.ai',
-    online_serving_enabled=False,
+    online_serving_enabled=True,
     features=[
-        user_click_counts,
-        user_impression_counts,
-        user_ad_impression_counts,
-        user_distinct_ad_count_7d
+       user_push_dynamo_no_transform,
+       keyword_push_dynamo_wafv
     ],
 )

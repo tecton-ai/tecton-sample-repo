@@ -1,18 +1,19 @@
 from datetime import timedelta, datetime
-from tecton import StreamFeatureView, Aggregation
+from tecton import StreamFeatureView, Aggregation, RedisConfig
 from ads.entities import user
-from ads.data_sources.ad_impressions import user_click_push_source
+from ads.data_sources.ad_impressions import user_push_source_redis
 
 # Windowed aggregations of user-keyed ad-click count events using the Tecton Stream Ingest API.
 #
 # See the documentation:
 # https://docs.tecton.ai/using-the-ingestion-api/#creating-a-stream-feature-view-with-a-push-source
-user_click_counts_push = StreamFeatureView(
-    name="user_click_counts_wafv",
-    source=user_click_push_source,
+user_push_redis_no_transform = StreamFeatureView(
+    name="user_push_redis_no_transform",
+    source=user_push_source_redis,
     entities=[user],
     online=True,
     offline=True,
+    online_store=RedisConfig(),
     feature_start_time=datetime(2023, 1, 1),
     alert_email="pooja@tecton.ai",
     aggregations=[
