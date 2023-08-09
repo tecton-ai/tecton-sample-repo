@@ -5,6 +5,7 @@ from tecton.types import Field
 from tecton.types import String
 from tecton.types import Struct
 from tecton.types import Map
+from tecton.types import Float64
 
 request_source = RequestSource(
     [
