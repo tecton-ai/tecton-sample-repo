@@ -13,24 +13,14 @@ output_schema = [Field('dist_km', Float64)]
     sources=[request, user_home_location],
     mode='python',
     schema=output_schema,
-    description="How far a transaction is from the user's home"
+    description="How far a transaction is from the user's home",
+    environments=['tecton-python-extended:0.1', 'tecton-python-extended:0.2']
 )
 def transaction_distance_from_home(request, user_home_location):
-    from math import sin, cos, sqrt, atan2, radians
+    from haversine import haversine
 
-    user_lat = radians(user_home_location['lat'])
-    user_long = radians(user_home_location['long'])
-    transaction_lat = radians(request['lat'])
-    transaction_long = radians(request['long'])
+    user = (user_home_location['lat'], user_home_location['long'])
+    transaction = (request['lat'],request['long'])
+    distance = haversine(user, transaction) # In kilometers
 
-    # approximate radius of earth in km
-    R = 6373.0
-
-    dlon = transaction_long - user_long
-    dlat = transaction_lat - user_lat
-
-    a = sin(dlat / 2)**2 + cos(user_lat) * cos(transaction_lat) * sin(dlon / 2)**2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-    distance = R * c
     return {'dist_km': distance}
