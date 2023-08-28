@@ -48,7 +48,7 @@ batch_config = FileConfig(
 transactions_stream = StreamSource(
     name='transactions_stream',
     stream_config=KinesisConfig(
-        stream_name='tecton-demo-fraud-data-stream',
+        stream_name='kinesis-demo-lightmode-stream',
         region='us-west-2',
         initial_stream_position='latest',
         watermark_delay_threshold=timedelta(hours=24),

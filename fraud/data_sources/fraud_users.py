@@ -6,7 +6,7 @@ fraud_users_batch = BatchSource(
     batch_config=FileConfig(
         uri='s3://tecton.ai.public/tutorials/fraud_demo/customers/',
         file_format='parquet',
-        timestamp_field='timestamp'
+        timestamp_field='signup_timestamp'
     ),
     owner='david@tecton.ai',
     tags={'release': 'production'}
