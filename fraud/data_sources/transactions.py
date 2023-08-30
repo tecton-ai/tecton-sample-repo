@@ -1,4 +1,4 @@
-from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
+from tecton import FileConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
 from datetime import timedelta
 
 def raw_data_deserialization(df):
@@ -39,23 +39,16 @@ partition_columns = [
     DatetimePartitionColumn(column_name="partition_2", datepart="day", zero_padded=True),
 ]
 
-batch_config = HiveConfig(
-    database='demo_fraud_v2',
-    table='transactions',
-    timestamp_field='timestamp',
-    datetime_partition_columns=partition_columns,
-    # Data in demo_fraud_v2.transactions lands slightly after the real wall time, e.g. the partition for Nov 4 may not
-    # land until Nov 5 00:30:00. Delay materialization jobs by one hour to accommodate this upstream data delay. This
-    # delay will be reflected in training data generation for batch feature views to reflect its impact on online
-    # freshness.
-    data_delay=timedelta(hours=1),
+batch_config = FileConfig(
+    uri='s3://tecton.ai.public/tutorials/fraud_demo/transactions/',
+    file_format='parquet',
+    timestamp_field='timestamp'
 )
-
 
 transactions_stream = StreamSource(
     name='transactions_stream',
     stream_config=KinesisConfig(
-        stream_name='tecton-demo-fraud-data-stream',
+        stream_name='kinesis-demo-lightmode-stream',
         region='us-west-2',
         initial_stream_position='latest',
         watermark_delay_threshold=timedelta(hours=24),
