@@ -11,11 +11,14 @@ def my_custom_spark_session():
     """Returns a custom spark session configured for use in Tecton unit testing."""
     with resources.path("tecton_spark.jars", "tecton-udfs-spark-3.jar") as path:
         tecton_udf_jar_path = str(path)
+        
+    # Adding any custom jar to the path being passed to spark so you can test locally
+    spark_jars = "path/to/your/jars" + "," + tecton_udf_jar_path
 
     with tempfile.TemporaryDirectory() as tempdir:
         spark = (
             SparkSession.builder.appName("my_custom_spark_session")
-            .config("spark.jars", tecton_udf_jar_path)
+            .config("spark.jars", spark_jars)
             # This short-circuit's Spark's attempt to auto-detect a hostname for the master address, which can lead to
             # errors on hosts with "unusual" hostnames that Spark believes are invalid.
             .config("spark.driver.host", "localhost")
