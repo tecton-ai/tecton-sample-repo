@@ -13,7 +13,7 @@ def sessions_data_source_function(spark):
     df = spark.read.schema(schema).parquet("s3://tecton.ai.public/recsys-demo/train.parquet")
     return df
 
-sessions_data = BatchSource(
+sessions_batch = BatchSource(
     name="sessions_batch",
     batch_config=sessions_data_source_function,
     owner='mihir@tecton.ai',
