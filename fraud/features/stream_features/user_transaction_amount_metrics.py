@@ -1,37 +1,37 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation
-from fraud.entities import user
-from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
 
+from tecton import stream_feature_view, Aggregation, DeltaConfig
+from tecton.types import Field, Int64, String, Timestamp, Float64
 
-# The following defines several sliding time window aggregations over a user's transaction amounts
+from fraud.data_sources.transactions import ingest_source
+from fraud.entities import user
+
+schema = [
+            Field(name="user_id", dtype=String),
+            Field(name="timestamp", dtype=Timestamp),
+            Field(name="amt", dtype=Float64),
+]
+
 @stream_feature_view(
-    source=FilteredSource(transactions_stream),
+    name="user_transaction_metrics",
+    source=ingest_source,
     entities=[user],
-    mode='spark_sql',
-    aggregation_interval=timedelta(minutes=10),  # Defines how frequently feature values get updated in the online store
-    batch_schedule=timedelta(days=1), # Defines how frequently batch jobs are scheduled to ingest into the offline store
+    online=True,
+    offline=True,
+    offline_store=DeltaConfig(),
+    feature_start_time=datetime(2023, 1, 1),
     aggregations=[
         Aggregation(column='amt', function='sum', time_window=timedelta(hours=1)),
         Aggregation(column='amt', function='sum', time_window=timedelta(days=1)),
-        Aggregation(column='amt', function='sum', time_window=timedelta(days=3)),
         Aggregation(column='amt', function='mean', time_window=timedelta(hours=1)),
         Aggregation(column='amt', function='mean', time_window=timedelta(days=1)),
-        Aggregation(column='amt', function='mean', time_window=timedelta(days=3))
     ],
-    online=True,
-    offline=True,
-    feature_start_time=datetime(2022, 5, 1),
-    tags={'release': 'production'},
-    owner='kevin@tecton.ai',
-    description='Transaction amount statistics and total over a series of time windows, updated every 10 minutes.'
+    tags={"release": "production"},
+    owner="pooja@tecton.ai",
+    description="Transaction amount statistics over a series of time windows",
+    mode="python",
+    schema=schema,
 )
-def user_transaction_amount_metrics(transactions):
-    return f'''
-        SELECT
-            user_id,
-            amt,
-            timestamp
-        FROM
-            {transactions}
-        '''
+def user_transaction_metrics(transactions):
+    transactions["amt"] = transactions["amt"].fillna(0).astype("float64")
+    return transactions
