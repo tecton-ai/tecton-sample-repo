@@ -8,6 +8,6 @@ fraud_users_batch = BatchSource(
         file_format='parquet',
         timestamp_field='signup_timestamp'
     ),
-    owner='david@tecton.ai',
+    owner='demo-user@tecton.ai',
     tags={'release': 'production'}
 )

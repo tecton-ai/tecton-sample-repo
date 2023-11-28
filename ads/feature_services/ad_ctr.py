@@ -9,7 +9,7 @@ ad_ctr_feature_service = FeatureService(
     name='ad_ctr_feature_service',
     description='A FeatureService providing features for a model that predicts if a user will click an ad.',
     tags={'release': 'production'},
-    owner='matt@tecton.ai',
+    owner='demo-user@tecton.ai',
     online_serving_enabled=False,
     features=[
         user_click_counts,

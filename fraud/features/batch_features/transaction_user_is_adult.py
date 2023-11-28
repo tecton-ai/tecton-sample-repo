@@ -17,7 +17,7 @@ from datetime import datetime, timedelta
     batch_schedule=timedelta(days=1),
     ttl=timedelta(days=100),
     tags={'release': 'production'},
-    owner='david@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='Whether the user performing the transaction is over 18 years old.'
 )
 def transaction_user_is_adult(transactions_batch, fraud_users_batch):

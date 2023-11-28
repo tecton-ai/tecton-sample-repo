@@ -19,5 +19,5 @@ user_embeddings = FeatureTable(
     offline=True,
     ttl=timedelta(days=10),
     description='Precomputed user embeddings pushed into Tecton.',
-    owner='jake@tecton.ai'
+    owner='demo-user@tecton.ai'
 )

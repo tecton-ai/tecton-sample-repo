@@ -37,7 +37,7 @@ def keyword_stats(input_data, keyword_column):
     online=False,
     offline=False,
     feature_start_time=datetime(2022, 5, 1),
-    owner='derek@tecton.ai',
+    owner='demo-user@tecton.ai',
     tags={'release': 'production'}
     )
 def auction_keywords(ad_impressions):

@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
     batch_schedule=timedelta(days=1),
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
-    owner='matt@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='The count of impressions between a given user and a given ad'
 )
 def user_ad_impression_counts(ad_impressions):

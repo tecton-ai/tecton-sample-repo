@@ -24,7 +24,7 @@ cluster_config = DatabricksClusterConfig(
     offline=False,
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
-    owner='ravi@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='The count of ad impressions for a content_keyword'
 )
 def content_keyword_click_counts(ad_impressions):

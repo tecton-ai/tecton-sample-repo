@@ -57,13 +57,13 @@ transactions_stream = StreamSource(
         options={'roleArn': 'arn:aws:iam::706752053316:role/tecton-demo-fraud-data-cross-account-kinesis-ro'}
     ),
     batch_config=batch_config,
-    owner='david@tecton.ai',
+    owner='demo-user@tecton.ai',
     tags={'release': 'production'}
 )
 
 transactions_batch = BatchSource(
     name='transactions_batch',
     batch_config=batch_config,
-    owner='david@tecton.ai',
+    owner='demo-user@tecton.ai',
     tags={'release': 'production'}
 )

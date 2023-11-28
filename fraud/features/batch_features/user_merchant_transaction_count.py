@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
     offline=True,
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
-    owner='matt@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='User transaction counts at specific merchants over a series of time windows, updated daily.'
 )
 def user_merchant_transaction_counts(transactions):

@@ -20,7 +20,7 @@ from datetime import datetime, timedelta
     feature_start_time=datetime(2022, 5, 1),
     prevent_destroy=False,  # Set to True to prevent accidental destructive changes or downtime.
     tags={'release': 'production'},
-    owner='kevin@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='Most recent 10 transaction amounts of a user'
 )
 def user_recent_transactions(transactions):

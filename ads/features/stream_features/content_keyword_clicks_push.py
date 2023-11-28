@@ -18,6 +18,6 @@ content_keyword_click_counts_push = StreamFeatureView(
     manual_trigger_backfill_end_time=datetime(2023, 5, 1),
     ttl=timedelta(days=30),
     tags={'release': 'production'},
-    owner='pooja@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='The ad clicks for a content keyword'
 )
