@@ -17,7 +17,7 @@ from datetime import datetime, timedelta
     timestamp_field='signup_timestamp',
     prevent_destroy=False,  # Set to True to prevent accidental destructive changes or downtime.
     tags={'release': 'production'},
-    owner='matt@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='User credit card issuer derived from the user credit card number.',
 )
 def user_credit_card_issuer(fraud_users_batch):

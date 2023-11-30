@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
     incremental_backfills=True,
     batch_schedule=timedelta(days=1),
     ttl=timedelta(days=2),
-    owner='david@tecton.ai',
+    owner='demo-user@tecton.ai',
     tags={'release': 'production'},
     description='How many transactions the user has made to distinct merchants in the last 30 days.'
 )

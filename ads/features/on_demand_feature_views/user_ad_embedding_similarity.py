@@ -9,7 +9,7 @@ output_schema = [Field('cosine_similarity', Float64)]
     sources=[ad_embeddings, user_embeddings],
     mode='python',
     schema=output_schema,
-    owner='jake@tecton.ai',
+    owner='demo-user@tecton.ai',
     tags={'release': 'production'},
     description="Computes the cosine similarity between a precomputed ad embedding and a precomputed user embedding."
 )

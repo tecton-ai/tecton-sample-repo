@@ -14,13 +14,13 @@ user_click_counts_push = StreamFeatureView(
     online=True,
     offline=True,
     feature_start_time=datetime(2023, 1, 1),
-    alert_email="pooja@tecton.ai",
+    alert_email="demo-user@tecton.ai",
     aggregations=[
         Aggregation(column='clicked', function='count', time_window=timedelta(hours=1)),
         Aggregation(column='clicked', function='count', time_window=timedelta(hours=24)),
         Aggregation(column='clicked', function='count', time_window=timedelta(hours=72)),
     ],
     tags={'release': 'production'},
-    owner='pooja@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='The count of ad clicks for a user'
 )

@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
     offline=True,
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production', 'usecase': 'ads'},
-    owner='david@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='How many distinct advertisements a user has been shown in the last week'
 )
 def user_distinct_ad_count_7d(ad_impressions, context=materialization_context()):

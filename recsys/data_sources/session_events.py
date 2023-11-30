@@ -16,7 +16,7 @@ def sessions_data_source_function(spark):
 sessions_batch = BatchSource(
     name="sessions_batch",
     batch_config=sessions_data_source_function,
-    owner='mihir@tecton.ai',
+    owner='demo-user@tecton.ai',
     tags={'release': 'production'}
 )
 

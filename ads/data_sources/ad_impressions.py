@@ -108,7 +108,7 @@ keyword_click_source = PushSource(
         A push source for synchronous, online ingestion of ad-click events with content keyword metadata. Contains a 
         batch config for backfilling and offline training data generation.
     """,
-    owner="pooja@tecton.ai",
+    owner="demo-user@tecton.ai",
     tags={'release': 'staging'}
 )
 
@@ -121,7 +121,7 @@ user_click_push_source = PushSource(
     name="user_event_source",
     schema=user_schema,
     description="A push source for synchronous, online ingestion of ad-click events with user info.",
-    owner="pooja@tecton.ai",
+    owner="demo-user@tecton.ai",
     tags={'release': 'staging'}
 )
 

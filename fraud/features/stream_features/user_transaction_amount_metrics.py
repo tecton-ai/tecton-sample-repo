@@ -23,7 +23,7 @@ from datetime import datetime, timedelta
     offline=True,
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
-    owner='kevin@tecton.ai',
+    owner='demo-user@tecton.ai',
     description='Transaction amount statistics and total over a series of time windows, updated every 10 minutes.'
 )
 def user_transaction_amount_metrics(transactions):
