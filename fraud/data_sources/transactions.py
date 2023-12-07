@@ -14,12 +14,21 @@ batch_config = FileConfig(
     )
 
 stream_config = PushConfig(log_offline=False)
+stream_config_log = PushConfig(log_offline=True)
 
 ingest_source = StreamSource(
     name="ingest_ds",
     schema=schema,
     stream_config=stream_config,
     batch_config=batch_config,
+    description="Sample Stream Source for click events",
+    owner="pooja@tecton.ai",
+)
+
+ingest_source_no_batch = StreamSource(
+    name="ingest_ds_no_batch",
+    schema=schema,
+    stream_config=stream_config_log,
     description="Sample Stream Source for click events",
     owner="pooja@tecton.ai",
 )
