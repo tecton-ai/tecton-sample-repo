@@ -50,3 +50,15 @@ bfv = tecton.StreamFeatureView(
     ttl=timedelta(days=365),
     schema=schema,
 )
+
+
+bfv_feature_service = FeatureService(
+    name='bfv_feature_service',
+    description='A FeatureService of a simple backfill feature',
+    tags={'release': 'production'},
+    owner='meastham@tecton.ai',
+    online_serving_enabled=True,
+    features=[
+        bfv,
+    ],
+)
