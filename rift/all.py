@@ -52,7 +52,7 @@ bfv = tecton.StreamFeatureView(
 )
 
 
-bfv_feature_service = FeatureService(
+bfv_feature_service = tecton.FeatureService(
     name='bfv_feature_service',
     description='A FeatureService of a simple backfill feature',
     tags={'release': 'production'},
