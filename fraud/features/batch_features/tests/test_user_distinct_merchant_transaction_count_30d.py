@@ -39,10 +39,3 @@ def test_user_distinct_merchant_transaction_count_30d(tecton_pytest_spark_sessio
     })
 
     pandas.testing.assert_frame_equal(actual, expected)
-
-
-@pytest.fixture(scope='module', autouse=True)
-def configure_spark_session(tecton_pytest_spark_session):
-    # Custom configuration for the spark session. In this case, configure the timezone so that we don't need to specify
-    # a timezone for every datetime in the mock data.
-    tecton_pytest_spark_session.conf.set("spark.sql.session.timeZone", "UTC")

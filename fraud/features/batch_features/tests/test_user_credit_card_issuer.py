@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import pandas
 import pytest
@@ -14,7 +14,7 @@ from fraud.features.batch_features.user_credit_card_issuer import user_credit_ca
 def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
     input_pandas_df = pandas.DataFrame({
         "user_id": ["user_1", "user_2", "user_3", "user_4"],
-        "signup_timestamp": [datetime(2022, 5, 1)] * 4,
+        "signup_timestamp": [datetime(2022, 5, 1, tzinfo=timezone.utc)] * 4,
         "cc_num": [1000000000000000, 4000000000000000, 5000000000000000, 6000000000000000],
     })
     input_spark_df = tecton_pytest_spark_session.createDataFrame(input_pandas_df)
@@ -41,7 +41,7 @@ def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
 def test_user_credit_card_issuer_ghf(tecton_pytest_spark_session):
     input_pandas_df = pandas.DataFrame({
         "user_id": ["user_1", "user_2", "user_3", "user_4"],
-        "signup_timestamp": [datetime(2022, 5, 1)] * 4,
+        "signup_timestamp": [datetime(2022, 5, 1, tzinfo=timezone.utc)] * 4,
         "cc_num": [1000000000000000, 4000000000000000, 5000000000000000, 6000000000000000],
     })
     input_spark_df = tecton_pytest_spark_session.createDataFrame(input_pandas_df)
@@ -68,10 +68,3 @@ def test_user_credit_card_issuer_ghf(tecton_pytest_spark_session):
     expected = expected.sort_values(["user_id", "timestamp"]).reset_index(drop=True)
 
     pandas.testing.assert_frame_equal(actual, expected)
-
-
-@pytest.fixture(scope='module', autouse=True)
-def configure_spark_session(tecton_pytest_spark_session):
-    # Custom configuration for the spark session. In this case, configure the timezone so that we don't need to specify
-    # a timezone for every datetime in the mock data.
-    tecton_pytest_spark_session.conf.set("spark.sql.session.timeZone", "UTC")
