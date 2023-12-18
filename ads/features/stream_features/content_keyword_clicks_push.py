@@ -1,5 +1,5 @@
 from datetime import timedelta, datetime
-from tecton import StreamFeatureView, FilteredSource
+from tecton import StreamFeatureView, FilteredSource, BatchTriggerType
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import keyword_click_source
 
@@ -15,6 +15,7 @@ content_keyword_click_counts_push = StreamFeatureView(
     offline=True,
     feature_start_time=datetime(2023, 1, 1),
     batch_schedule=timedelta(days=1),
+    batch_trigger=BatchTriggerType.MANUAL,
     manual_trigger_backfill_end_time=datetime(2023, 5, 1),
     ttl=timedelta(days=30),
     tags={'release': 'production'},
