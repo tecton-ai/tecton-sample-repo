@@ -23,12 +23,13 @@ def test_transaction_amount_features(daily_mean, amount, expected):
     assert expected == actual
 
 
-# Testing the 'user_age' feature which takes in request data ('timestamp')
-# and a precomputed feature ('USER_DATE_OF_BIRTH') as inputs
-# def test_user_age():
-#     user_date_of_birth = {'USER_DATE_OF_BIRTH': '1992-12-05'}
-#     request = {'timestamp': '2021-05-14T00:00:00.000+00:00'}
+def test_transaction_user_features():
+    user_date_of_birth = {'USER_DATE_OF_BIRTH': '1992-12-05'}
+    user_home_location = {'lat': 45.7597, 'long': 4.8422}
+    lat = 48.8567
+    long = 2.3508
+    request = {'timestamp': '2021-05-14T00:00:00.000+00:00', 'lat': lat, 'long': long, 'amt': 40}
 
-#     actual = transaction_user_features.test_run(request=request, user_date_of_birth=user_date_of_birth)
-#     expected = {'user_age': 10387}
-#     assert actual == expected
+    actual = transaction_user_features.test_run(transaction_request=request, user_date_of_birth=user_date_of_birth, user_home_location=user_home_location)
+    expected = {'user_age': 10387, 'dist_km': 392.2172595594006}
+    assert actual == expected
