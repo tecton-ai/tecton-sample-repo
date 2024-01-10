@@ -1,0 +1,54 @@
+# This is the Tecton Repo Config. It's used to configure how Tecton collects and builds your
+# feature definitions during `tecton plan/apply/test`.
+#
+# By default, the tecton CLI will use the repo configuration specified at TECTON_REPO_ROOT/repo.yaml, but you
+# can use other files by using `tecton plan --config my_config.yaml`.
+
+# Specify tecton object defaults. These defaults can be overridden on a per-object basis in your repo.
+defaults:
+  batch_feature_view:
+    tecton_materialization_runtime: 99.99.99
+  stream_feature_view:
+    tecton_materialization_runtime: 99.99.99
+  feature_table:
+    tecton_materialization_runtime: 99.99.99
+
+
+# Example defaults with more fields set.
+# defaults:
+#   batch_feature_view:
+#     tecton_materialization_runtime: 99.99.99
+#     online_store:
+#       kind: DynamoConfig
+#     offline_store:
+#       kind: OfflineStoreConfig
+#       staging_table_format:
+#         kind: ParquetConfig
+#     batch_compute:
+#       kind: DatabricksClusterConfig
+#       instance_type: m5.xlarge
+#       instance_availability: on_demand
+#       number_of_workers: 2
+#       extra_pip_dependencies:
+#         - "haversine==2.8.0"
+#   stream_feature_view:
+#     tecton_materialization_runtime: 99.99.99
+#     # TODO(you): batch_compute:
+#     # TODO(you): stream_compute:
+#     online_store:
+#       kind: DynamoConfig
+#     offline_store:
+#       kind: OfflineStoreConfig
+#       staging_table_format:
+#         kind: ParquetConfig
+#   feature_table:
+#     tecton_materialization_runtime: 99.99.99
+#     # TODO(you): batch_compute:
+#     online_store:
+#       kind: DynamoConfig
+#     offline_store:
+#       kind: OfflineStoreConfig
+#       staging_table_format:
+#         kind: DeltaConfig
+#   feature_service:
+#     on_demand_environment: tecton-python-extended:0.2
