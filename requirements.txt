@@ -1,2 +1,2 @@
-tecton[pyspark]~=0.7.0
+tecton[pyspark]~=0.8.0
 google-cloud-dataproc

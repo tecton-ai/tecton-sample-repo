@@ -1,0 +1,56 @@
+# This is the Tecton repo config. It's used to configure how Tecton builds and applies your
+# feature definitions during `tecton plan/apply/test`.
+#
+# By default, the Tecton CLI will use the Repo Config specified at <TECTON_REPO_ROOT>/repo.yaml, but you
+# can specify another file by using `tecton plan --config my_config.yaml`.
+
+# The `defaults` keyword specifies default parameter values for Tecton objects defined in your Feature Repository.
+# For example, you can set a default `tecton_materialization_runtime` for all Batch Feature Views.
+# Defaults can be overridden on a per-object basis in your Python feature definitions.
+# See Tecton's documentation for details on which Tecton objects are currently supported by the `defaults` keyword.
+
+defaults:
+  batch_feature_view:
+    tecton_materialization_runtime: 0.8.1
+  stream_feature_view:
+    tecton_materialization_runtime: 0.8.1
+  feature_table:
+    tecton_materialization_runtime: 0.8.1
+
+# Below is an example of other defaults that can be set using the `defaults` keyword.
+# defaults:
+#   batch_feature_view:
+#     tecton_materialization_runtime: 0.8.1
+#     online_store:
+#       kind: RedisConfig
+#     offline_store:
+#       kind: OfflineStoreConfig
+#       staging_table_format:
+#         kind: ParquetConfig
+#     batch_compute:
+#       kind: DatabricksClusterConfig
+#       instance_type: m5.xlarge
+#       number_of_workers: 2
+#       extra_pip_dependencies:
+#         - haversine==2.8.0
+#   stream_feature_view:
+#     tecton_materialization_runtime: 0.8.1
+#     stream_compute:
+#       kind: DatabricksClusterConfig
+#       instance_availability: on_demand
+#       instance_type: m5.2xlarge
+#       number_of_workers: 4
+#     offline_store:
+#       kind: OfflineStoreConfig
+#       staging_table_format:
+#         kind: ParquetConfig
+#   feature_table:
+#     tecton_materialization_runtime: 0.8.1
+#     batch_compute:
+#       kind: DatabricksClusterConfig
+#       instance_type: m5.xlarge
+#       number_of_workers: 2
+#     online_store:
+#       kind: RedisConfig
+#   feature_service:
+#     on_demand_environment: tecton-python-extended:0.4
