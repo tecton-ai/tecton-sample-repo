@@ -21,6 +21,7 @@ schema = [
     offline=True,
     offline_store=DeltaConfig(),
     feature_start_time=datetime(2023, 1, 1),
+    batch_schedule=timedelta(days=1),
     aggregations=[
         Aggregation(column='clicked', function='sum', time_window=timedelta(hours=1)),
         Aggregation(column='clicked', function='sum', time_window=timedelta(days=1)),

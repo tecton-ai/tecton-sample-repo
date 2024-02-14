@@ -28,6 +28,7 @@ schema = [
     offline=True,
     offline_store=DeltaConfig(),
     feature_start_time=datetime(2023, 1, 1),
+    batch_schedule=timedelta(days=1),
     tags={"release": "production"},
     owner="pooja@tecton.ai",
     description="Transaction amount statistics over a series of time windows",

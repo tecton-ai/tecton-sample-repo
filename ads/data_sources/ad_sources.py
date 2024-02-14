@@ -1,4 +1,4 @@
-from tecton.types import Field, Int64, String, Timestamp, Float64, Array, Struct, Bool
+from tecton.types import Field, Int64, String, Timestamp, Float64, Array, Struct, Bool, Map
 from tecton import PushConfig, StreamSource, FileConfig, HiveConfig, DatetimePartitionColumn
 
 input_schema = [
@@ -117,4 +117,29 @@ fulfillment_option_source = StreamSource(
     schema=fo_schema,
     stream_config=PushConfig(log_offline=True),
     description="Sample Push Source with a struct schema",
+)
+
+# Example Struct for product details
+product_details_struct = Struct(
+    [
+        Field("product_id", dtype=String),
+        Field("category", dtype=String),
+        Field("price", dtype=Float64),
+    ]
+)
+
+# Schema with Struct and Map for Stream Source
+schema = [
+    Field('user_id', dtype=String),
+    Field('timestamp', dtype=Timestamp),
+    Field('product_details', dtype=product_details_struct),
+    Field("user_preferences", Map(String, Float64)), # Map product category to a user preference score
+]
+
+# Stream Source
+ecommerce_source = StreamSource(
+    name='ecommerce_events',
+    schema=schema,
+    stream_config=PushConfig(log_offline=True),
+    description='Stream of e-commerce events, including user actions and product details.'
 )
