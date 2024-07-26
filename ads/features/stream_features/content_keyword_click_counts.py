@@ -1,5 +1,5 @@
 from tecton import stream_feature_view, FilteredSource, DatabricksClusterConfig, StreamProcessingMode, Aggregate
-from tecton.types import Field, Bool
+from tecton.types import Field, Int64
 
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import ad_impressions_stream
@@ -17,8 +17,8 @@ cluster_config = DatabricksClusterConfig(
     mode='pyspark',
     stream_processing_mode=StreamProcessingMode.CONTINUOUS, # enable low latency streaming
     features=[
-        Aggregate(input_column=Field('column', Bool), function='count', time_window=timedelta(minutes=1)),
-        Aggregate(input_column=Field('column', Bool), function='count', time_window=timedelta(minutes=5)),
+        Aggregate(input_column=Field('clicked', Int64), function='count', time_window=timedelta(minutes=1)),
+        Aggregate(input_column=Field('clicked', Int64), function='count', time_window=timedelta(minutes=5)),
     ],
     timestamp_field='timestamp',
     batch_compute=cluster_config,

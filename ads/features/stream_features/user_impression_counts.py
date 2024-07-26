@@ -13,8 +13,8 @@ from datetime import datetime, timedelta
     aggregation_interval=timedelta(hours=1),
     features=[
         Aggregate(input_column=Field('impression', Int32), function='count', time_window=timedelta(hours=1)),
-        Aggregate(input_column=Aggregate('impression', Int32), function='count', time_window=timedelta(hours=24)),
-        Aggregate(input_column=Aggregate('impression', Int32), function='count', time_window=timedelta(hours=72)),
+        Aggregate(input_column=Field('impression', Int32), function='count', time_window=timedelta(hours=24)),
+        Aggregate(input_column=Field('impression', Int32), function='count', time_window=timedelta(hours=72)),
     ],
     timestamp_field='timestamp',
     online=False,
