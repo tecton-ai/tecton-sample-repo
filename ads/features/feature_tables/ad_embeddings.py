@@ -1,5 +1,5 @@
 from tecton.types import Field, String, Timestamp, Array, Float64
-from tecton import Entity, FeatureTable, DeltaConfig
+from tecton import FeatureTable, Attribute
 from ads.entities import ad
 from datetime import timedelta
 
@@ -13,7 +13,11 @@ schema = [
 ad_embeddings = FeatureTable(
     name='ad_embeddings',
     entities=[ad],
-    schema=schema,
+    features=[
+        Attribute(name='ad_id', dtype=String),
+        Attribute(name='ad_embedding', dtype=Array(Float64)),
+    ],
+    timestamp_field='timestamp',
     online=True,
     offline=True,
     ttl=timedelta(days=10),

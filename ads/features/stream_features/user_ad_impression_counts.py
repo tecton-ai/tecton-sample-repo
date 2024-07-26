@@ -1,4 +1,5 @@
-from tecton import stream_feature_view, Aggregation, FilteredSource
+from tecton import stream_feature_view, Aggregate, FilteredSource
+from tecton.types import Int32
 from ads.entities import ad, user
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta
@@ -9,11 +10,12 @@ from datetime import datetime, timedelta
     entities=[user, ad],
     mode='spark_sql',
     aggregation_interval=timedelta(hours=1),
-    aggregations=[
-        Aggregation(column='impression', function='count', time_window=timedelta(hours=1)),
-        Aggregation(column='impression', function='count', time_window=timedelta(hours=24)),
-        Aggregation(column='impression', function='count', time_window=timedelta(hours=72)),
+    features=[
+        Aggregate(input_column=('impression', Int32), function='count', time_window=timedelta(hours=1)),
+        Aggregate(input_column=('impression', Int32), function='count', time_window=timedelta(hours=24)),
+        Aggregate(input_column=('impression', Int32), function='count', time_window=timedelta(hours=72)),
     ],
+    timestamp_field='timestamp',
     online=False,
     offline=False,
     batch_schedule=timedelta(days=1),

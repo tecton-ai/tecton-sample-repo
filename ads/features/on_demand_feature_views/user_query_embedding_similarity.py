@@ -1,4 +1,4 @@
-from tecton import RequestSource, on_demand_feature_view
+from tecton import RequestSource, on_demand_feature_view, Attribute
 from tecton.types import Field, Array, Float64
 from ads.features.feature_tables.user_embeddings import user_embeddings
 
@@ -6,13 +6,10 @@ from ads.features.feature_tables.user_embeddings import user_embeddings
 request_schema = [Field('query_embedding', Array(Float64))]
 request = RequestSource(schema=request_schema)
 
-output_schema = [Field('cosine_similarity', Float64)]
-
-
 @on_demand_feature_view(
     sources=[request, user_embeddings],
     mode='python',
-    schema=output_schema,
+    features=[Attribute(name='cosine_similarity', dtype=Float64)],
     owner='demo-user@tecton.ai',
     tags={'release': 'production'},
     description="Computes the cosine similarity between a query embedding and a precomputed user embedding."

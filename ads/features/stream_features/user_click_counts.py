@@ -1,4 +1,6 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation
+from tecton import stream_feature_view, FilteredSource, Aggregate
+from tecton.types import Field, Bool
+
 from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta
@@ -9,10 +11,10 @@ from datetime import datetime, timedelta
     entities=[user],
     mode='pyspark',
     aggregation_interval=timedelta(hours=1),
-    aggregations=[
-        Aggregation(column='clicked', function='count', time_window=timedelta(hours=1)),
-        Aggregation(column='clicked', function='count', time_window=timedelta(hours=24)),
-        Aggregation(column='clicked', function='count', time_window=timedelta(hours=72)),
+    features=[
+        Aggregate(input_column=Field('clicked', Bool), function='count', time_window=timedelta(hours=1)),
+        Aggregate(input_column=Field('clicked', Bool), function='count', time_window=timedelta(hours=24)),
+        Aggregate(input_column=Field('clicked', Bool), function='count', time_window=timedelta(hours=72)),
     ],
     online=False,
     offline=False,

@@ -1,5 +1,6 @@
 from datetime import timedelta, datetime
-from tecton import StreamFeatureView, Aggregation
+from tecton import StreamFeatureView, Aggregation, Aggregate
+from tecton.types import Bool, Field
 from ads.entities import user
 from ads.data_sources.ad_impressions import user_click_push_source
 
@@ -15,11 +16,12 @@ user_click_counts_push = StreamFeatureView(
     offline=True,
     feature_start_time=datetime(2023, 1, 1),
     alert_email="demo-user@tecton.ai",
-    aggregations=[
-        Aggregation(column='clicked', function='count', time_window=timedelta(hours=1)),
-        Aggregation(column='clicked', function='count', time_window=timedelta(hours=24)),
-        Aggregation(column='clicked', function='count', time_window=timedelta(hours=72)),
+    features=[
+        Aggregate(input_column=Field('clicked', Bool), function='count', time_window=timedelta(hours=1)),
+        Aggregate(input_column=Field('clicked', Bool), function='count', time_window=timedelta(hours=24)),
+        Aggregate(input_column=Field('clicked', Bool), function='count', time_window=timedelta(hours=72)),
     ],
+    timestamp_field='timestamp',
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='The count of ad clicks for a user'
