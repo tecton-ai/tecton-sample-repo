@@ -1,9 +1,9 @@
 from tecton import Entity
-from tecton.types import Field, String
+from tecton.types import Field, String, Int64
 
 ad = Entity(
     name='ad',
-    join_keys=[Field('ad_id', String)],
+    join_keys=[Field('ad_id', Int64)],
     description='An ad',
     owner='demo-user@tecton.ai',
     tags={'release': 'production'}
@@ -26,7 +26,7 @@ auction = Entity(
 
 user = Entity(
     name='ads_user',
-    join_keys=[Field('content_keyword', String)],
+    join_keys=[Field('user_id', String)],
     description='A user of the platform',
     owner='demo-user@tecton.ai',
     tags={'release': 'production'}

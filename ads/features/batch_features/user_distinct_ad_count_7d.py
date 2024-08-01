@@ -20,7 +20,6 @@ from datetime import datetime, timedelta
     description='How many distinct advertisements a user has been shown in the last week',
     timestamp_field='timestamp',
     features=[
-        Attribute(name='user_id', dtype=String),
         Attribute(name='distinct_ad_count', dtype=Int64),
     ]
 )
