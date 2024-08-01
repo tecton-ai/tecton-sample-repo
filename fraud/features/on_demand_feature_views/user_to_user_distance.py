@@ -12,7 +12,7 @@ from fraud.features.batch_features.user_home_location import user_home_location
     mode='python',
     features=[Attribute('dist_km', Float64)],
     description="How far apart two users' home locations are.",
-    # environments=['tecton-python-extended:0.1', 'tecton-python-extended:0.2']
+    environments=['tecton-python-extended:0.1', 'tecton-python-extended:0.2']
 )
 def user_to_user_distance(sender_location, recipient_location):
     from haversine import haversine
