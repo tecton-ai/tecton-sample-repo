@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Aggregation
+from tecton.v09_compat import batch_feature_view, Aggregation
 from tecton.aggregation_functions import approx_count_distinct
 from recsys.entities import session
 from recsys.data_sources.session_events import sessions_batch

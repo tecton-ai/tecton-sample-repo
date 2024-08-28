@@ -1,4 +1,4 @@
-from tecton import RequestSource, on_demand_feature_view
+from tecton.v09_compat import RequestSource, on_demand_feature_view
 from tecton.types import Field, Array, Float64
 from ads.features.feature_tables.user_embeddings import user_embeddings
 

@@ -1,4 +1,4 @@
-from tecton import transformation, FilteredSource, batch_feature_view, const
+from tecton.v09_compat import transformation, FilteredSource, batch_feature_view, const
 from ads.entities import auction
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime, timedelta

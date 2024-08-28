@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource
+from tecton.v09_compat import stream_feature_view, FilteredSource
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta

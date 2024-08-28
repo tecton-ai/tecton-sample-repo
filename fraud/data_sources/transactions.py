@@ -1,4 +1,4 @@
-from tecton import FileConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
+from tecton.v09_compat import FileConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
 from datetime import timedelta
 
 def raw_data_deserialization(df):

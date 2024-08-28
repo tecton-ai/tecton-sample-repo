@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource
+from tecton.v09_compat import batch_feature_view, Aggregation, FilteredSource
 from tecton.aggregation_functions import approx_count_distinct
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch

@@ -1,4 +1,4 @@
-from tecton import FeatureService
+from tecton.v09_compat import FeatureService
 from ads.features.stream_features.user_ad_impression_counts import user_ad_impression_counts
 from ads.features.stream_features.user_click_counts import user_click_counts
 from ads.features.stream_features.user_impression_counts import user_impression_counts

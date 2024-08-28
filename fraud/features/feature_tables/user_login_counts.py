@@ -1,4 +1,4 @@
-from tecton import Entity, FeatureTable
+from tecton.v09_compat import Entity, FeatureTable
 from tecton.types import String, Timestamp, Int64, Field
 from fraud.entities import user
 from datetime import timedelta

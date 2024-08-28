@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, FilteredSource
+from tecton.v09_compat import batch_feature_view, FilteredSource
 from fraud.entities import user
 from fraud.data_sources.fraud_users import fraud_users_batch
 from fraud.data_sources.transactions import transactions_batch
