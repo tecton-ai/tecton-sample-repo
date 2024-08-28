@@ -1,4 +1,4 @@
-from tecton import RequestSource, on_demand_feature_view, Attribute
+from tecton import RequestSource, realtime_feature_view, Attribute
 from tecton.types import Field, Array, Float64
 from ads.features.feature_tables.user_embeddings import user_embeddings
 
@@ -6,7 +6,7 @@ from ads.features.feature_tables.user_embeddings import user_embeddings
 request_schema = [Field('query_embedding', Array(Float64))]
 request = RequestSource(schema=request_schema)
 
-@on_demand_feature_view(
+@realtime_feature_view(
     sources=[request, user_embeddings],
     mode='python',
     features=[Attribute(name='cosine_similarity', dtype=Float64)],

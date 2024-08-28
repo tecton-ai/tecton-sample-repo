@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, StreamProcessingMode, Attribute, Aggregate
+from tecton import stream_feature_view, FilteredSource, StreamProcessingMode, Attribute, Aggregate
 from tecton.types import Float64, Int32, Field
 
 from fraud.entities import user

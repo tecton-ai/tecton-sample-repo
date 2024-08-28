@@ -1,4 +1,4 @@
-from tecton import RequestSource, on_demand_feature_view, Attribute
+from tecton import RequestSource, realtime_feature_view, Attribute
 from tecton.types import Float64, Field, Bool
 
 request_schema = [Field('amt', Float64)]
@@ -6,7 +6,7 @@ transaction_request = RequestSource(schema=request_schema)
 features = [Attribute('transaction_amount_is_high', Bool)]
 
 # An example of an on-demand feature view that depends only on a request source.
-@on_demand_feature_view(
+@realtime_feature_view(
     sources=[transaction_request],
     mode='python',
     features=features,

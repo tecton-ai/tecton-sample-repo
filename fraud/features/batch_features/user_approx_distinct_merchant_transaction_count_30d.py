@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource, Aggregate
+from tecton import batch_feature_view, FilteredSource, Aggregate
 from tecton.aggregation_functions import approx_count_distinct
 from tecton.types import Field, String
 

@@ -1,5 +1,6 @@
-from tecton import stream_feature_view, FilteredSource, Attribute
+from tecton import Attribute
 from tecton.types import Float64
+from tecton import stream_feature_view
 
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream

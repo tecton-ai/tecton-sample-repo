@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, FilteredSource, Aggregation, Aggregate
+from tecton import batch_feature_view, FilteredSource, Aggregate
 from tecton.types import Field, Int32
 
 from fraud.entities import user
