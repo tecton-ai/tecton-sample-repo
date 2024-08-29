@@ -1,4 +1,6 @@
-from tecton import transformation, FilteredSource, batch_feature_view, const
+from tecton import Attribute, batch_feature_view
+from tecton.types import String, Array, Int32, Bool
+from tecton.v09_compat import transformation, FilteredSource, const
 from ads.entities import auction
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime, timedelta
@@ -37,8 +39,10 @@ def keyword_stats(input_data, keyword_column):
     online=False,
     offline=False,
     feature_start_time=datetime(2022, 5, 1),
+    features=[Attribute("keyword_list", dtype=Array(String)), Attribute("num_keywords", dtype=Int32), Attribute("keyword_contains_bitcoin", dtype=Bool)],
     owner='demo-user@tecton.ai',
-    tags={'release': 'production'}
+    tags={'release': 'production'},
+    timestamp_field="timestamp"
     )
 def auction_keywords(ad_impressions):
     split_keywords = str_split(ad_impressions, const("content_keyword"), const("keywords"), const("\' \'"))

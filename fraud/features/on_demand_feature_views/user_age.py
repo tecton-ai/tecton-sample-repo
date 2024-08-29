@@ -1,5 +1,6 @@
-from tecton import RequestSource, on_demand_feature_view
-from tecton.types import String, Timestamp, Int64, Field
+from tecton import Attribute, realtime_feature_view
+from tecton.v09_compat import RequestSource
+from tecton.types import String, Int64, Field
 from fraud.features.batch_features.user_date_of_birth import user_date_of_birth
 
 
@@ -7,10 +8,10 @@ request_schema = [Field('timestamp', String)]
 request = RequestSource(schema=request_schema)
 output_schema = [Field('user_age', Int64)]
 
-@on_demand_feature_view(
+@realtime_feature_view(
     sources=[request, user_date_of_birth],
     mode='python',
-    schema=output_schema,
+    features=[Attribute("user_age", dtype=Int64)],
     description="The user's age in days."
 )
 def user_age(request, user_date_of_birth):

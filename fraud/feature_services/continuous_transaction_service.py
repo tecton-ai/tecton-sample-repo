@@ -1,4 +1,4 @@
-from tecton import FeatureService
+from tecton.v09_compat import FeatureService
 from fraud.features.stream_features.user_continuous_transaction_count import user_continuous_transaction_count
 
 continuous_feature_service = FeatureService(

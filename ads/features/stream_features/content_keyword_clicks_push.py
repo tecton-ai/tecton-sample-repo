@@ -1,5 +1,8 @@
 from datetime import timedelta, datetime
-from tecton import StreamFeatureView, FilteredSource
+
+from tecton import Attribute, AggregationLeadingEdge, StreamFeatureView, FilteredSource
+from tecton.types import Int64
+from tecton.v09_compat import BatchTriggerType
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import keyword_click_source
 
@@ -19,5 +22,9 @@ content_keyword_click_counts_push = StreamFeatureView(
     ttl=timedelta(days=30),
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='The ad clicks for a content keyword'
+    description='The ad clicks for a content keyword',
+    batch_trigger=BatchTriggerType.MANUAL,
+    timestamp_field="timestamp",
+    features=[Attribute("clicked", dtype=Int64)],
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )

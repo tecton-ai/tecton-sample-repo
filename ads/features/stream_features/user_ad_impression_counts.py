@@ -1,4 +1,6 @@
-from tecton import stream_feature_view, Aggregation, FilteredSource
+from tecton import Aggregate, AggregationLeadingEdge, stream_feature_view
+from tecton.types import Int32, Field
+from tecton.v09_compat import Aggregation, FilteredSource
 from ads.entities import ad, user
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta
@@ -9,18 +11,16 @@ from datetime import datetime, timedelta
     entities=[user, ad],
     mode='spark_sql',
     aggregation_interval=timedelta(hours=1),
-    aggregations=[
-        Aggregation(column='impression', function='count', time_window=timedelta(hours=1)),
-        Aggregation(column='impression', function='count', time_window=timedelta(hours=24)),
-        Aggregation(column='impression', function='count', time_window=timedelta(hours=72)),
-    ],
+    features=[Aggregate(input_column=Field("impression", Int32), function="count", time_window=timedelta(hours=1)), Aggregate(input_column=Field("impression", Int32), function="count", time_window=timedelta(days=1)), Aggregate(input_column=Field("impression", Int32), function="count", time_window=timedelta(days=3))],
     online=False,
     offline=False,
     batch_schedule=timedelta(days=1),
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='The count of impressions between a given user and a given ad'
+    description='The count of impressions between a given user and a given ad',
+    timestamp_field="timestamp",
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def user_ad_impression_counts(ad_impressions):
     return f"""

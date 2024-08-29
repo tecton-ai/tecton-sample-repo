@@ -1,5 +1,5 @@
-from tecton import on_demand_feature_view
-from tecton import RequestSource
+from tecton.v09_compat import on_demand_feature_view
+from tecton.v09_compat import RequestSource
 from tecton.types import Array
 from tecton.types import Field
 from tecton.types import String
@@ -31,22 +31,22 @@ output_schema = [
         )),
 ]
 
-@on_demand_feature_view(mode="python", sources=[request_source], schema=output_schema)
-def complex_data_type_odfv(request):
-    # Transform map value 
-    output_string_map = request["string_map"]
-    output_string_map["new_key"] = "new_value"
-
-    # Transform array value
-    output_two_dimensional_array = request["two_dimensional_array"]
-    output_two_dimensional_array.append(["value"])
-
-    # Transform struct value
-    output_simple_struct = request["simple_struct"]
-    output_simple_struct["string_field"] = None
-    
-    return {
-        "output_string_map": output_string_map,
-        "output_two_dimensional_array": output_two_dimensional_array,
-        "output_simple_struct": output_simple_struct,
-    }
+# @on_demand_feature_view(mode="python", sources=[request_source], schema=output_schema)
+# def complex_data_type_odfv(request):
+#     # Transform map value
+#     output_string_map = request["string_map"]
+#     output_string_map["new_key"] = "new_value"
+#
+#     # Transform array value
+#     output_two_dimensional_array = request["two_dimensional_array"]
+#     output_two_dimensional_array.append(["value"])
+#
+#     # Transform struct value
+#     output_simple_struct = request["simple_struct"]
+#     output_simple_struct["string_field"] = None
+#
+#     return {
+#         "output_string_map": output_string_map,
+#         "output_two_dimensional_array": output_two_dimensional_array,
+#         "output_simple_struct": output_simple_struct,
+#     }

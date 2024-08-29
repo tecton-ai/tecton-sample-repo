@@ -1,4 +1,4 @@
-from tecton import FileConfig, BatchSource
+from tecton.v09_compat import FileConfig, BatchSource
 
 
 fraud_users_batch = BatchSource(

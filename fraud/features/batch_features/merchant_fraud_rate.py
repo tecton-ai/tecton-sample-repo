@@ -1,4 +1,6 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource
+from tecton import Aggregate, batch_feature_view
+from tecton.types import Field, Int32
+from tecton.v09_compat import FilteredSource
 from fraud.entities import merchant
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
@@ -11,12 +13,9 @@ from datetime import datetime, timedelta
     online=True,
     offline=True,
     aggregation_interval=timedelta(days=1),
-    aggregations=[
-        Aggregation(column='is_fraud', function='mean', time_window=timedelta(days=1)),
-        Aggregation(column='is_fraud', function='mean', time_window=timedelta(days=30)),
-        Aggregation(column='is_fraud', function='mean', time_window=timedelta(days=90))
-    ],
+    features=[Aggregate(input_column=Field("is_fraud", Int32), function="mean", time_window=timedelta(days=1)), Aggregate(input_column=Field("is_fraud", Int32), function="mean", time_window=timedelta(days=30)), Aggregate(input_column=Field("is_fraud", Int32), function="mean", time_window=timedelta(days=90))],
     feature_start_time=datetime(2022, 5, 1),
+    timestamp_field="timestamp",
     description='The merchant fraud rate over series of time windows, updated daily.'
 )
 def merchant_fraud_rate(transactions_batch):

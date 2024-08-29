@@ -1,4 +1,6 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource
+from tecton import Aggregate, batch_feature_view
+from tecton.types import Field, Float64
+from tecton.v09_compat import  FilteredSource
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
@@ -23,8 +25,8 @@ CATEGORIES = [
 
 aggregations = [
     [
-        Aggregation(column=f'{category}_amt', function='sum', time_window=timedelta(days=30)),
-        Aggregation(column=f'{category}_amt', function='mean', time_window=timedelta(days=30))
+        Aggregate(input_column=Field(f'{category}_amt', Float64), function='sum', time_window=timedelta(days=30)),
+        Aggregate(input_column=Field(f'{category}_amt', Float64), function='mean', time_window=timedelta(days=30)),
     ]
     for category in CATEGORIES
 ]
@@ -42,11 +44,12 @@ aggregations = reduce(lambda l, r: l + r, aggregations)
     entities=[user],
     mode='pyspark',
     aggregation_interval=timedelta(days=1),
-    aggregations=aggregations,
+    features=aggregations,
     online=False,
     offline=False,
     feature_start_time=datetime(2022, 7, 1),
-    description='User transaction aggregate metrics split by purchase category.'
+    description='User transaction aggregate metrics split by purchase category.',
+    timestamp_field="timestamp"
 )
 def user_transaction_aggregates_by_category(transactions_df):
     from pyspark.sql.functions import col, when

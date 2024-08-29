@@ -1,4 +1,6 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource
+from tecton import Aggregate, batch_feature_view
+from tecton.types import Field, Float64
+from tecton.v09_compat import Aggregation, FilteredSource
 from tecton.aggregation_functions import approx_percentile
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
@@ -12,9 +14,8 @@ from datetime import datetime, timedelta
     offline=False,
     feature_start_time=datetime(2022, 5, 1),
     aggregation_interval=timedelta(days=1),
-    aggregations=[
-        Aggregation(column='amt', function=approx_percentile(percentile=0.5), time_window=timedelta(days=30)),
-    ],
+    timestamp_field="timestamp",
+    features=[Aggregate(input_column=Field("amt", Float64), function=approx_percentile(percentile=0.5), time_window=timedelta(days=30))],
     description='Median transaction amount for a user over the last 30 days'
 )
 def user_median_transaction_amount_30d(transactions_batch):
