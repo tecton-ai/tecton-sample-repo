@@ -1,4 +1,4 @@
-from tecton import Entity
+from tecton.v09_compat import Entity
 
 article = Entity(
     name='article',

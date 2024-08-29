@@ -1,4 +1,4 @@
-from tecton import FeatureService
+from tecton.v09_compat import FeatureService
 from fraud.features.on_demand_feature_views.user_to_user_distance import user_to_user_distance
 from fraud.features.on_demand_feature_views.transaction_distance_from_home import transaction_distance_from_home
 

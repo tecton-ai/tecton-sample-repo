@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, FilteredSource, materialization_context
+from tecton.v09_compat import batch_feature_view, FilteredSource, materialization_context
 from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime, timedelta

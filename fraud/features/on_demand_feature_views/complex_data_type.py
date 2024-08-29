@@ -1,5 +1,5 @@
-from tecton import on_demand_feature_view
-from tecton import RequestSource
+from tecton.v09_compat import on_demand_feature_view
+from tecton.v09_compat import RequestSource
 from tecton.types import Array
 from tecton.types import Field
 from tecton.types import String

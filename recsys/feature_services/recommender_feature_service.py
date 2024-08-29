@@ -1,4 +1,4 @@
-from tecton import FeatureService
+from tecton.v09_compat import FeatureService
 from recsys.features.batch_features.article_features import article_sessions
 from recsys.features.batch_features.session_features import session_approx_count_articles
 

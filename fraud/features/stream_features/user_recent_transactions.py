@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation
+from tecton.v09_compat import stream_feature_view, FilteredSource, Aggregation
 from tecton.aggregation_functions import last_distinct
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream

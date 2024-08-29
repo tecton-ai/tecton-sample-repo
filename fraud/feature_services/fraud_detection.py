@@ -1,4 +1,4 @@
-from tecton import FeatureService
+from tecton.v09_compat import FeatureService
 from fraud.features.stream_features.user_transaction_amount_metrics import user_transaction_amount_metrics
 from fraud.features.batch_features.user_transaction_counts import user_transaction_counts
 from fraud.features.on_demand_feature_views.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average

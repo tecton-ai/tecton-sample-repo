@@ -1,5 +1,5 @@
 from tecton.types import Field, String, Timestamp, Array, Float64
-from tecton import Entity, FeatureTable, DeltaConfig
+from tecton.v09_compat import Entity, FeatureTable, DeltaConfig
 from ads.entities import user
 from datetime import timedelta
 

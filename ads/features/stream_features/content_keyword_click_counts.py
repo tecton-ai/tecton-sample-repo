@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, DatabricksClusterConfig, StreamProcessingMode
+from tecton.v09_compat import stream_feature_view, FilteredSource, Aggregation, DatabricksClusterConfig, StreamProcessingMode
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta
