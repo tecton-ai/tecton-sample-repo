@@ -39,3 +39,5 @@ content_keyword = Entity(
     owner='demo-user@tecton.ai',
     tags={'release': 'production'}
 )
+
+ad_embeddings_entity = Entity(name='ad_embeddings_entity', join_keys=["ad_id"], description='An ad used in the embeddings table', owner='demo-user@tecton.ai', tags={'release': 'production'})
