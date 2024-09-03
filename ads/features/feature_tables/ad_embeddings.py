@@ -1,10 +1,11 @@
-from tecton.types import Field, String, Timestamp, Array, Float64
-from tecton import Entity, FeatureTable, DeltaConfig
-from ads.entities import ad
+from tecton.types import Field, Timestamp, Array, Float64, Int64
+from tecton import FeatureTable
 from datetime import timedelta
 
+from ads.entities import ad
+
 schema = [
-    Field('ad_id', String),
+    Field('ad_id', Int64),
     Field('timestamp', Timestamp),
     Field('ad_embedding', Array(Float64))
 ]
