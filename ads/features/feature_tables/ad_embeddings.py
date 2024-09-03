@@ -1,7 +1,8 @@
 from tecton.types import Field, String, Timestamp, Array, Float64
-from tecton import Entity, FeatureTable, DeltaConfig
-from ads.entities import ad
+from tecton import Entity, FeatureTable
 from datetime import timedelta
+
+ad = Entity(name='ad_embeddings_entity', join_keys=["ad_id"])
 
 schema = [
     Field('ad_id', String),
