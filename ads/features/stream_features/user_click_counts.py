@@ -1,4 +1,6 @@
-from tecton.v09_compat import stream_feature_view, FilteredSource, Aggregation
+from tecton.v09_compat import FilteredSource
+from tecton import stream_feature_view, AggregationLeadingEdge, Aggregate
+from tecton.types import Field, Int64
 from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta
@@ -9,11 +11,13 @@ from datetime import datetime, timedelta
     entities=[user],
     mode='pyspark',
     aggregation_interval=timedelta(hours=1),
-    aggregations=[
-        Aggregation(column='clicked', function='count', time_window=timedelta(hours=1)),
-        Aggregation(column='clicked', function='count', time_window=timedelta(hours=24)),
-        Aggregation(column='clicked', function='count', time_window=timedelta(hours=72)),
+    features=[
+        Aggregate(input_column=Field("clicked", Int64), function="count", time_window=timedelta(hours=1)),
+        Aggregate(input_column=Field("clicked", Int64), function="count", time_window=timedelta(days=1)),
+        Aggregate(input_column=Field("clicked", Int64), function="count", time_window=timedelta(days=3))
     ],
+    timestamp_field="timestamp",
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME,
     online=False,
     offline=False,
     batch_schedule=timedelta(days=1),

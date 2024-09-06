@@ -1,4 +1,6 @@
-from tecton.v09_compat import stream_feature_view, FilteredSource, Aggregation, StreamProcessingMode
+from tecton.v09_compat import FilteredSource, StreamProcessingMode
+from tecton import stream_feature_view, AggregationLeadingEdge, Aggregate
+from tecton.types import Field, Int32
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
@@ -11,18 +13,20 @@ from datetime import datetime, timedelta
     entities=[user],
     mode='spark_sql',
     stream_processing_mode=StreamProcessingMode.CONTINUOUS,
-    aggregations=[
-        Aggregation(column='transaction', function='count', time_window=timedelta(minutes=1)),
-        Aggregation(column='transaction', function='count', time_window=timedelta(minutes=30)),
-        Aggregation(column='transaction', function='count', time_window=timedelta(hours=1))
-    ],
     online=False,
     offline=True,
     feature_start_time=datetime(2022, 5, 1),
     prevent_destroy=False,  # Set to True to prevent accidental destructive changes or downtime.
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='Number of transactions a user has made recently'
+    description='Number of transactions a user has made recently',
+    features=[
+        Aggregate(input_column=Field("transaction", Int32), function="count", time_window=timedelta(minutes=1)),
+        Aggregate(input_column=Field("transaction", Int32), function="count", time_window=timedelta(minutes=30)),
+        Aggregate(input_column=Field("transaction", Int32), function="count", time_window=timedelta(hours=1))
+    ],
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME,
+    timestamp_field="timestamp",
 )
 def user_continuous_transaction_count(transactions):
     return f'''
