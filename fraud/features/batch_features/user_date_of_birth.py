@@ -1,4 +1,5 @@
-from tecton.v09_compat import batch_feature_view
+from tecton import batch_feature_view, Attribute
+from tecton.types import String
 from fraud.entities import user
 from fraud.data_sources.fraud_users import fraud_users_batch
 from datetime import datetime, timedelta
@@ -17,6 +18,10 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='User date of birth, entered at signup.',
+    timestamp_field="timestamp",
+    features=[
+        Attribute("user_date_of_birth", dtype=String)
+    ],
 )
 def user_date_of_birth(fraud_users_batch):
     from pyspark.sql import functions as f

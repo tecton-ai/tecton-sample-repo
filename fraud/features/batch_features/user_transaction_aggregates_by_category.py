@@ -1,4 +1,6 @@
-from tecton.v09_compat import batch_feature_view, Aggregation, FilteredSource
+from tecton.v09_compat import FilteredSource
+from tecton import batch_feature_view, Aggregate
+from tecton.types import Field, Float64
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
@@ -21,17 +23,6 @@ CATEGORIES = [
     'grocery_net',
 ]
 
-aggregations = [
-    [
-        Aggregation(column=f'{category}_amt', function='sum', time_window=timedelta(days=30)),
-        Aggregation(column=f'{category}_amt', function='mean', time_window=timedelta(days=30))
-    ]
-    for category in CATEGORIES
-]
-
-# Flatten the `aggregations` list of lists.
-aggregations = reduce(lambda l, r: l + r, aggregations)
-
 # This feature view produces aggregate metrics for each purchase category in a user's transaction history, e.g. how much
 # has the user spent on "health_fitness" in the past 30 days. This feature view creates two aggregate features for each
 # of the 14 categories for a total of 28 features.
@@ -42,11 +33,41 @@ aggregations = reduce(lambda l, r: l + r, aggregations)
     entities=[user],
     mode='pyspark',
     aggregation_interval=timedelta(days=1),
-    aggregations=aggregations,
     online=False,
     offline=False,
     feature_start_time=datetime(2022, 7, 1),
-    description='User transaction aggregate metrics split by purchase category.'
+    description='User transaction aggregate metrics split by purchase category.',
+    timestamp_field='timestamp',
+    features=[
+        Aggregate(input_column=Field("gas_transport_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("gas_transport_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("home_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("home_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("kids_pets_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("kids_pets_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("shopping_pos_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("shopping_pos_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("grocery_pos_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("grocery_pos_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("shopping_net_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("shopping_net_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("food_dining_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("food_dining_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("entertainment_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("entertainment_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("personal_care_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("personal_care_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("health_fitness_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("health_fitness_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("misc_pos_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("misc_pos_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("misc_net_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("misc_net_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("travel_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("travel_amt", Float64), function="mean", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("grocery_net_amt", Float64), function="sum", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("grocery_net_amt", Float64), function="mean", time_window=timedelta(days=30))
+    ]
 )
 def user_transaction_aggregates_by_category(transactions_df):
     from pyspark.sql.functions import col, when

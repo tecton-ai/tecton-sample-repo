@@ -1,4 +1,6 @@
-from tecton.v09_compat import batch_feature_view, FilteredSource, materialization_context
+from tecton.v09_compat import FilteredSource, materialization_context
+from tecton import batch_feature_view, Attribute
+from tecton.types import Int64
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
@@ -21,7 +23,11 @@ from datetime import datetime, timedelta
     ttl=timedelta(days=2),
     owner='demo-user@tecton.ai',
     tags={'release': 'production'},
-    description='How many transactions the user has made to distinct merchants in the last 30 days.'
+    description='How many transactions the user has made to distinct merchants in the last 30 days.',
+    timestamp_field="timestamp",
+    features=[
+        Attribute("distinct_merchant_transaction_count_30d", dtype=Int64)
+    ]
 )
 def user_distinct_merchant_transaction_count_30d(transactions_batch, context=materialization_context()):
     return f'''

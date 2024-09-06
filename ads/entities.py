@@ -1,9 +1,10 @@
-from tecton.v09_compat import Entity
+from tecton import Entity
+from tecton.types import Field, Int64, String
 
 
 ad = Entity(
     name='ad',
-    join_keys=['ad_id'],
+    join_keys=[Field('ad_id', Int64)],
     description='An ad',
     owner='demo-user@tecton.ai',
     tags={'release': 'production'}
@@ -11,7 +12,7 @@ ad = Entity(
 
 content = Entity(
     name="content",
-    join_keys=["content_id"],
+    join_keys=[Field("content_id", String)],
     description='Content ID',
     owner='demo-user@tecton.ai',
     tags={'release': 'production'}
@@ -19,14 +20,14 @@ content = Entity(
 
 auction = Entity(
     name="auction",
-    join_keys=["auction_id"],
+    join_keys=[Field("auction_id", String)],
     description='Auction ID',
     owner='demo-user@tecton.ai',
 )
 
 user = Entity(
     name='ads_user',
-    join_keys=['user_id'],
+    join_keys=[Field('user_id', String)],
     description='A user of the platform',
     owner='demo-user@tecton.ai',
     tags={'release': 'production'}
@@ -34,7 +35,7 @@ user = Entity(
 
 content_keyword = Entity(
     name='ContentKeyword',
-    join_keys=['content_keyword'],
+    join_keys=[Field('content_keyword', String)],
     description='The keyword describing the content this ad is being placed alongside.',
     owner='demo-user@tecton.ai',
     tags={'release': 'production'}

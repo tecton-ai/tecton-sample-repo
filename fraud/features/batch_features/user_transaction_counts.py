@@ -1,4 +1,6 @@
-from tecton.v09_compat import batch_feature_view, FilteredSource, Aggregation
+from tecton.v09_compat import FilteredSource
+from tecton import batch_feature_view, Aggregate
+from tecton.types import Field, Int32
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
@@ -9,11 +11,12 @@ from datetime import datetime, timedelta
     entities=[user],
     mode='spark_sql',
     aggregation_interval=timedelta(days=1),
-    aggregations=[
-        Aggregation(column='transaction', function='count', time_window=timedelta(days=1)),
-        Aggregation(column='transaction', function='count', time_window=timedelta(days=30)),
-        Aggregation(column='transaction', function='count', time_window=timedelta(days=90))
+    features=[
+        Aggregate(input_column=Field("transaction", Int32), function="count", time_window=timedelta(days=1)),
+        Aggregate(input_column=Field("transaction", Int32), function="count", time_window=timedelta(days=30)),
+        Aggregate(input_column=Field("transaction", Int32), function="count", time_window=timedelta(days=90))
     ],
+    timestamp_field='timestamp',
     online=True,
     offline=True,
     feature_start_time=datetime(2022, 5, 1),

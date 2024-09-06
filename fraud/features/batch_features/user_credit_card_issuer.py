@@ -1,4 +1,5 @@
-from tecton.v09_compat import batch_feature_view
+from tecton import batch_feature_view, Attribute
+from tecton.types import String
 from fraud.entities import user
 from fraud.data_sources.fraud_users import fraud_users_batch
 from datetime import datetime, timedelta
@@ -19,6 +20,9 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='User credit card issuer derived from the user credit card number.',
+    features=[
+        Attribute("credit_card_issuer", dtype=String)
+    ],
 )
 def user_credit_card_issuer(fraud_users_batch):
     return f'''
