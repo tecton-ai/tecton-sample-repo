@@ -1,4 +1,4 @@
-from tecton import RequestSource, on_demand_feature_view
+from tecton.v09_compat import RequestSource, on_demand_feature_view
 from tecton.types import Float64, Field, Bool
 
 request_schema = [Field('amt', Float64)]

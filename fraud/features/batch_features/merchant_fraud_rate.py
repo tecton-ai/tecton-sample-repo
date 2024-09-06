@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource
+from tecton.v09_compat import batch_feature_view, Aggregation, FilteredSource
 from fraud.entities import merchant
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta

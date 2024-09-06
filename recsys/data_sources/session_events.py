@@ -1,4 +1,5 @@
-from tecton import spark_batch_config, BatchSource
+from tecton.v09_compat import spark_batch_config
+from tecton import BatchSource
 
 @spark_batch_config()
 def sessions_data_source_function(spark):

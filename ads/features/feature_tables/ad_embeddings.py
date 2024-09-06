@@ -1,5 +1,5 @@
 from tecton.types import Field, Timestamp, Array, Float64, Int64
-from tecton import FeatureTable
+from tecton.v09_compat import FeatureTable
 from datetime import timedelta
 
 from ads.entities import ad

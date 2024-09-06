@@ -1,5 +1,6 @@
-from tecton import FileConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn
+from tecton.v09_compat import FileConfig, KinesisConfig, DatetimePartitionColumn
 from datetime import timedelta
+from tecton import StreamSource, BatchSource
 
 def raw_data_deserialization(df):
     from pyspark.sql.functions import col, from_json, from_utc_timestamp, when

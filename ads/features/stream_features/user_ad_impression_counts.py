@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, Aggregation, FilteredSource
+from tecton.v09_compat import stream_feature_view, Aggregation, FilteredSource
 from ads.entities import ad, user
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta

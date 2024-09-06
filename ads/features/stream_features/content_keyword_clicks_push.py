@@ -1,5 +1,5 @@
 from datetime import timedelta, datetime
-from tecton import StreamFeatureView, FilteredSource, BatchTriggerType
+from tecton.v09_compat import StreamFeatureView, FilteredSource, BatchTriggerType
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import keyword_click_source
 

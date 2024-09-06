@@ -1,5 +1,5 @@
 from datetime import timedelta, datetime
-from tecton import StreamFeatureView, Aggregation
+from tecton.v09_compat import StreamFeatureView, Aggregation
 from ads.entities import user
 from ads.data_sources.ad_impressions import user_click_push_source
 
