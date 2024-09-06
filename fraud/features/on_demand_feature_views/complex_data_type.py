@@ -1,4 +1,4 @@
-from tecton.v09_compat import on_demand_feature_view
+from tecton import realtime_feature_view, Attribute
 from tecton.v09_compat import RequestSource
 from tecton.types import Array
 from tecton.types import Field
@@ -31,7 +31,15 @@ output_schema = [
         )),
 ]
 
-@on_demand_feature_view(mode="python", sources=[request_source], schema=output_schema)
+@realtime_feature_view(
+    mode="python", 
+    sources=[request_source], 
+    features=[
+        Attribute("output_string_map", dtype=Map(String, String)),
+        Attribute("output_two_dimensional_array", dtype=Array(Array(String))),
+        Attribute("output_simple_struct", dtype=Struct([Field('string_field', String), Field('float64_field', Float64)]))
+    ],
+)
 def complex_data_type_odfv(request):
     # Transform map value 
     output_string_map = request["string_map"]

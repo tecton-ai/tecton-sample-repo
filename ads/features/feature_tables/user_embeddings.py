@@ -1,5 +1,6 @@
 from tecton.types import Field, String, Timestamp, Array, Float64
-from tecton.v09_compat import Entity, FeatureTable, DeltaConfig
+from tecton.v09_compat import Entity, DeltaConfig
+from tecton import FeatureTable, Attribute
 from ads.entities import user
 from datetime import timedelta
 
@@ -14,10 +15,13 @@ schema = [
 user_embeddings = FeatureTable(
     name='user_embeddings',
     entities=[user],
-    schema=schema,
     online=True,
     offline=True,
     ttl=timedelta(days=10),
     description='Precomputed user embeddings pushed into Tecton.',
-    owner='demo-user@tecton.ai'
+    owner='demo-user@tecton.ai',
+    timestamp_field="timestamp",
+    features=[
+        Attribute("user_embedding", dtype=Array(Float64))
+    ]
 )
