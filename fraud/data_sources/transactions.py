@@ -1,4 +1,4 @@
-from tecton.v09_compat import FileConfig, KinesisConfig, DatetimePartitionColumn
+from tecton import FileConfig, KinesisConfig, DatetimePartitionColumn
 from datetime import timedelta
 from tecton import StreamSource, BatchSource
 

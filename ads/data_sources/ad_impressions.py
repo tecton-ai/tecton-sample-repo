@@ -1,4 +1,4 @@
-from tecton.v09_compat import HiveConfig, KinesisConfig, DatetimePartitionColumn
+from tecton import HiveConfig, KinesisConfig, DatetimePartitionColumn
 from datetime import timedelta
 from tecton.types import Field, Int64, String, Timestamp
 from tecton import StreamSource, BatchSource, PushConfig

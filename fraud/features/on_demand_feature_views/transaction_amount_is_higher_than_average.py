@@ -1,4 +1,4 @@
-from tecton.v09_compat import RequestSource
+from tecton import RequestSource
 from tecton import realtime_feature_view, Attribute
 from tecton.types import String, Timestamp, Float64, Field, Bool
 from fraud.features.stream_features.user_transaction_amount_metrics import user_transaction_amount_metrics

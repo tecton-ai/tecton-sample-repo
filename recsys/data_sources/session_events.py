@@ -1,4 +1,4 @@
-from tecton.v09_compat import spark_batch_config
+from tecton import spark_batch_config
 from tecton import BatchSource
 
 @spark_batch_config()

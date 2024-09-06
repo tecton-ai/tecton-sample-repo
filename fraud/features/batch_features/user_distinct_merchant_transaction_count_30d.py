@@ -1,4 +1,4 @@
-from tecton.v09_compat import FilteredSource, materialization_context
+from tecton import FilteredSource, materialization_context
 from tecton import batch_feature_view, Attribute
 from tecton.types import Int64
 from fraud.entities import user

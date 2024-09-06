@@ -1,4 +1,4 @@
-from tecton.v09_compat import transformation, FilteredSource, const
+from tecton import transformation, FilteredSource, const
 from tecton.types import String, Int32, Bool, Array
 from tecton import batch_feature_view, Attribute
 from ads.entities import auction

@@ -1,4 +1,4 @@
-from tecton.v09_compat import FilteredSource
+from tecton import FilteredSource
 from tecton import  batch_feature_view, Attribute
 from tecton.types import Float64
 

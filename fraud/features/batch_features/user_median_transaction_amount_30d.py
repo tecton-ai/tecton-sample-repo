@@ -1,4 +1,4 @@
-from tecton.v09_compat import FilteredSource
+from tecton import FilteredSource
 from tecton import batch_feature_view, Aggregate
 from tecton.types import Field, Float64
 from tecton.aggregation_functions import approx_percentile

@@ -1,4 +1,4 @@
-from tecton.v09_compat import FilteredSource, DatabricksClusterConfig, StreamProcessingMode
+from tecton import FilteredSource, DatabricksClusterConfig, StreamProcessingMode
 from tecton import stream_feature_view, Aggregate, AggregationLeadingEdge
 from tecton.types import Field, Int32
 from ads.entities import content_keyword

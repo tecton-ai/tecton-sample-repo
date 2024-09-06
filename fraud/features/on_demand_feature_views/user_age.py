@@ -1,4 +1,4 @@
-from tecton.v09_compat import RequestSource
+from tecton import RequestSource
 from tecton import realtime_feature_view, Attribute
 from tecton.types import String, Timestamp, Int64, Field
 from fraud.features.batch_features.user_date_of_birth import user_date_of_birth

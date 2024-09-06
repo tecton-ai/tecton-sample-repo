@@ -1,4 +1,4 @@
-from tecton.v09_compat import FilteredSource
+from tecton import FilteredSource
 from tecton import stream_feature_view, AggregationLeadingEdge, Attribute
 from tecton.types import Field, Float64
 from fraud.entities import user

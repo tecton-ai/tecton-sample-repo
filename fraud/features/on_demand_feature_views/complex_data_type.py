@@ -1,5 +1,5 @@
 from tecton import realtime_feature_view, Attribute
-from tecton.v09_compat import RequestSource
+from tecton import RequestSource
 from tecton.types import Array
 from tecton.types import Field
 from tecton.types import String
