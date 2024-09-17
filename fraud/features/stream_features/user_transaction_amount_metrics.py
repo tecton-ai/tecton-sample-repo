@@ -1,4 +1,6 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation
+from tecton import stream_feature_view, FilteredSource, Aggregation, Aggregate
+from tecton.types import Field, Int64, Float64
+
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
@@ -11,14 +13,15 @@ from datetime import datetime, timedelta
     mode='spark_sql',
     aggregation_interval=timedelta(minutes=10),  # Defines how frequently feature values get updated in the online store
     batch_schedule=timedelta(days=1), # Defines how frequently batch jobs are scheduled to ingest into the offline store
-    aggregations=[
-        Aggregation(column='amt', function='sum', time_window=timedelta(hours=1)),
-        Aggregation(column='amt', function='sum', time_window=timedelta(days=1)),
-        Aggregation(column='amt', function='sum', time_window=timedelta(days=3)),
-        Aggregation(column='amt', function='mean', time_window=timedelta(hours=1)),
-        Aggregation(column='amt', function='mean', time_window=timedelta(days=1)),
-        Aggregation(column='amt', function='mean', time_window=timedelta(days=3))
+    features=[
+        Aggregate(input_column=Field('amt', Float64), function='sum', time_window=timedelta(hours=1)),
+        Aggregate(input_column=Field('amt', Float64), function='sum', time_window=timedelta(days=1)),
+        Aggregate(input_column=Field('amt', Float64), function='sum', time_window=timedelta(days=3)),
+        Aggregate(input_column=Field('amt', Float64), function='mean', time_window=timedelta(hours=1)),
+        Aggregate(input_column=Field('amt', Float64), function='mean', time_window=timedelta(days=1)),
+        Aggregate(input_column=Field('amt', Float64), function='mean', time_window=timedelta(days=3)),
     ],
+    timestamp_field='timestamp',
     online=True,
     offline=True,
     feature_start_time=datetime(2022, 5, 1),

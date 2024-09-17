@@ -1,4 +1,6 @@
-from tecton import batch_feature_view, FilteredSource
+from tecton import batch_feature_view, FilteredSource, Attribute
+from tecton.types import Int32
+
 from fraud.entities import user
 from fraud.data_sources.fraud_users import fraud_users_batch
 from fraud.data_sources.transactions import transactions_batch
@@ -18,7 +20,11 @@ from datetime import datetime, timedelta
     ttl=timedelta(days=100),
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='Whether the user performing the transaction is over 18 years old.'
+    description='Whether the user performing the transaction is over 18 years old.',
+    features=[
+        Attribute('user_is_adult', Int32)
+    ],
+    timestamp_field='timestamp'
 )
 def transaction_user_is_adult(transactions_batch, fraud_users_batch):
     return f'''

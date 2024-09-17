@@ -1,4 +1,4 @@
-from tecton import RequestSource, on_demand_feature_view
+from tecton import RequestSource, on_demand_feature_view, Attribute
 from tecton.types import String, Timestamp, Float64, Field
 from fraud.features.batch_features.user_home_location import user_home_location
 
@@ -10,7 +10,7 @@ from fraud.features.batch_features.user_home_location import user_home_location
         user_home_location.with_join_key_map({"user_id": "recipient_id"}),
     ],
     mode='python',
-    schema=[Field('dist_km', Float64)],
+    features=[Attribute('dist_km', Float64)],
     description="How far apart two users' home locations are.",
     environments=['tecton-python-extended:0.1', 'tecton-python-extended:0.2']
 )
