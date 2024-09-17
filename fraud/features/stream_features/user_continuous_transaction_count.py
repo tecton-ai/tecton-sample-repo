@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, StreamProcessingMode, Aggregate
+from tecton import stream_feature_view, StreamProcessingMode, Aggregate, AggregationLeadingEdge
 from tecton.types import Int32, Field
 
 from fraud.entities import user
@@ -25,7 +25,8 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='Number of transactions a user has made recently',
-    timestamp_field='timestamp'
+    timestamp_field='timestamp',
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def user_continuous_transaction_count(transactions):
     return f'''

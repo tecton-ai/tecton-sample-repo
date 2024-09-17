@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Aggregate, AggregationLeadingEdge
+from tecton import stream_feature_view, Aggregate, AggregationLeadingEdge
 from tecton.aggregation_functions import last_distinct
 from tecton.types import Field, String
 

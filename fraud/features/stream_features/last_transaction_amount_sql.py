@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Attribute
+from tecton import stream_feature_view, Attribute, AggregationLeadingEdge
 from tecton.types import Float64
 
 from fraud.entities import user
@@ -18,7 +18,8 @@ from datetime import datetime, timedelta
     features=[
         Attribute('amt', Float64)
     ],
-    timestamp_field='timestamp'
+    timestamp_field='timestamp',
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def last_transaction_amount_sql(transactions):
     return f'''

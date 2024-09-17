@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, Aggregate
+from tecton import stream_feature_view, Aggregate, AggregationLeadingEdge
 from tecton.types import Field, Float64
 
 from fraud.entities import user
@@ -27,7 +27,8 @@ from datetime import datetime, timedelta
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='Transaction amount statistics and total over a series of time windows, updated every 10 minutes.'
+    description='Transaction amount statistics and total over a series of time windows, updated every 10 minutes.',
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def user_transaction_amount_metrics(transactions):
     return f'''

@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, Aggregate, AggregationLeadingEdge
+from tecton import stream_feature_view, Aggregate, AggregationLeadingEdge
 from tecton.types import Int32, Field
 
 from ads.entities import user
