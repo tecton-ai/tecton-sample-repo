@@ -12,10 +12,8 @@
 defaults:
   batch_feature_view:
     tecton_materialization_runtime: 1.0.0
-    environment: tecton-rift-core-1.0.0  # For Rift-based Batch Feature Views
   stream_feature_view:
     tecton_materialization_runtime: 1.0.0
-    environment: tecton-rift-core-1.0.0  # For Rift-based Stream Feature Views
   feature_table:
     tecton_materialization_runtime: 1.0.0
 
