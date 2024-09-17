@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import pandas
 import pytest
@@ -40,7 +40,7 @@ def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
 
     expected = pandas.DataFrame({
         "user_id": ["user_1", "user_2", "user_3", "user_4"],
-        "signup_timestamp":  [pytz.UTC.localize(datetime(2022, 5, 1, 0, 0, 0, 0))] * 4,
+        "signup_timestamp":  [datetime(2022, 5, 1, 0, 0, 0, 0, tzinfo=timezone.utc)] * 4,
         "credit_card_issuer": ["other", "Visa", "MasterCard", "Discover"],
     })
     expected['signup_timestamp'] = expected['signup_timestamp'].astype('datetime64[us, UTC]')
@@ -78,7 +78,7 @@ def test_user_credit_card_issuer_ghf(tecton_pytest_spark_session):
 
     expected = pandas.DataFrame({
         "user_id": ["user_1", "user_1", "user_2", "user_not_found"],
-        "timestamp": [pytz.UTC.localize(datetime(2022, 5, 1)), pytz.UTC.localize(datetime(2022, 5, 2)), pytz.UTC.localize(datetime(2022, 6, 1)), pytz.UTC.localize(datetime(2022, 6, 1))],
+        "timestamp": [datetime(2022, 5, 1, tzinfo=timezone.utc), datetime(2022, 5, 2, tzinfo=timezone.utc), datetime(2022, 6, 1, tzinfo=timezone.utc), datetime(2022, 6, 1, tzinfo=timezone.utc)],
         "user_credit_card_issuer__credit_card_issuer": [None, "other", "Visa", None],
     })
     expected['timestamp'] = expected['timestamp'].astype('datetime64[us, UTC]')

@@ -42,7 +42,7 @@ def test_user_recent_transactions(my_custom_spark_session):
         "amt_last_distinct_10_1h_10m": [["100", "200", "300"], ["400"]],
         # The result timestamp is rounded up to the nearest aggregation interval "end time". The aggregation interval
         # is ten minutes for this feature view.
-        "timestamp": [pytz.UTC.localize(datetime(2022, 5, 1, 0, 10))] * 2,
+        "timestamp": [(datetime(2022, 5, 1, 0, 10, tzinfo=timezone.utc))] * 2,
     })
     expected['timestamp'] = expected['timestamp'].astype('datetime64[us, UTC]')
 
