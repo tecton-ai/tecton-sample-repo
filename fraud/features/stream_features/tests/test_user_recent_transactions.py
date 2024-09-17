@@ -44,6 +44,7 @@ def test_user_recent_transactions(my_custom_spark_session):
         # is ten minutes for this feature view.
         "timestamp": [pytz.UTC.localize(datetime(2022, 5, 1, 7, 10))] * 2,
     })
+    expected['timestamp'] = expected['timestamp'].astype('datetime64[us]')
 
     pandas.testing.assert_frame_equal(actual, expected)
 

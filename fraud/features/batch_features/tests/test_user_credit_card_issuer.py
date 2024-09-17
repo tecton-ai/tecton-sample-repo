@@ -13,12 +13,22 @@ from fraud.features.batch_features.user_credit_card_issuer import user_credit_ca
 # session is needed, then you can create your own and set it with `tecton.set_tecton_spark_session()`.
 @pytest.mark.skipif(os.environ.get("TECTON_TEST_SPARK") is None, reason="Requires JDK installation and $JAVA_HOME env variable to run, so we skip unless user sets the `TECTON_TEST_SPARK` env var.")
 def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
-    input_pandas_df = pandas.DataFrame({
-        "user_id": ["user_1", "user_2", "user_3", "user_4"],
-        "signup_timestamp": [datetime(2022, 5, 1)] * 4,
-        "cc_num": [1000000000000000, 4000000000000000, 5000000000000000, 6000000000000000],
-    })
-    input_spark_df = tecton_pytest_spark_session.createDataFrame(input_pandas_df)
+    # Same signup timestamp for all users
+    signup_timestamp = datetime(2022, 5, 1)
+
+    # Create the data
+    data = [
+        ("user_1", signup_timestamp, 1000000000000000),
+        ("user_2", signup_timestamp, 4000000000000000),
+        ("user_3", signup_timestamp, 5000000000000000),
+        ("user_4", signup_timestamp, 6000000000000000)
+    ]
+
+    # Define schema: user_id, signup_timestamp, cc_num
+    schema = ["user_id", "signup_timestamp", "cc_num"]
+
+    # Convert to Spark DataFrame
+    input_spark_df = tecton_pytest_spark_session.createDataFrame(data, schema)
 
     # Simulate materializing features for May 1st.
     output = user_credit_card_issuer.test_run(
@@ -30,9 +40,10 @@ def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
 
     expected = pandas.DataFrame({
         "user_id": ["user_1", "user_2", "user_3", "user_4"],
-        "signup_timestamp":  [pytz.UTC.localize(datetime(2022, 5, 1))] * 4,
+        "signup_timestamp":  [pytz.UTC.localize(datetime(2022, 5, 1, 0, 0, 0, 0))] * 4,
         "credit_card_issuer": ["other", "Visa", "MasterCard", "Discover"],
     })
+    expected['signup_timestamp'] = expected['signup_timestamp'].astype('datetime64[us]')
 
     pandas.testing.assert_frame_equal(actual, expected)
 
@@ -40,12 +51,20 @@ def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
 
 @pytest.mark.skipif(os.environ.get("TECTON_TEST_SPARK") is None, reason="Requires JDK installation and $JAVA_HOME env variable to run, so we skip unless user sets the `TECTON_TEST_SPARK` env var.")
 def test_user_credit_card_issuer_ghf(tecton_pytest_spark_session):
-    input_pandas_df = pandas.DataFrame({
-        "user_id": ["user_1", "user_2", "user_3", "user_4"],
-        "signup_timestamp": [datetime(2022, 5, 1)] * 4,
-        "cc_num": [1000000000000000, 4000000000000000, 5000000000000000, 6000000000000000],
-    })
-    input_spark_df = tecton_pytest_spark_session.createDataFrame(input_pandas_df)
+    signup_timestamp = datetime(2022, 5, 1)
+
+    data = [
+        ("user_1", signup_timestamp, 1000000000000000),
+        ("user_2", signup_timestamp, 4000000000000000),
+        ("user_3", signup_timestamp, 5000000000000000),
+        ("user_4", signup_timestamp, 6000000000000000)
+    ]
+
+    # Define schema: user_id, signup_timestamp, cc_num
+    schema = ["user_id", "signup_timestamp", "cc_num"]
+
+    # Convert to Spark DataFrame
+    input_spark_df = tecton_pytest_spark_session.createDataFrame(data, schema)
 
     spine_df = pandas.DataFrame({
         "user_id": ["user_1", "user_1", "user_2", "user_not_found"],
@@ -59,9 +78,10 @@ def test_user_credit_card_issuer_ghf(tecton_pytest_spark_session):
 
     expected = pandas.DataFrame({
         "user_id": ["user_1", "user_1", "user_2", "user_not_found"],
-        "timestamp": [datetime(2022, 5, 1), datetime(2022, 5, 2), datetime(2022, 6, 1), datetime(2022, 6, 1)],
+        "timestamp": [pytz.UTC.localize(datetime(2022, 5, 1)), pytz.UTC.localize(datetime(2022, 5, 2)), pytz.UTC.localize(datetime(2022, 6, 1)), pytz.UTC.localize(datetime(2022, 6, 1))],
         "user_credit_card_issuer__credit_card_issuer": [None, "other", "Visa", None],
     })
+    expected['signup_timestamp'] = expected['signup_timestamp'].astype('datetime64[us]')
 
     # NOTE: because the Spark join has non-deterministic ordering, it is important to
     # sort the dataframe to avoid test flakes.
