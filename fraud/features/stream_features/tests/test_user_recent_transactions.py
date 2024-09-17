@@ -15,7 +15,7 @@ from pyspark.sql import SparkSession
 # session is needed, then you can create your own and set it with `tecton.set_tecton_spark_session()`.
 @pytest.mark.skipif(os.environ.get("TECTON_TEST_SPARK") is None, reason="Requires JDK installation and $JAVA_HOME env variable to run, so we skip unless user sets the `TECTON_TEST_SPARK` env var.")
 def test_user_recent_transactions(my_custom_spark_session):
-    print(f'falala {pandas.__version__}')
+    print(f'flalal {pandas.__version__}')
     input_pandas_df = pandas.DataFrame({
         "user_id": ["user_1", "user_1", "user_1", "user_2"],
         "timestamp": [datetime(2022, 5, 1)] * 4,
