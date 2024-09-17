@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource, Aggregate
+from tecton import batch_feature_view, Aggregate
 from tecton.aggregation_functions import approx_percentile
 from tecton.types import Field, Float64
 
@@ -7,7 +7,7 @@ from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
 
 @batch_feature_view(
-    sources=[FilteredSource(transactions_batch)],
+    sources=[transactions_batch],
     entities=[user],
     mode='spark_sql',
     online=False,

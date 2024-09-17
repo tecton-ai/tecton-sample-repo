@@ -1,5 +1,5 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, Aggregate
-from tecton.types import Field, Int64, Float64
+from tecton import stream_feature_view, Aggregate
+from tecton.types import Field, Float64
 
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 # The following defines several sliding time window aggregations over a user's transaction amounts
 @stream_feature_view(
-    source=FilteredSource(transactions_stream),
+    source=transactions_stream,
     entities=[user],
     mode='spark_sql',
     aggregation_interval=timedelta(minutes=10),  # Defines how frequently feature values get updated in the online store

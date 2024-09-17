@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, FilteredSource, Aggregation, Aggregate
+from tecton import batch_feature_view, Aggregate
 from tecton.types import Field, Int32
 
 from fraud.entities import user
@@ -10,7 +10,7 @@ def is_weekend(input_df, timestamp_column):
     return input_df.withColumn("is_weekend", dayofweek(to_timestamp(col(timestamp_column))).isin([1,7]).cast("int"))
 
 @batch_feature_view(
-    sources=[FilteredSource(transactions_batch)],
+    sources=[transactions_batch],
     entities=[user],
     mode='pyspark',
     aggregation_interval=timedelta(days=1),

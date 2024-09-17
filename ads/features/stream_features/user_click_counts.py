@@ -1,5 +1,5 @@
-from tecton import stream_feature_view, FilteredSource, Aggregate
-from tecton.types import Field, Bool, Int64
+from tecton import stream_feature_view, Aggregate, AggregationLeadingEdge
+from tecton.types import Field, Int64
 
 from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_stream
@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 
 @stream_feature_view(
-    source=FilteredSource(ad_impressions_stream),
+    source=ad_impressions_stream,
     entities=[user],
     mode='pyspark',
     aggregation_interval=timedelta(hours=1),
@@ -23,7 +23,8 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='The count of ad clicks for a user',
-    timestamp_field='timestamp'
+    timestamp_field='timestamp',
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def user_click_counts(ad_impressions):
     return ad_impressions.select(ad_impressions['user_uuid'].alias('user_id'), 'clicked', 'timestamp')

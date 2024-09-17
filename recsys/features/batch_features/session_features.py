@@ -7,7 +7,7 @@ from recsys.data_sources.session_events import sessions_batch
 from datetime import datetime, timedelta
 
 @batch_feature_view(
-    sources=[sessions_batch],
+    sources=[sessions_batch.unfiltered()],
     entities=[session],
     mode='spark_sql',
     online=False,

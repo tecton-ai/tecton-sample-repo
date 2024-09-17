@@ -9,7 +9,7 @@ from datetime import timedelta
 
 @batch_feature_view(
     description="Unique sessions with article interactions",
-    sources=[sessions_batch],
+    sources=[sessions_batch.unfiltered()],
     entities=[article],
     mode="spark_sql",
     timestamp_field="ts",

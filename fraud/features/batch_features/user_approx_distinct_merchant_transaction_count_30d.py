@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource, Aggregate
+from tecton import batch_feature_view, Aggregate
 from tecton.aggregation_functions import approx_count_distinct
 from tecton.types import Field, String
 
@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 # This feature view is a simpler way to implement the features in user_distinct_merchant_transaction_count_30d.
 # Instead of using a "custom aggregation" with `incremental_backfills=True`, it uses Tecton's built-in `approx_count_distinct` aggregation.
 @batch_feature_view(
-    sources=[FilteredSource(transactions_batch)],
+    sources=[transactions_batch],
     entities=[user],
     mode='spark_sql',
     online=True,

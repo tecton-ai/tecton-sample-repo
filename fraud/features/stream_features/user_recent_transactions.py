@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Aggregate
+from tecton import stream_feature_view, FilteredSource, Aggregate, AggregationLeadingEdge
 from tecton.aggregation_functions import last_distinct
 from tecton.types import Field, String
 
@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 
 # The following defines a sliding time window aggregation that collects the last N transaction amounts of a user
 @stream_feature_view(
-    source=FilteredSource(transactions_stream),
+    source=transactions_stream,
     entities=[user],
     mode='spark_sql',
     aggregation_interval=timedelta(minutes=10),  # Defines how frequently feature values get updated in the online store
@@ -24,7 +24,8 @@ from datetime import datetime, timedelta
     prevent_destroy=False,  # Set to True to prevent accidental destructive changes or downtime.
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='Most recent 10 transaction amounts of a user'
+    description='Most recent 10 transaction amounts of a user',
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def user_recent_transactions(transactions):
     return f'''

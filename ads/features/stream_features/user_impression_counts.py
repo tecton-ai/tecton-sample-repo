@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, Aggregate
+from tecton import stream_feature_view, FilteredSource, Aggregation, Aggregate, AggregationLeadingEdge
 from tecton.types import Int32, Field
 
 from ads.entities import user
@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 
 @stream_feature_view(
-    source=FilteredSource(ad_impressions_stream),
+    source=ad_impressions_stream,
     entities=[user],
     mode='spark_sql',
     aggregation_interval=timedelta(hours=1),
@@ -23,7 +23,8 @@ from datetime import datetime, timedelta
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='The count of ad impressions for a user'
+    description='The count of ad impressions for a user',
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def user_impression_counts(ad_impressions):
     return f'''

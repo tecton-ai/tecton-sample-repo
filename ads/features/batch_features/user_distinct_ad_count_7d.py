@@ -1,12 +1,13 @@
-from tecton import batch_feature_view, FilteredSource, materialization_context, Attribute
-from tecton.types import String, Int64
+from tecton import batch_feature_view, materialization_context, Attribute
+from tecton import TectonTimeConstant
+from tecton.types import Int64
 from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime, timedelta
 
 
 @batch_feature_view(
-    sources=[FilteredSource(ad_impressions_batch, start_time_offset=timedelta(days=-6))],
+    sources=[ad_impressions_batch.select_range(start_time=TectonTimeConstant.MATERIALIZATION_START_TIME - timedelta(days=6), end_time=TectonTimeConstant.MATERIALIZATION_END_TIME)],
     entities=[user],
     mode='spark_sql',
     ttl=timedelta(days=1),

@@ -1,5 +1,5 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, StreamProcessingMode, Attribute, Aggregate
-from tecton.types import Float64, Int32, Field
+from tecton import stream_feature_view, StreamProcessingMode, Aggregate
+from tecton.types import Int32, Field
 
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 # It counts the number of non-fraudulent transactions per user over a 1min, 5min and 1h time window
 # The expected freshness for these features is <1second
 @stream_feature_view(
-    source=FilteredSource(transactions_stream),
+    source=transactions_stream,
     entities=[user],
     mode='spark_sql',
     stream_processing_mode=StreamProcessingMode.CONTINUOUS,

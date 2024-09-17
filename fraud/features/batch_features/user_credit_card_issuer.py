@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 
 @batch_feature_view(
-    sources=[fraud_users_batch],
+    sources=[fraud_users_batch.unfiltered()],
     entities=[user],
     mode='spark_sql',
     online=False,

@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, FilteredSource, Attribute
+from tecton import batch_feature_view, Attribute
 from tecton.types import Int32
 
 from fraud.entities import user
@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 # For every transaction, the following FeatureView precomputes a feature that indicates
 # whether a user was an adult as of the time of the transaction
 @batch_feature_view(
-    sources=[FilteredSource(transactions_batch), fraud_users_batch],
+    sources=[transactions_batch, fraud_users_batch.unfiltered()],
     entities=[user],
     mode='spark_sql',
     online=False,

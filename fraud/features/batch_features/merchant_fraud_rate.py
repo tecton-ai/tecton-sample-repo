@@ -1,5 +1,5 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource, Aggregate
-from tecton.types import Field, Bool, Int64, Int32
+from tecton import batch_feature_view, Aggregate
+from tecton.types import Field, Int32
 
 from fraud.entities import merchant
 from fraud.data_sources.transactions import transactions_batch
@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 
 @batch_feature_view(
-    sources=[FilteredSource(transactions_batch)],
+    sources=[transactions_batch],
     entities=[merchant],
     mode='spark_sql',
     online=True,

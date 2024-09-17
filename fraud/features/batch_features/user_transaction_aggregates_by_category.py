@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, Aggregation, FilteredSource, Aggregate
+from tecton import batch_feature_view, Aggregate
 from tecton.types import Field, Float64
 
 from fraud.entities import user
@@ -40,7 +40,7 @@ features = reduce(lambda l, r: l + r, generated_features)
 #
 # An equivalent feature view can be implemented in spark SQL using the PIVOT clause.
 @batch_feature_view(
-    sources=[FilteredSource(transactions_batch)],
+    sources=[transactions_batch],
     entities=[user],
     mode='pyspark',
     aggregation_interval=timedelta(days=1),
