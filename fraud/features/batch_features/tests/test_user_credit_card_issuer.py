@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 import pandas
 import pytest
+import pytz
 
 from fraud.features.batch_features.user_credit_card_issuer import user_credit_card_issuer
 
@@ -29,7 +30,7 @@ def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
 
     expected = pandas.DataFrame({
         "user_id": ["user_1", "user_2", "user_3", "user_4"],
-        "signup_timestamp":  [datetime(2022, 5, 1)] * 4,
+        "signup_timestamp":  [pytz.UTC.localize(datetime(2022, 5, 1))] * 4,
         "credit_card_issuer": ["other", "Visa", "MasterCard", "Discover"],
     })
 

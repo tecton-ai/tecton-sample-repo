@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 import pandas
 import pytest
+import pytz
 
 from fraud.features.batch_features.user_distinct_merchant_transaction_count_30d import user_distinct_merchant_transaction_count_30d
 
@@ -34,7 +35,7 @@ def test_user_distinct_merchant_transaction_count_30d(tecton_pytest_spark_sessio
 
     expected = pandas.DataFrame({
         "user_id": ["user_1", "user_2"],
-        "timestamp": [datetime(2022, 5, 2) - timedelta(microseconds=1), datetime(2022, 5, 2) - timedelta(microseconds=1)],
+        "timestamp": [pytz.UTC.localize(datetime(2022, 5, 2) - timedelta(microseconds=1), datetime(2022, 5, 2) - timedelta(microseconds=1))],
         "distinct_merchant_transaction_count_30d": [2, 1],
     })
 
