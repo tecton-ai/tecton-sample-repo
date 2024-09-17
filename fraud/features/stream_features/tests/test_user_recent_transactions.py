@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 
 import pandas
 import pytest
+import pytz
 import tecton
 
 from fraud.features.stream_features.user_recent_transactions import user_recent_transactions
@@ -15,16 +16,17 @@ from pyspark.sql import SparkSession
 # session is needed, then you can create your own and set it with `tecton.set_tecton_spark_session()`.
 @pytest.mark.skipif(os.environ.get("TECTON_TEST_SPARK") is None, reason="Requires JDK installation and $JAVA_HOME env variable to run, so we skip unless user sets the `TECTON_TEST_SPARK` env var.")
 def test_user_recent_transactions(my_custom_spark_session):
-    print(f'flalal {pandas.__version__}')
-    input_pandas_df = pandas.DataFrame({
-        "user_id": ["user_1", "user_1", "user_1", "user_2"],
-        "timestamp": [datetime(2022, 5, 1)] * 4,
-        "amt": [100, 200, 300, 400],
-        "partition_0": ["2022"] * 4,
-        "partition_1": ["05"] * 4,
-        "partition_2": ["01"] * 4,
-    })
-    input_spark_df = my_custom_spark_session.createDataFrame(input_pandas_df)
+    data = [
+        ("user_1", datetime(2022, 5, 1), 100, "2022", "05", "01"),
+        ("user_1", datetime(2022, 5, 1), 200, "2022", "05", "01"),
+        ("user_1", datetime(2022, 5, 1), 300, "2022", "05", "01"),
+        ("user_2", datetime(2022, 5, 1), 400, "2022", "05", "01")
+    ]
+
+    # Define the schema (column names)
+    schema = ["user_id", "timestamp", "amt", "partition_0", "partition_1", "partition_2"]
+
+    input_spark_df = my_custom_spark_session.createDataFrame(data, schema)
 
     # Simulate materializing features for May 1st.
     output = user_recent_transactions.test_run(
@@ -37,10 +39,10 @@ def test_user_recent_transactions(my_custom_spark_session):
 
     expected = pandas.DataFrame({
         "user_id": ["user_1", "user_2"],
-        "amt_last_distinct_10_1h_10m": [["300", "200", "100"], ["400"]],
+        "amt_last_distinct_10_1h_10m": [["100", "200", "300"], ["400"]],
         # The result timestamp is rounded up to the nearest aggregation interval "end time". The aggregation interval
         # is ten minutes for this feature view.
-        "timestamp": [datetime(2022, 5, 1, 0, 10)] * 2,
+        "timestamp": [pytz.UTC.localize(datetime(2022, 5, 1, 7, 10))] * 2,
     })
 
     pandas.testing.assert_frame_equal(actual, expected)
