@@ -1,4 +1,4 @@
-from tecton import on_demand_feature_view, Attribute
+from tecton import realtime_feature_view, Attribute
 from tecton import RequestSource
 from tecton.types import Array
 from tecton.types import Field
@@ -30,7 +30,7 @@ features = [
         )),
 ]
 
-@on_demand_feature_view(mode="python", sources=[request_source], features=features)
+@realtime_feature_view(mode="python", sources=[request_source], features=features)
 def complex_data_type_odfv(request):
     # Transform map value 
     output_string_map = request["string_map"]

@@ -1,10 +1,10 @@
-from tecton import on_demand_feature_view, Attribute
+from tecton import realtime_feature_view, Attribute
 from tecton.types import Float64
 from ads.features.feature_tables.user_embeddings import user_embeddings
 from ads.features.feature_tables.ad_embeddings import ad_embeddings
 
 
-@on_demand_feature_view(
+@realtime_feature_view(
     sources=[ad_embeddings, user_embeddings],
     mode='python',
     features=[

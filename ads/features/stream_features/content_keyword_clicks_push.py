@@ -10,7 +10,7 @@ from ads.data_sources.ad_impressions import keyword_click_source
 # https://docs.tecton.ai/using-the-ingestion-api/#creating-a-stream-feature-view-with-a-push-source
 content_keyword_click_counts_push = StreamFeatureView(
     name="keyword_clicks_fv",
-    source=keyword_click_source.unfiltered(),
+    source=keyword_click_source,
     entities=[content_keyword],
     online=True,
     offline=True,

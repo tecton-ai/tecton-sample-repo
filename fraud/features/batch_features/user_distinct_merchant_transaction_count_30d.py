@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 # See this documentation for more info:
 # https://docs.tecton.ai/latest/overviews/framework/feature_views/batch/incremental_backfills.html.
 @batch_feature_view(
-    sources=[transactions_batch.select_range(start_time=TectonTimeConstant.MATERIALIZATION_START_TIME - timedelta(days=20), end_time=TectonTimeConstant.MATERIALIZATION_END_TIME)],
+    sources=[transactions_batch.select_range(start_time=TectonTimeConstant.MATERIALIZATION_START_TIME - timedelta(days=29), end_time=TectonTimeConstant.MATERIALIZATION_END_TIME)],
     entities=[user],
     mode='spark_sql',
     online=True,

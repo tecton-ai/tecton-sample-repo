@@ -31,7 +31,7 @@ def keyword_stats(input_data, keyword_column):
 # array of words, then create metrics based on that array.
 @batch_feature_view(
     mode='pipeline',
-    sources=[ad_impressions_batch.unfiltered()],
+    sources=[ad_impressions_batch],
     entities=[auction],
     timestamp_field="timestamp",
     features=[
