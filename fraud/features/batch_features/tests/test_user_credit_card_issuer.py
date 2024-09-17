@@ -43,7 +43,7 @@ def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
         "signup_timestamp":  [pytz.UTC.localize(datetime(2022, 5, 1, 0, 0, 0, 0))] * 4,
         "credit_card_issuer": ["other", "Visa", "MasterCard", "Discover"],
     })
-    expected['signup_timestamp'] = expected['signup_timestamp'].astype('datetime64[us]')
+    expected['signup_timestamp'] = expected['signup_timestamp'].astype('datetime64[us, UTC]')
 
     pandas.testing.assert_frame_equal(actual, expected)
 
@@ -81,7 +81,7 @@ def test_user_credit_card_issuer_ghf(tecton_pytest_spark_session):
         "timestamp": [pytz.UTC.localize(datetime(2022, 5, 1)), pytz.UTC.localize(datetime(2022, 5, 2)), pytz.UTC.localize(datetime(2022, 6, 1)), pytz.UTC.localize(datetime(2022, 6, 1))],
         "user_credit_card_issuer__credit_card_issuer": [None, "other", "Visa", None],
     })
-    expected['signup_timestamp'] = expected['signup_timestamp'].astype('datetime64[us]')
+    expected['timestamp'] = expected['timestamp'].astype('datetime64[us, UTC]')
 
     # NOTE: because the Spark join has non-deterministic ordering, it is important to
     # sort the dataframe to avoid test flakes.

@@ -45,7 +45,7 @@ def test_user_distinct_merchant_transaction_count_30d(tecton_pytest_spark_sessio
         "timestamp": [pytz.UTC.localize(datetime(2022, 5, 2) - timedelta(microseconds=1)), pytz.UTC.localize(datetime(2022, 5, 2) - timedelta(microseconds=1))],
         "distinct_merchant_transaction_count_30d": [2, 1],
     })
-    expected['timestamp'] = expected['timestamp'].astype('datetime64[us]')
+    expected['timestamp'] = expected['timestamp'].astype('datetime64[us, UTC]')
 
     pandas.testing.assert_frame_equal(actual, expected)
 
