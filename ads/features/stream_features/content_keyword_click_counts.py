@@ -1,4 +1,7 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, DatabricksClusterConfig, StreamProcessingMode
+from tecton import stream_feature_view, DatabricksClusterConfig, StreamProcessingMode, Aggregate, \
+    AggregationLeadingEdge
+from tecton.types import Field, Int32
+
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta
@@ -10,14 +13,15 @@ cluster_config = DatabricksClusterConfig(
 )
 
 @stream_feature_view(
-    source=FilteredSource(ad_impressions_stream),
+    source=ad_impressions_stream,
     entities=[content_keyword],
     mode='pyspark',
     stream_processing_mode=StreamProcessingMode.CONTINUOUS, # enable low latency streaming
-    aggregations=[
-        Aggregation(column='clicked', function='count', time_window=timedelta(minutes=1)),
-        Aggregation(column='clicked', function='count', time_window=timedelta(minutes=5)),
+    features=[
+        Aggregate(input_column=Field('clicked', Int32), function='count', time_window=timedelta(minutes=1)),
+        Aggregate(input_column=Field('clicked', Int32), function='count', time_window=timedelta(minutes=5)),
     ],
+    timestamp_field='timestamp',
     batch_compute=cluster_config,
     stream_compute=cluster_config,
     online=False,
@@ -25,7 +29,8 @@ cluster_config = DatabricksClusterConfig(
     feature_start_time=datetime(2022, 5, 1),
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='The count of ad impressions for a content_keyword'
+    description='The count of ad impressions for a content_keyword',
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def content_keyword_click_counts(ad_impressions):
     from pyspark.sql import functions as F

@@ -1,4 +1,4 @@
-from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn, PushSource
+from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn, PushConfig
 from datetime import timedelta
 from tecton.types import Field, Int64, String, Timestamp
 
@@ -100,7 +100,7 @@ input_schema = [
     Field(name='timestamp', dtype=Timestamp),
     Field(name='clicked', dtype=Int64),
 ]
-keyword_click_source = PushSource(
+keyword_click_source = StreamSource(
     name="keyword_click_source",
     schema=input_schema,
     batch_config=ad_impressions_hive_config,
@@ -109,7 +109,8 @@ keyword_click_source = PushSource(
         batch config for backfilling and offline training data generation.
     """,
     owner="demo-user@tecton.ai",
-    tags={'release': 'staging'}
+    tags={'release': 'staging'},
+    stream_config=PushConfig()
 )
 
 user_schema = [
@@ -117,11 +118,12 @@ user_schema = [
     Field(name='timestamp', dtype=Timestamp),
     Field(name='clicked', dtype=Int64),
 ]
-user_click_push_source = PushSource(
+user_click_push_source = StreamSource(
     name="user_event_source",
     schema=user_schema,
     description="A push source for synchronous, online ingestion of ad-click events with user info.",
     owner="demo-user@tecton.ai",
-    tags={'release': 'staging'}
+    tags={'release': 'staging'},
+    stream_config=PushConfig()
 )
 

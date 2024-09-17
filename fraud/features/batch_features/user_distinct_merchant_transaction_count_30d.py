@@ -1,4 +1,6 @@
-from tecton import batch_feature_view, FilteredSource, materialization_context
+from tecton import batch_feature_view, materialization_context, Attribute, TectonTimeConstant
+from tecton.types import Int64
+
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
 from datetime import datetime, timedelta
@@ -10,7 +12,7 @@ from datetime import datetime, timedelta
 # See this documentation for more info:
 # https://docs.tecton.ai/latest/overviews/framework/feature_views/batch/incremental_backfills.html.
 @batch_feature_view(
-    sources=[FilteredSource(transactions_batch, start_time_offset=timedelta(days=-29))],
+    sources=[transactions_batch.select_range(start_time=TectonTimeConstant.MATERIALIZATION_START_TIME - timedelta(days=29), end_time=TectonTimeConstant.MATERIALIZATION_END_TIME)],
     entities=[user],
     mode='spark_sql',
     online=True,
@@ -21,7 +23,11 @@ from datetime import datetime, timedelta
     ttl=timedelta(days=2),
     owner='demo-user@tecton.ai',
     tags={'release': 'production'},
-    description='How many transactions the user has made to distinct merchants in the last 30 days.'
+    description='How many transactions the user has made to distinct merchants in the last 30 days.',
+    features=[
+        Attribute('distinct_merchant_transaction_count_30d', Int64)
+    ],
+    timestamp_field='timestamp',
 )
 def user_distinct_merchant_transaction_count_30d(transactions_batch, context=materialization_context()):
     return f'''

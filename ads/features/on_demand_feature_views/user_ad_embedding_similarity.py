@@ -1,14 +1,15 @@
-from tecton import on_demand_feature_view
-from tecton.types import Field, Float64
+from tecton import realtime_feature_view, Attribute
+from tecton.types import Float64
 from ads.features.feature_tables.user_embeddings import user_embeddings
 from ads.features.feature_tables.ad_embeddings import ad_embeddings
 
-output_schema = [Field('cosine_similarity', Float64)]
 
-@on_demand_feature_view(
+@realtime_feature_view(
     sources=[ad_embeddings, user_embeddings],
     mode='python',
-    schema=output_schema,
+    features=[
+        Attribute(name='cosine_similarity', dtype=Float64)
+    ],
     owner='demo-user@tecton.ai',
     tags={'release': 'production'},
     description="Computes the cosine similarity between a precomputed ad embedding and a precomputed user embedding."

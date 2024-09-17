@@ -1,5 +1,6 @@
 from datetime import timedelta, datetime
-from tecton import StreamFeatureView, FilteredSource, BatchTriggerType
+from tecton import StreamFeatureView, BatchTriggerType, Attribute
+from tecton.types import Int64
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import keyword_click_source
 
@@ -9,7 +10,7 @@ from ads.data_sources.ad_impressions import keyword_click_source
 # https://docs.tecton.ai/using-the-ingestion-api/#creating-a-stream-feature-view-with-a-push-source
 content_keyword_click_counts_push = StreamFeatureView(
     name="keyword_clicks_fv",
-    source=FilteredSource(keyword_click_source),
+    source=keyword_click_source,
     entities=[content_keyword],
     online=True,
     offline=True,
@@ -20,5 +21,9 @@ content_keyword_click_counts_push = StreamFeatureView(
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='The ad clicks for a content keyword',
-    batch_trigger=BatchTriggerType.MANUAL
+    batch_trigger=BatchTriggerType.MANUAL,
+    timestamp_field='timestamp',
+    features=[
+        Attribute(name='clicked', dtype=Int64),
+    ]
 )

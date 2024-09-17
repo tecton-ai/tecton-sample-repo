@@ -1,15 +1,15 @@
-from tecton import RequestSource, on_demand_feature_view
+from tecton import RequestSource, realtime_feature_view, Attribute
 from tecton.types import String, Timestamp, Float64, Field, Bool
 from fraud.features.stream_features.user_transaction_amount_metrics import user_transaction_amount_metrics
 
 request_schema = [Field('amt', Float64)]
 transaction_request = RequestSource(schema=request_schema)
-output_schema = [Field('transaction_amount_is_higher_than_average', Bool)]
+features = [Attribute('transaction_amount_is_higher_than_average', Bool)]
 
-@on_demand_feature_view(
+@realtime_feature_view(
     sources=[transaction_request, user_transaction_amount_metrics],
     mode='python',
-    schema=output_schema,
+    features=features,
     description='The transaction amount is higher than the 1 day average.'
 )
 def transaction_amount_is_higher_than_average(transaction_request, user_transaction_amount_metrics):

@@ -1,4 +1,4 @@
-from tecton import on_demand_feature_view
+from tecton import realtime_feature_view, Attribute
 from tecton import RequestSource
 from tecton.types import Array
 from tecton.types import Field
@@ -20,18 +20,17 @@ request_source = RequestSource(
     ]
 )
 
-output_schema = [
-        Field("output_string_map", Map(String, String)),
-        Field("output_two_dimensional_array", Array(Array(String))),
-        Field("output_simple_struct", Struct(
-          [
+features = [
+        Attribute("output_string_map", Map(String, String)),
+        Attribute("output_two_dimensional_array", Array(Array(String))),
+        Attribute("output_simple_struct", Struct([
               Field("string_field", String),
               Field("float64_field", Float64),
           ]
         )),
 ]
 
-@on_demand_feature_view(mode="python", sources=[request_source], schema=output_schema)
+@realtime_feature_view(mode="python", sources=[request_source], features=features)
 def complex_data_type_odfv(request):
     # Transform map value 
     output_string_map = request["string_map"]

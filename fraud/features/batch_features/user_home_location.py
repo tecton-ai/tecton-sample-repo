@@ -1,11 +1,13 @@
-from tecton import batch_feature_view
+from tecton import batch_feature_view, Attribute
+from tecton.types import Float64
+
 from fraud.entities import user
 from fraud.data_sources.fraud_users import fraud_users_batch
 from datetime import datetime, timedelta
 
 
 @batch_feature_view(
-    sources=[fraud_users_batch],
+    sources=[fraud_users_batch.unfiltered()],
     entities=[user],
     mode='spark_sql',
     online=True,
@@ -17,7 +19,12 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='User date of birth, entered at signup.',
-    timestamp_field='signup_timestamp'
+    timestamp_field='signup_timestamp',
+    features=[
+        Attribute('lat', Float64),
+        Attribute('long', Float64),
+    ],
+
 )
 def user_home_location(fraud_users_batch):
     return f'''

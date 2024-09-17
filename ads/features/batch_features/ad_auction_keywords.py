@@ -1,4 +1,5 @@
-from tecton import transformation, FilteredSource, batch_feature_view, const
+from tecton import transformation, batch_feature_view, const, Attribute
+from tecton.types import String, Array, Int32, Bool
 from ads.entities import auction
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime, timedelta
@@ -30,8 +31,14 @@ def keyword_stats(input_data, keyword_column):
 # array of words, then create metrics based on that array.
 @batch_feature_view(
     mode='pipeline',
-    sources=[FilteredSource(ad_impressions_batch)],
+    sources=[ad_impressions_batch],
     entities=[auction],
+    timestamp_field="timestamp",
+    features=[
+        Attribute(name="keyword_list", dtype=Array(String)),
+        Attribute(name="num_keywords", dtype=Int32),
+        Attribute(name="keyword_contains_bitcoin", dtype=Bool),
+    ],
     ttl=timedelta(days=1),
     batch_schedule=timedelta(days=1),
     online=False,
