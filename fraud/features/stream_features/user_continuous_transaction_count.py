@@ -1,4 +1,6 @@
-from tecton import stream_feature_view, FilteredSource, Aggregation, StreamProcessingMode
+from tecton import stream_feature_view, FilteredSource, Aggregation, StreamProcessingMode, Attribute, Aggregate
+from tecton.types import Float64, Int32, Field
+
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
@@ -11,10 +13,10 @@ from datetime import datetime, timedelta
     entities=[user],
     mode='spark_sql',
     stream_processing_mode=StreamProcessingMode.CONTINUOUS,
-    aggregations=[
-        Aggregation(column='transaction', function='count', time_window=timedelta(minutes=1)),
-        Aggregation(column='transaction', function='count', time_window=timedelta(minutes=30)),
-        Aggregation(column='transaction', function='count', time_window=timedelta(hours=1))
+    features=[
+        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(minutes=1)),
+        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(minutes=30)),
+        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(hours=1))
     ],
     online=False,
     offline=True,
@@ -22,7 +24,8 @@ from datetime import datetime, timedelta
     prevent_destroy=False,  # Set to True to prevent accidental destructive changes or downtime.
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='Number of transactions a user has made recently'
+    description='Number of transactions a user has made recently',
+    timestamp_field='timestamp'
 )
 def user_continuous_transaction_count(transactions):
     return f'''
