@@ -11,18 +11,18 @@
 
 defaults:
   batch_feature_view:
-    tecton_materialization_runtime: 0.10.0b28
-    environment:   # For Rift-based Batch Feature Views
+    tecton_materialization_runtime: 1.0.0
+    environment: tecton-rift-core-1.0.0  # For Rift-based Batch Feature Views
   stream_feature_view:
-    tecton_materialization_runtime: 0.10.0b28
-    environment:   # For Rift-based Stream Feature Views
+    tecton_materialization_runtime: 1.0.0
+    environment: tecton-rift-core-1.0.0  # For Rift-based Stream Feature Views
   feature_table:
-    tecton_materialization_runtime: 0.10.0b28
+    tecton_materialization_runtime: 1.0.0
 
 # Below is an example of other defaults that can be set using the `defaults` keyword.
 # defaults:
 #   batch_feature_view:
-#     tecton_materialization_runtime: 99.99.99
+#     tecton_materialization_runtime: 0.9.0
 #     online_store:
 #       kind: RedisConfig
 #     offline_store:
@@ -36,7 +36,7 @@ defaults:
 #       extra_pip_dependencies:
 #         - haversine==2.8.0
 #   stream_feature_view:
-#     tecton_materialization_runtime: 99.99.99
+#     tecton_materialization_runtime: 1.0.0
 #     stream_compute:
 #       kind: DatabricksClusterConfig
 #       instance_availability: on_demand
@@ -47,7 +47,7 @@ defaults:
 #       staging_table_format:
 #         kind: ParquetConfig
 #   feature_table:
-#     tecton_materialization_runtime: 99.99.99
+#     tecton_materialization_runtime: 1.0.0
 #     batch_compute:
 #       kind: DatabricksClusterConfig
 #       instance_type: m5.xlarge
