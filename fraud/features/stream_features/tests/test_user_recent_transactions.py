@@ -23,7 +23,6 @@ def test_user_recent_transactions(my_custom_spark_session):
         ("user_2", datetime(2022, 5, 1), 400, "2022", "05", "01")
     ]
 
-    # Define the schema (column names)
     schema = ["user_id", "timestamp", "amt", "partition_0", "partition_1", "partition_2"]
 
     input_spark_df = my_custom_spark_session.createDataFrame(data, schema)
