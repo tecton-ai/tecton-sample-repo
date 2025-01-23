@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, materialization_context, Attribute, TectonTimeConstant
+from tecton import batch_feature_view, Attribute, TectonTimeConstant
 from tecton.types import Int64
 
 from fraud.entities import user
@@ -29,7 +29,7 @@ from datetime import datetime, timedelta
     ],
     timestamp_field='timestamp',
 )
-def user_distinct_merchant_transaction_count_30d(transactions_batch, context=materialization_context()):
+def user_distinct_merchant_transaction_count_30d(transactions_batch, context):
     return f'''
         SELECT
             user_id,
