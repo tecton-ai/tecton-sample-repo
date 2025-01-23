@@ -19,7 +19,7 @@ jobs:
     - run: pip install -r requirements.txt
 
     - name: Run tecton test
-      run: tecton test
+      run: tecton init; tecton test
       env:
         # Set the `TECTON_TEST_SPARK` var since the Tecton sample repo skips
         # tests if this variable is not set.
