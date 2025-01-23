@@ -11,11 +11,11 @@
 
 defaults:
   batch_feature_view:
-    tecton_materialization_runtime: 1.0.0
+    tecton_materialization_runtime: 1.1.0
   stream_feature_view:
-    tecton_materialization_runtime: 1.0.0
+    tecton_materialization_runtime: 1.1.0
   feature_table:
-    tecton_materialization_runtime: 1.0.0
+    tecton_materialization_runtime: 1.1.0
 
 # Below is an example of other defaults that can be set using the `defaults` keyword.
 # defaults:

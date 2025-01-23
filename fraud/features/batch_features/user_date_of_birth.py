@@ -20,13 +20,13 @@ from datetime import datetime, timedelta
     owner='demo-user@tecton.ai',
     description='User date of birth, entered at signup.',
     features=[
-        Attribute('user_date_of_birth', String)
+        Attribute('USER_DATE_OF_BIRTH', String)
     ],
     timestamp_field='timestamp'
 )
 def user_date_of_birth(fraud_users_batch):
     from pyspark.sql import functions as f
     return fraud_users_batch \
-        .withColumn('user_date_of_birth', f.date_format(f.col('dob'), 'yyyy-MM-dd')) \
+        .withColumn('USER_DATE_OF_BIRTH', f.date_format(f.col('dob'), 'yyyy-MM-dd')) \
         .withColumnRenamed('signup_timestamp', 'timestamp') \
-        .select('user_id', 'user_date_of_birth', 'timestamp')
+        .select('user_id', 'USER_DATE_OF_BIRTH', 'timestamp')
