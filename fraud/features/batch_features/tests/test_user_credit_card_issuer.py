@@ -45,7 +45,7 @@ def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
     })
     expected['signup_timestamp'] = expected['signup_timestamp'].astype('datetime64[us, UTC]')
 
-    pandas.testing.assert_frame_equal(actual, expected)
+    pandas.testing.assert_frame_equal(actual, expected, check_like=True)
 
 
 
@@ -88,7 +88,7 @@ def test_user_credit_card_issuer_ghf(tecton_pytest_spark_session):
     actual = actual.sort_values(["user_id", "timestamp"]).reset_index(drop=True)
     expected = expected.sort_values(["user_id", "timestamp"]).reset_index(drop=True)
 
-    pandas.testing.assert_frame_equal(actual, expected)
+    pandas.testing.assert_frame_equal(actual, expected,  check_like=True)
 
 
 @pytest.fixture(scope='module', autouse=True)

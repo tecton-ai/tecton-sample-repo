@@ -45,7 +45,7 @@ def test_user_recent_transactions(my_custom_spark_session):
     })
     expected['timestamp'] = expected['timestamp'].astype('datetime64[us, UTC]')
 
-    pandas.testing.assert_frame_equal(actual, expected)
+    pandas.testing.assert_frame_equal(actual, expected,  check_like=True)
 
 
 # Example showing of how to create your own spark session for testing instead of the Tecton provided

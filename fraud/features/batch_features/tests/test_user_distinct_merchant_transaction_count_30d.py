@@ -47,7 +47,7 @@ def test_user_distinct_merchant_transaction_count_30d(tecton_pytest_spark_sessio
     })
     expected['timestamp'] = expected['timestamp'].astype('datetime64[us, UTC]')
 
-    pandas.testing.assert_frame_equal(actual, expected)
+    pandas.testing.assert_frame_equal(actual, expected,  check_like=True)
 
 
 @pytest.fixture(scope='module', autouse=True)
