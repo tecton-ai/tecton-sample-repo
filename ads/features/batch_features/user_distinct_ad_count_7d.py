@@ -1,4 +1,4 @@
-from tecton import batch_feature_view, materialization_context, Attribute
+from tecton import batch_feature_view, Attribute
 from tecton import TectonTimeConstant
 from tecton.types import Int64
 from ads.entities import user
@@ -24,7 +24,7 @@ from datetime import datetime, timedelta
         Attribute(name='distinct_ad_count', dtype=Int64),
     ]
 )
-def user_distinct_ad_count_7d(ad_impressions, context=materialization_context()):
+def user_distinct_ad_count_7d(ad_impressions, context):
     return f'''
         SELECT
             user_uuid as user_id,

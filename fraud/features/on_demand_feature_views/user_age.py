@@ -17,7 +17,7 @@ def user_age(request, user_date_of_birth):
     from datetime import datetime, date
 
     request_datetime = datetime.fromisoformat(request['timestamp']).replace(tzinfo=None)
-    dob_datetime = datetime.fromisoformat(user_date_of_birth['USER_DATE_OF_BIRTH'])
+    dob_datetime = datetime.fromisoformat(user_date_of_birth['user_date_of_birth'])
 
     td = request_datetime - dob_datetime
 
