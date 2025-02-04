@@ -1,4 +1,4 @@
-from fraud.features.on_demand_feature_views.user_age import user_age
+from fraud.features.realtime_features.user_age import user_age
 
 
 # Testing the 'user_age' feature which takes in request data ('timestamp')

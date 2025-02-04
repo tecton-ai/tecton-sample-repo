@@ -1,4 +1,4 @@
-from fraud.features.on_demand_feature_views.transaction_amount_is_high import transaction_amount_is_high
+from fraud.features.realtime_features.transaction_amount_is_high import transaction_amount_is_high
 import pytest
 
 

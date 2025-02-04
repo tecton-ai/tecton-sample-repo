@@ -18,9 +18,14 @@ jobs:
 
     - run: pip install -r requirements.txt
 
-    - name: Run tecton test
-      run: tecton init; tecton test
+    - name: Run tecton test for Spark features
+      run: cd spark; tecton init; tecton test
       env:
         # Set the `TECTON_TEST_SPARK` var since the Tecton sample repo skips
         # tests if this variable is not set.
         TECTON_TEST_SPARK: 1
+
+    - name: Run tecton test for Rift features
+      run: cd rift; tecton init; tecton test
+
+  
