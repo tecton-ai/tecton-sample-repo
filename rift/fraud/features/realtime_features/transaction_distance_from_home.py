@@ -14,7 +14,7 @@ features = [Attribute('dist_km', Float64)]
     mode='python',
     features=features,
     description="How far a transaction is from the user's home",
-    environments=['tecton-python-extended:0.1', 'tecton-python-extended:0.2']
+    environments=['tecton-core-1.1.0']
 )
 def transaction_distance_from_home(request, user_home_location):
     from haversine import haversine
