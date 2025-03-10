@@ -4,7 +4,7 @@ from tecton.types import Int64
 from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime, timedelta
-import pandas as pd
+import pandas
 
 
 @batch_feature_view(
@@ -26,6 +26,8 @@ import pandas as pd
     ]
 )
 def user_distinct_ad_count_7d(ad_impressions, context):
+    import pandas
+
     # Group by user_uuid and count distinct ad_ids
     df = ad_impressions.groupby('user_uuid').agg({
         'ad_id': 'nunique'
@@ -35,6 +37,6 @@ def user_distinct_ad_count_7d(ad_impressions, context):
     df.columns = ['user_id', 'distinct_ad_count']
     
     # Add timestamp column
-    df['timestamp'] = pd.Timestamp(context.end_time) - pd.Timedelta(microseconds=1)
+    df['timestamp'] = pandas.Timestamp(context.end_time) - pandas.Timedelta(microseconds=1)
     
     return df
