@@ -4,7 +4,7 @@ from tecton.types import String
 from fraud.entities import user
 from fraud.data_sources.fraud_users import fraud_users_batch
 from datetime import datetime, timedelta
-import pandas as pd
+import pandas
 
 
 @batch_feature_view(
@@ -26,10 +26,12 @@ import pandas as pd
     timestamp_field='timestamp'
 )
 def user_date_of_birth(fraud_users_batch):
+    import pandas
+
     df = fraud_users_batch.copy()
     
     # Format date of birth to yyyy-MM-dd
-    df['user_date_of_birth'] = pd.to_datetime(df['dob']).dt.strftime('%Y-%m-%d')
+    df['user_date_of_birth'] = pandas.to_datetime(df['dob']).dt.strftime('%Y-%m-%d')
     
     # Rename signup_timestamp to timestamp
     df = df.rename(columns={'signup_timestamp': 'timestamp'})

@@ -1,6 +1,6 @@
 from tecton import batch_feature_view, Attribute, TectonTimeConstant
 from tecton.types import Int64
-import pandas as pd
+import pandas
 
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
@@ -31,6 +31,8 @@ from datetime import datetime, timedelta
     timestamp_field='timestamp',
 )
 def user_distinct_merchant_transaction_count_30d(transactions_batch, context):
+    import pandas
+
     # Group by user_id and count distinct merchants
     df = transactions_batch.groupby('user_id').agg({
         'merchant': 'nunique'
@@ -40,6 +42,6 @@ def user_distinct_merchant_transaction_count_30d(transactions_batch, context):
     df = df.rename(columns={'merchant': 'distinct_merchant_transaction_count_30d'})
     
     # Add timestamp column (end_time - 1 microsecond)
-    df['timestamp'] = pd.Timestamp(context.end_time) - pd.Timedelta(microseconds=1)
+    df['timestamp'] = pandas.Timestamp(context.end_time) - pandas.Timedelta(microseconds=1)
     
     return df[['user_id', 'timestamp', 'distinct_merchant_transaction_count_30d']]
