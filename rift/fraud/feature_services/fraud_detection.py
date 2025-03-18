@@ -17,25 +17,3 @@ fraud_detection_feature_service = FeatureService(
         merchant_fraud_rate
     ]
 )
-
-# # fraud_detection_feature_service_v2 = FeatureService(
-# #     name='fraud_detection_feature_service:v2',
-# #     description='A FeatureService providing features for a model that predicts if a transaction is fraudulent.',
-# #     tags={'release': 'production'},
-# #     features=[
-# #         user_has_great_credit, # New feature
-# #         last_transaction_amount_sql,
-# #         transaction_amount_is_high,
-# #         transaction_amount_is_higher_than_average,
-# #         user_transaction_amount_metrics,
-# #         user_transaction_counts,
-# #         user_distinct_merchant_transaction_count_30d
-# #     ]
-# # )
-#
-# minimal_fs = FeatureService(
-#     name='minimal_fs',
-#     features=[
-#         transaction_amount_is_high
-#     ]
-# )

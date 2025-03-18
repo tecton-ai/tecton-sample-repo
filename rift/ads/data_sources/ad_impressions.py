@@ -1,9 +1,7 @@
-from tecton import HiveConfig, KinesisConfig, StreamSource, BatchSource, DatetimePartitionColumn, PushConfig
-from datetime import timedelta
+from tecton import StreamSource, BatchSource, PushConfig
 from tecton.types import Field, Int64, String, Timestamp, Bool
 
-import tecton
-from tecton import pyarrow_batch_config, FilterContext
+from tecton import pyarrow_batch_config
 
 # Declare a pyarrow_batch_config that connects to your Iceberg table
 @pyarrow_batch_config(

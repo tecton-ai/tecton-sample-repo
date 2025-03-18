@@ -1,4 +1,4 @@
-from tecton.types import Field, String, Timestamp, Array, Float64
+from tecton.types import Array, Float64
 from tecton import FeatureTable, Attribute
 from ads.entities import user
 from datetime import timedelta

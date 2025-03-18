@@ -21,5 +21,5 @@ from datetime import datetime, timedelta
     timestamp_field='timestamp',
     aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
-def last_transaction_amount_pyspark(transactions):
+def last_transaction_amount_stream(transactions):
     return transactions[['timestamp', 'user_id', 'amt']]

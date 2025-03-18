@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, DatabricksClusterConfig, StreamProcessingMode, Aggregate, \
+from tecton import stream_feature_view, StreamProcessingMode, Aggregate, \
     AggregationLeadingEdge
 from tecton.types import Field, Int32
 
