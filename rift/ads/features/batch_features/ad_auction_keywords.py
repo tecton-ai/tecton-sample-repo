@@ -1,4 +1,4 @@
-from tecton import transformation, batch_feature_view, const, Attribute
+from tecton import batch_feature_view, Attribute
 from tecton.types import String, Array, Int32, Bool
 from ads.entities import auction
 from ads.data_sources.ad_impressions import ad_impressions_batch

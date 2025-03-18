@@ -4,6 +4,7 @@ from fraud.data_sources.transactions import transactions_batch
 from fraud.entities import user
 from tecton.types import Field, Int32
 
+
 @batch_feature_view(
     sources=[transactions_batch],
     mode="pandas",

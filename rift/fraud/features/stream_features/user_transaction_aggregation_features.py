@@ -1,4 +1,4 @@
-from tecton import stream_feature_view, Aggregate, AggregationLeadingEdge
+from tecton import stream_feature_view, Aggregate
 from tecton.types import Field, Float64, String
 
 from tecton.aggregation_functions import (

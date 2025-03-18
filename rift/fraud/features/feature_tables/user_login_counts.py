@@ -1,5 +1,5 @@
-from tecton import Entity, FeatureTable, Attribute
-from tecton.types import String, Timestamp, Int64, Field
+from tecton import FeatureTable, Attribute
+from tecton.types import Int64
 from fraud.entities import user
 from datetime import timedelta
 

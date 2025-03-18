@@ -1,5 +1,5 @@
-from tecton import RequestSource, realtime_feature_view, Attribute
-from tecton.types import String, Timestamp, Float64, Field
+from tecton import realtime_feature_view, Attribute
+from tecton.types import Float64
 from fraud.features.batch_features.user_home_location import user_home_location
 
 # This on-demand feature uses the same user feature view as two separate inputs. The join keys

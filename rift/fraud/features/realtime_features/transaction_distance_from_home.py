@@ -1,5 +1,5 @@
 from tecton import RequestSource, realtime_feature_view, Attribute
-from tecton.types import String, Timestamp, Float64, Field
+from tecton.types import Float64, Field
 from fraud.features.batch_features.user_home_location import user_home_location
 
 request_schema = [
