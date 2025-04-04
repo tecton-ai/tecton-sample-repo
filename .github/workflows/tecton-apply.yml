@@ -1,0 +1,39 @@
+name: Tecton Feature Repo CI/CD
+
+on:
+  push
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      planid: ${{ steps.planid.outputs.planid }}
+    env:
+      TECTON_API_KEY: ${{ secrets.TECTON_API_KEY }}
+      API_SERVICE: https://app.tecton.ai/api
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip' # caching pip dependencies
+    - run: pip install -r requirements.txt
+
+    - name: Run tecton plan
+      run: tecton plan | tee output.log
+
+    - name: Extract plan output
+      id: planid
+      run: |
+        PLANID=$(cat output.log | perl -wne  '/Generated plan ID is ([0-9a-f]+)/i and print $1')
+        echo "planid=$PLANID" >> "$GITHUB_OUTPUT"
+
+
+  apply:
+    runs-on: ubuntu-latest
+    needs: plan
+    environment: prod-workspace
+    steps:
+      - env:
+          PLANID: ${{needs.plan.outputs.planid}}
+        run: echo "$PLANID"
