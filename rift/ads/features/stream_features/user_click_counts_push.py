@@ -8,7 +8,7 @@ from ads.data_sources.ad_impressions import user_click_push_source
 #
 # See the documentation:
 # https://docs.tecton.ai/using-the-ingestion-api/#creating-a-stream-feature-view-with-a-push-source
-user_click_counts_push = StreamFeatureView(
+user_click_counts_wafv = StreamFeatureView(
     name="user_click_counts_wafv",
     source=user_click_push_source.unfiltered(),
     entities=[user],
@@ -24,5 +24,6 @@ user_click_counts_push = StreamFeatureView(
     timestamp_field='timestamp',
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='The count of ad clicks for a user'
+    description='The count of ad clicks for a user',
+    environment='tecton-core-1.1.0'
 )

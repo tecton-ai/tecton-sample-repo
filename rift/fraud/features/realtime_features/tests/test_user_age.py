@@ -7,6 +7,11 @@ def test_user_age():
     user_date_of_birth = {'user_date_of_birth': '1992-12-05'}
     request = {'timestamp': '2021-05-14T00:00:00.000+00:00'}
 
-    actual = user_age.test_run(request=request, user_date_of_birth=user_date_of_birth)
+    actual = user_age.run_transformation(
+        input_data={
+            "request": request,
+            "user_date_of_birth": user_date_of_birth
+        }
+    )
     expected = {'user_age': 10387}
     assert actual == expected

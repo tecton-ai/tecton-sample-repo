@@ -19,7 +19,12 @@ from datetime import datetime, timedelta
         Attribute('amt', Float64)
     ],
     timestamp_field='timestamp',
-    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME,
+    environment='tecton-core-1.1.0'
 )
 def last_transaction_amount_pyspark(transactions):
-    return transactions[['timestamp', 'user_id', 'amt']]
+    # Sort by timestamp and get the last transaction for each user
+    transactions = transactions.sort_values('timestamp')
+    last_transactions = transactions.groupby('user_id').last().reset_index()
+    # Return columns in the expected order
+    return last_transactions[['timestamp', 'user_id', 'amt']]
