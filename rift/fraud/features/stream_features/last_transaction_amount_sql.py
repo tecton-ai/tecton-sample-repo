@@ -6,7 +6,7 @@ from fraud.data_sources.transactions import transactions_stream
 from datetime import datetime, timedelta
 
 @stream_feature_view(
-    source=transactions_stream.unfiltered(),
+    source=transactions_stream,
     entities=[user],
     mode='pandas',
     online=False,

@@ -14,9 +14,9 @@ from datetime import datetime, timedelta
     mode='pandas',
     stream_processing_mode=StreamProcessingMode.CONTINUOUS,
     features=[
-        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(minutes=1)),
-        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(minutes=30)),
-        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(hours=1))
+        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(minutes=1), name='transaction_1min'),
+        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(minutes=30), name='transaction_30min'),
+        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(hours=1), name='transaction_1h')
     ],
     online=False,
     offline=True,
@@ -26,9 +26,14 @@ from datetime import datetime, timedelta
     owner='demo-user@tecton.ai',
     description='Number of transactions a user has made recently',
     timestamp_field='timestamp',
-    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME,
+    environment='tecton-core-1.1.0'
 )
 def user_continuous_transaction_count(transactions):
+    # Create a copy of the input DataFrame with only the required columns
     pandas_df = transactions[['user_id', 'timestamp']].copy()
+    
+    # Add a column for counting transactions
     pandas_df['transaction'] = 1
+    
     return pandas_df

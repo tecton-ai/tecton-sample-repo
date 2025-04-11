@@ -2,7 +2,6 @@ from fraud.features.realtime_features.transaction_amount_is_high import transact
 import pytest
 
 
-# Testing the 'transaction_amount_is_high' feature which depends on request data ('amt') as input
 @pytest.mark.parametrize(
     "amount,expected",
     [
@@ -15,5 +14,5 @@ def test_transaction_amount_is_high(amount, expected):
     transaction_request = {'amt': amount}
     expected = {'transaction_amount_is_high': expected}
 
-    actual = transaction_amount_is_high.test_run(transaction_request=transaction_request)
+    actual = transaction_amount_is_high.run_transformation(input_data={"transaction_request": transaction_request})
     assert expected == actual

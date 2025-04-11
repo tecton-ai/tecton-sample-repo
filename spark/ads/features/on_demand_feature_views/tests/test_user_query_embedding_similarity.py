@@ -9,7 +9,12 @@ def test_user_query_embedding_similarity():
     request = {'query_embedding': [1.0, 1.0, 0.0]}
     user_embedding = {'user_embedding': [0.0, 1.0, 1.0]}
 
-    actual = user_query_embedding_similarity.test_run(request=request, user_embedding=user_embedding)
+    actual = user_query_embedding_similarity.run_transformation(
+        input_data={
+            "request": request,
+            "user_embedding": user_embedding
+        }
+    )
 
     # Float comparison.
     expected = 0.5

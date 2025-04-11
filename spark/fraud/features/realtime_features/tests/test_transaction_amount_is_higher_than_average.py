@@ -15,9 +15,12 @@ def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected)
     user_transaction_amount_metrics = {'amt_mean_1d_10m': daily_mean}
     transaction_request = {'amt': amount}
 
-    actual = transaction_amount_is_higher_than_average.test_run(
-        transaction_request=transaction_request,
-        user_transaction_amount_metrics=user_transaction_amount_metrics)
+    actual = transaction_amount_is_higher_than_average.run_transformation(
+        input_data={
+            "transaction_request": transaction_request,
+            "user_transaction_amount_metrics": user_transaction_amount_metrics
+        }
+    )
 
     expected = {'transaction_amount_is_higher_than_average': expected}
     assert expected == actual

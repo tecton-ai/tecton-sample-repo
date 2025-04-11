@@ -31,10 +31,13 @@ def test_user_credit_card_issuer_run(tecton_pytest_spark_session):
     input_spark_df = tecton_pytest_spark_session.createDataFrame(data, schema)
 
     # Simulate materializing features for May 1st.
-    output = user_credit_card_issuer.test_run(
-        start_time=datetime(2022, 5, 1),
-        end_time=datetime(2022, 5, 2),
-        fraud_users_batch=input_spark_df)
+    output = user_credit_card_issuer.run_transformation(
+        input_data={
+            "start_time": datetime(2022, 5, 1),
+            "end_time": datetime(2022, 5, 2),
+            "fraud_users_batch": input_spark_df
+        }
+    )
 
     actual = output.to_pandas()
 
@@ -72,7 +75,7 @@ def test_user_credit_card_issuer_ghf(tecton_pytest_spark_session):
     })
 
     # Simulate offline retrieval for features computed based on the provided data source.
-    output = user_credit_card_issuer.get_historical_features(spine_df, mock_inputs={"fraud_users_batch":input_spark_df})
+    output = user_credit_card_issuer.get_features_for_events(spine_df, mock_inputs={"fraud_users_batch":input_spark_df})
 
     actual = output.to_pandas()
 

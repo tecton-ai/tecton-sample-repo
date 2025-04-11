@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
     source=transactions_stream,
     entities=[user],
     mode='pandas',
+    environment='tecton-core-1.1.0',
     batch_schedule=timedelta(days=1), # Defines how frequently batch jobs are scheduled to ingest into the offline store
     features=[
         Aggregate(input_column=Field('amt', Float64), function='sum', time_window=timedelta(hours=1)),
@@ -30,4 +31,6 @@ from datetime import datetime, timedelta
     aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def user_transaction_amount_metrics(transactions):
+    # The transformation function should return the input data
+    # Tecton will handle the aggregations based on the features defined above
     return transactions[['user_id', 'amt', 'timestamp']]

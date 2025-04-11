@@ -1,9 +1,9 @@
 from tecton import Entity
-from tecton.types import Field, Int32
+from tecton.types import Field, Int32, Int64
 
 article = Entity(
     name='article',
-    join_keys=[Field('aid', Int32)],
+    join_keys=[Field('aid', Int64)],
     description='Item on an ecommerce site',
     owner='demo-user@tecton.ai',
     tags={'release': 'production'}
