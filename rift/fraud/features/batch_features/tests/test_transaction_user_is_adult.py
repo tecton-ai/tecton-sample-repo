@@ -15,17 +15,21 @@ def test_transaction_user_is_adult():
     # Create test data with users of different ages
     transactions = pd.DataFrame({
         'user_id': ['user1', 'user1', 'user2'],
-        'timestamp': pd.Series(transaction_timestamps).dt.tz_localize(None).astype('datetime64[us]').dt.tz_localize('UTC')
+        'timestamp': pd.Series(transaction_timestamps)
     })
 
     # User1: Born in 2000 (24 years old in 2024)
     # User2: Born in 2010 (14 years old in 2024)
     users = pd.DataFrame({
         'user_id': ['user1', 'user2'],
-        'dob': [
-            datetime(2000, 1, 1, tzinfo=timezone.utc),
-            datetime(2010, 1, 1, tzinfo=timezone.utc)
-        ]
+        'dob': pd.Series([
+            datetime(2000, 1, 1),
+            datetime(2010, 1, 1)
+        ]),
+        'signup_timestamp': pd.Series([
+            datetime(2023, 1, 1),
+            datetime(2023, 1, 1)
+        ])
     })
 
     # Set time window to include all test data

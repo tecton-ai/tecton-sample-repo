@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 @stream_feature_view(
     source=transactions_stream,
     entities=[user],
-    mode='pandas',
+    mode='spark_sql',
     aggregation_interval=timedelta(minutes=10),  # Defines how frequently feature values get updated in the online store
     batch_schedule=timedelta(days=1), # Defines how frequently batch jobs are scheduled to ingest into the offline store
     features=[
@@ -28,7 +28,11 @@ from datetime import datetime, timedelta
     aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
 )
 def user_recent_transactions(transactions):
-    # Just return the input columns and let Tecton handle the aggregation
-    df = transactions[['user_id', 'amt', 'timestamp']].copy()
-    df['amt'] = df['amt'].astype(str)
-    return df
+    return f'''
+        SELECT
+            user_id,
+            cast(amt as string) as amt,
+            timestamp
+        FROM
+            {transactions}
+        '''
