@@ -1,6 +1,7 @@
 from fraud.features.realtime_features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
 import pytest
 
+
 # Testing the 'transaction_amount_is_higher_than_average' feature which takes in request data ('amt')
 # and a precomputed feature ('amt_mean_1d_continuous') as inputs
 @pytest.mark.parametrize(
@@ -12,12 +13,13 @@ import pytest
     ],
 )
 def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected):
-    user_transaction_amount_metrics = {'amt_mean_1d_continuous': daily_mean}
-    transaction_request = {'amt': amount}
+    # Prepare input data
+    input_data = {
+        'transaction_request': {'amt': amount},
+        'user_transaction_amount_metrics': {'amt_mean_1d_continuous': daily_mean}
+    }
 
-    actual = transaction_amount_is_higher_than_average.test_run(
-        transaction_request=transaction_request,
-        user_transaction_amount_metrics=user_transaction_amount_metrics)
+    actual = transaction_amount_is_higher_than_average.run_transformation(input_data=input_data)
 
     expected = {'transaction_amount_is_higher_than_average': expected}
     assert expected == actual

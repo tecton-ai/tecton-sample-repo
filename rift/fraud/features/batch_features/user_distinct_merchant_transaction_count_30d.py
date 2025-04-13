@@ -1,6 +1,5 @@
-from tecton import batch_feature_view, Attribute, TectonTimeConstant
+from tecton import batch_feature_view, Attribute
 from tecton.types import Int64
-import pandas as pd
 
 from fraud.entities import user
 from fraud.data_sources.transactions import transactions_batch
@@ -13,7 +12,7 @@ from datetime import datetime, timedelta
 # See this documentation for more info:
 # https://docs.tecton.ai/latest/overviews/framework/feature_views/batch/incremental_backfills.html.
 @batch_feature_view(
-    sources=[transactions_batch.select_range(start_time=TectonTimeConstant.MATERIALIZATION_START_TIME - timedelta(days=29), end_time=TectonTimeConstant.MATERIALIZATION_END_TIME)],
+    sources=[transactions_batch],
     entities=[user],
     mode='pandas',
     online=True,
@@ -29,8 +28,18 @@ from datetime import datetime, timedelta
         Attribute('distinct_merchant_transaction_count_30d', Int64)
     ],
     timestamp_field='timestamp',
+    environment='rift_materialization_1-1-0b10'
 )
-def user_distinct_merchant_transaction_count_30d(transactions_batch, context):
+def user_distinct_merchant_transaction_count_30d(transactions_batch):
+    """
+    Compute the count of distinct merchants per user over a 30-day window.
+    
+    Args:
+        transactions_batch: DataFrame containing transaction data
+        
+    Returns:
+        DataFrame with user_id, timestamp, and distinct merchant count
+    """
     # Group by user_id and count distinct merchants
     df = transactions_batch.groupby('user_id').agg({
         'merchant': 'nunique'
@@ -39,7 +48,7 @@ def user_distinct_merchant_transaction_count_30d(transactions_batch, context):
     # Rename the aggregated column
     df = df.rename(columns={'merchant': 'distinct_merchant_transaction_count_30d'})
     
-    # Add timestamp column (end_time - 1 microsecond)
-    df['timestamp'] = pd.Timestamp(context.end_time) - pd.Timedelta(microseconds=1)
+    # Add timestamp column from the input DataFrame
+    df['timestamp'] = transactions_batch['timestamp'].max()
     
     return df[['user_id', 'timestamp', 'distinct_merchant_transaction_count_30d']]

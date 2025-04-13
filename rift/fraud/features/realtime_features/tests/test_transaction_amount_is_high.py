@@ -12,8 +12,11 @@ import pytest
     ],
 )
 def test_transaction_amount_is_high(amount, expected):
-    transaction_request = {'amt': amount}
+    # Prepare input data
+    input_data = {
+        'transaction_request': {'amt': amount}
+    }
     expected = {'transaction_amount_is_high': expected}
 
-    actual = transaction_amount_is_high.test_run(transaction_request=transaction_request)
+    actual = transaction_amount_is_high.run_transformation(input_data=input_data)
     assert expected == actual

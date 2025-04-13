@@ -29,4 +29,6 @@ from datetime import datetime, timedelta
 def user_recent_transactions(transactions):
     df = transactions[['user_id', 'amt', 'timestamp']]
     df['amt'] = df['amt'].astype(str)
+    # Sort by timestamp in descending order and take the first 10 distinct values for each user
+    df = df.sort_values('timestamp', ascending=False).groupby('user_id').head(10)
     return df

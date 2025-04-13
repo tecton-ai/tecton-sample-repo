@@ -5,6 +5,7 @@ from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_batch
 from datetime import datetime, timedelta
 import pandas as pd
+from pandas import Timestamp, Timedelta
 
 
 @batch_feature_view(
@@ -26,8 +27,16 @@ import pandas as pd
     ]
 )
 def user_distinct_ad_count_7d(ad_impressions, context):
+    # Filter data to only include events within the 7-day window
+    window_start = Timestamp(context.end_time) - Timedelta(days=7)
+    window_end = Timestamp(context.end_time)
+    df = ad_impressions[
+        (ad_impressions['timestamp'] >= window_start) &
+        (ad_impressions['timestamp'] < window_end)
+    ]
+    
     # Group by user_uuid and count distinct ad_ids
-    df = ad_impressions.groupby('user_uuid').agg({
+    df = df.groupby('user_uuid').agg({
         'ad_id': 'nunique'
     }).reset_index()
     
@@ -35,6 +44,6 @@ def user_distinct_ad_count_7d(ad_impressions, context):
     df.columns = ['user_id', 'distinct_ad_count']
     
     # Add timestamp column
-    df['timestamp'] = pd.Timestamp(context.end_time) - pd.Timedelta(microseconds=1)
+    df['timestamp'] = Timestamp(context.end_time) - Timedelta(microseconds=1)
     
     return df

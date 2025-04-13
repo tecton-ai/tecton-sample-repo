@@ -1,2 +1,3 @@
 tecton[pyspark]~=1.1.0
 tecton[rift]~=1.1.0
+pandas>=1.3.0
