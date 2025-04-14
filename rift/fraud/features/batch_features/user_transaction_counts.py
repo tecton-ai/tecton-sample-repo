@@ -12,9 +12,9 @@ from datetime import datetime, timedelta
     mode='pandas',
     aggregation_interval=timedelta(days=1),
     features=[
-        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(days=1)),
-        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(days=30)),
-        Aggregate(input_column=Field('transaction', Int32), function='count', time_window=timedelta(days=90)),
+        Aggregate(input_column=Field('count', Int32), function='count', time_window=timedelta(days=1)),
+        Aggregate(input_column=Field('count', Int32), function='count', time_window=timedelta(days=30)),
+        Aggregate(input_column=Field('count', Int32), function='count', time_window=timedelta(days=90)),
     ],
     online=True,
     offline=True,
@@ -25,10 +25,10 @@ from datetime import datetime, timedelta
     timestamp_field='timestamp',
     environment='tecton-core-1.1.0'
 )
-def user_transaction_counts(transactions):
-    df = transactions[['user_id', 'timestamp']].copy()
+def user_transaction_counts(transactions_batch):
+    df = transactions_batch[['user_id', 'timestamp']].copy()
     
-    # Add transaction column with constant value 1
-    df['transaction'] = 1
+    # Add count column with constant value 1
+    df['count'] = 1
     
     return df

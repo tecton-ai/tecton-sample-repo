@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from fraud.features.batch_features.batch_transaction_features import last_transaction_amount
 
 def test_last_transaction_amount():
-    # Create test data with transactions at different timestamps
+    # Create test data with transactions
     timestamps = [
         datetime(2024, 1, 1, 10, 0, tzinfo=timezone.utc),
         datetime(2024, 1, 2, 11, 0, tzinfo=timezone.utc),

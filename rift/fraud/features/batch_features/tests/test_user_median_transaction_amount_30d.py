@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from fraud.features.batch_features.user_median_transaction_amount_30d import user_median_transaction_amount_30d
 
 def test_user_median_transaction_amount_30d():
-    # Create test data with transactions of different amounts
+    # Create test data with transactions
     timestamps = [
         datetime(2024, 1, 1, 10, 0, tzinfo=timezone.utc),
         datetime(2024, 1, 2, 11, 0, tzinfo=timezone.utc),
