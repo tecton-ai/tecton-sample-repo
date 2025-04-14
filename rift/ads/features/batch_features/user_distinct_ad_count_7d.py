@@ -22,6 +22,7 @@ from pandas import Timestamp, Timedelta
     owner='demo-user@tecton.ai',
     description='How many distinct advertisements a user has been shown in the last week',
     timestamp_field='timestamp',
+    environment='tecton-core-1.1.0',
     features=[
         Attribute(name='distinct_ad_count', dtype=Int64),
     ]

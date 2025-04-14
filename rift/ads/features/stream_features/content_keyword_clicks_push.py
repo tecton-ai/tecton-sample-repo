@@ -23,6 +23,7 @@ content_keyword_click_counts_push = StreamFeatureView(
     description='The ad clicks for a content keyword',
     batch_trigger=BatchTriggerType.MANUAL,
     timestamp_field='timestamp',
+    environment='tecton-core-1.1.0',
     features=[
         Attribute(name='clicked', dtype=Int64),
     ]

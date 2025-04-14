@@ -27,7 +27,8 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='Transaction amount statistics and total over a series of time windows, updated every 10 minutes.',
-    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME,
+    environment='tecton-core-1.1.0'
 )
 def user_transaction_amount_metrics(transactions):
     return transactions[['user_id', 'amt', 'timestamp']]

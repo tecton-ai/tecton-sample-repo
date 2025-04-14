@@ -24,5 +24,6 @@ user_click_counts_push = StreamFeatureView(
     timestamp_field='timestamp',
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
-    description='The count of ad clicks for a user'
+    description='The count of ad clicks for a user',
+    environment='tecton-core-1.1.0'
 )

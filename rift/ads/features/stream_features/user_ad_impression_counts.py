@@ -1,5 +1,5 @@
 from tecton import stream_feature_view, Aggregate, AggregationLeadingEdge
-from tecton.types import Int32, Field
+from tecton.types import Int64, Field
 from ads.entities import ad, user
 from ads.data_sources.ad_impressions import ad_impressions_stream
 from datetime import datetime, timedelta
@@ -10,9 +10,9 @@ from datetime import datetime, timedelta
     entities=[user, ad],
     mode='pandas',
     features=[
-        Aggregate(input_column=Field('impression', Int32), function='count', time_window=timedelta(hours=1)),
-        Aggregate(input_column=Field('impression', Int32), function='count', time_window=timedelta(hours=24)),
-        Aggregate(input_column=Field('impression', Int32), function='count', time_window=timedelta(hours=72)),
+        Aggregate(input_column=Field('impression', Int64), function='count', time_window=timedelta(hours=1)),
+        Aggregate(input_column=Field('impression', Int64), function='count', time_window=timedelta(hours=24)),
+        Aggregate(input_column=Field('impression', Int64), function='count', time_window=timedelta(hours=72)),
     ],
     timestamp_field='timestamp',
     online=False,
@@ -22,7 +22,8 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='The count of impressions between a given user and a given ad',
-    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME,
+    environment='tecton-core-1.1.0'
 )
 def user_ad_impression_counts(ad_impressions):
     df = ad_impressions[['user_uuid', 'ad_id', 'timestamp']].copy()

@@ -22,7 +22,8 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='User transaction counts at specific merchants over a series of time windows, updated daily.',
-    timestamp_field='timestamp'
+    timestamp_field='timestamp',
+    environment='tecton-core-1.1.0'
 )
 def user_merchant_transaction_count(transactions):
     pandas_df = transactions[['user_id', 'merchant', 'timestamp']].copy()
