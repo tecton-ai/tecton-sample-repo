@@ -22,7 +22,8 @@ from datetime import datetime, timedelta
     tags={'release': 'production'},
     owner='demo-user@tecton.ai',
     description='The count of impressions between a given user and a given ad',
-    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME
+    aggregation_leading_edge=AggregationLeadingEdge.LATEST_EVENT_TIME,
+    environment='tecton-core-1.1.0'
 )
 def user_ad_impression_counts(ad_impressions):
     df = ad_impressions[['user_uuid', 'ad_id', 'timestamp']].copy()

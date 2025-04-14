@@ -26,5 +26,9 @@ def user_ad_embedding_similarity(ad_embedding, user_embedding):
         return np.dot(a, b)/(norm(a)*norm(b))
 
     result = {}
-    result["cosine_similarity"] = cosine_similarity(user_embedding["user_embedding"], ad_embedding["ad_embedding"]).astype('float64')
+    # Handle the case where the input dictionaries are None or missing the embedding key
+    user_emb = user_embedding.get("user_embedding") if user_embedding else None
+    ad_emb = ad_embedding.get("ad_embedding") if ad_embedding else None
+    similarity = cosine_similarity(user_emb, ad_emb)
+    result["cosine_similarity"] = float(similarity)  # Convert to float to ensure it's JSON serializable
     return result

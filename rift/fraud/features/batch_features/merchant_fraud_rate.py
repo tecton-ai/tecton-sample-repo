@@ -20,7 +20,8 @@ from datetime import datetime, timedelta
     ],
     feature_start_time=datetime(2022, 5, 1),
     description='The merchant fraud rate over series of time windows, updated daily.',
-    timestamp_field='timestamp'
+    timestamp_field='timestamp',
+    environment='tecton-core-1.1.0'
 )
 def merchant_fraud_rate(transactions_batch):
     return transactions_batch[['merchant', 'is_fraud', 'timestamp']]

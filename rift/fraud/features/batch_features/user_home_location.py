@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
     owner='demo-user@tecton.ai',
     description='User date of birth, entered at signup.',
     timestamp_field='signup_timestamp',
+    environment='tecton-core-1.1.0',
     features=[
         Attribute('lat', Float64),
         Attribute('long', Float64),

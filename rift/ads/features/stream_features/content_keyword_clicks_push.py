@@ -1,6 +1,6 @@
 from datetime import timedelta, datetime
 from tecton import StreamFeatureView, BatchTriggerType, Attribute
-from tecton.types import Int64
+from tecton.types import Int32
 from ads.entities import content_keyword
 from ads.data_sources.ad_impressions import keyword_click_source
 
@@ -23,7 +23,8 @@ content_keyword_click_counts_push = StreamFeatureView(
     description='The ad clicks for a content keyword',
     batch_trigger=BatchTriggerType.MANUAL,
     timestamp_field='timestamp',
+    environment='tecton-core-1.1.0',
     features=[
-        Attribute(name='clicked', dtype=Int64),
+        Attribute(name='clicked', dtype=Int32),
     ]
 )

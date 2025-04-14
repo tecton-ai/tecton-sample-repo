@@ -22,7 +22,8 @@ from datetime import datetime, timedelta
     ],
     tags={'release': 'production'},
     description='How many transactions the user has made to distinct merchants in the last 30 days.',
-    timestamp_field='timestamp'
+    timestamp_field='timestamp',
+    environment='tecton-core-1.1.0'
 )
 def user_approx_distinct_merchant_transaction_count_30d(transactions_batch):
     return transactions_batch[['user_id', 'timestamp', 'merchant']]

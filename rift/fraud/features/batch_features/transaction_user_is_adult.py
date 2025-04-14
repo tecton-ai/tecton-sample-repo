@@ -1,6 +1,5 @@
 from tecton import batch_feature_view, Attribute
 from tecton.types import Int32
-import pandas as pd
 
 from fraud.entities import user
 from fraud.data_sources.fraud_users import fraud_users_batch
@@ -28,6 +27,8 @@ from datetime import datetime, timedelta
     timestamp_field='timestamp'
 )
 def transaction_user_is_adult(transactions_batch, fraud_users_batch):
+    import pandas as pd
+    
     # Merge transactions with user data
     df = transactions_batch.merge(
         fraud_users_batch,
@@ -35,8 +36,11 @@ def transaction_user_is_adult(transactions_batch, fraud_users_batch):
         how='inner'
     )
     
+    # Convert dob to timezone-aware datetime
+    df['dob'] = pd.to_datetime(df['dob']).dt.tz_localize('UTC')
+    
     # Calculate age in days and create user_is_adult column
-    df['user_is_adult'] = ((df['timestamp'] - pd.to_datetime(df['dob'])).dt.days > (18*365)).astype(int)
+    df['user_is_adult'] = ((df['timestamp'] - df['dob']).dt.days > (18*365)).astype(int)
     
     # Select and order final columns
     return df[['timestamp', 'user_id', 'user_is_adult']]

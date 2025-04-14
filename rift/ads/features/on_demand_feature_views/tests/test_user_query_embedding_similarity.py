@@ -6,10 +6,13 @@ from ads.features.on_demand_feature_views.user_query_embedding_similarity import
 # Testing the 'user_query_embedding_similarity' feature which takes in request data ('query_embedding')
 # and a precomputed feature ('user_embedding') as inputs
 def test_user_query_embedding_similarity():
-    request = {'query_embedding': [1.0, 1.0, 0.0]}
-    user_embedding = {'user_embedding': [0.0, 1.0, 1.0]}
+    # Prepare input data
+    input_data = {
+        'request': {'query_embedding': [1.0, 1.0, 0.0]},
+        'user_embedding': {'user_embedding': [0.0, 1.0, 1.0]}
+    }
 
-    actual = user_query_embedding_similarity.test_run(request=request, user_embedding=user_embedding)
+    actual = user_query_embedding_similarity.run_transformation(input_data=input_data)
 
     # Float comparison.
     expected = 0.5
