@@ -33,7 +33,7 @@ def test_user_impression_counts_basic():
 
     # Verify that each row has an impression value of 1
     assert all(result_df['impression'] == 1)
-    assert result_df['impression'].dtype == np.int64  # Verify type is Int64
+    assert result_df['impression'].dtype == np.int32  # Verify type is Int32
 
     # Verify that user_uuid is correctly mapped to user_id
     assert all(result_df['user_id'] == 'user1')

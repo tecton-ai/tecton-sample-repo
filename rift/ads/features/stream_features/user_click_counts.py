@@ -1,5 +1,5 @@
 from tecton import stream_feature_view, Aggregate, AggregationLeadingEdge
-from tecton.types import Field, Int64
+from tecton.types import Field, Int32
 
 from ads.entities import user
 from ads.data_sources.ad_impressions import ad_impressions_stream
@@ -11,9 +11,9 @@ from datetime import datetime, timedelta
     entities=[user],
     mode='pandas',
     features=[
-        Aggregate(input_column=Field('clicked', Int64), function='count', time_window=timedelta(hours=1)),
-        Aggregate(input_column=Field('clicked', Int64), function='count', time_window=timedelta(hours=24)),
-        Aggregate(input_column=Field('clicked', Int64), function='count', time_window=timedelta(hours=72)),
+        Aggregate(input_column=Field('clicked', Int32), function='count', time_window=timedelta(hours=1)),
+        Aggregate(input_column=Field('clicked', Int32), function='count', time_window=timedelta(hours=24)),
+        Aggregate(input_column=Field('clicked', Int32), function='count', time_window=timedelta(hours=72)),
     ],
     online=False,
     offline=False,
