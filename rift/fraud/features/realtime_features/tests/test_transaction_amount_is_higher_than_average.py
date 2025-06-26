@@ -33,7 +33,6 @@ def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected)
         'user_transaction_amount_metrics__amt_mean_3d_continuous': [MOCK_VALUE],
     })
     
-    # Create expected output DataFrame
     expected_df = pd.DataFrame({
         'user_id': ['user123'],
         'timestamp': [pd.Timestamp('2023-01-01', tz='UTC')],
