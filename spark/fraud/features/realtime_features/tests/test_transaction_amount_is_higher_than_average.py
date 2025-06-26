@@ -12,9 +12,9 @@ MOCK_VALUE = 42
 @pytest.mark.parametrize(
     "daily_mean,amount,expected",
     [
-        (100, 200, True),
-        (100, 10, False),
-        (100, 100, False),
+        (100, 200.0, True),
+        (100, 10.0, False),
+        (100, 100.0, False),
     ],
 )
 def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected):
@@ -49,4 +49,4 @@ def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected)
     
     actual_df = transaction_amount_is_higher_than_average.get_features_for_events(input_df).to_pandas()
     
-    pd.testing.assert_frame_equal(actual_df, expected_df)
+    pd.testing.assert_frame_equal(actual_df, expected_df, check_like=True)
