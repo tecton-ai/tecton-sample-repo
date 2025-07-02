@@ -1,2 +1,2 @@
-tecton[pyspark]~=1.1.0
-tecton[rift]~=1.1.0
+tecton[pyspark]~=1.2.0rc0
+tecton[rift]~=1.2.0rc0
