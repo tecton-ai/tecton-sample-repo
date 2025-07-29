@@ -19,7 +19,7 @@ MOCK_VALUE = 42
         (100, 100.0, False),
     ],
 )
-def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected):
+def test_transaction_amount_is_higher_than_average(tecton_pytest_spark_session,daily_mean, amount, expected):
     input_df = pd.DataFrame({
         # add the required fields to run get_features_for_events on the realtime feature view
         'user_id': ['user123'],
