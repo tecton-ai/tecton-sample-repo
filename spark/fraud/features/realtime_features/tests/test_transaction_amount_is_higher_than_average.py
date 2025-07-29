@@ -1,6 +1,7 @@
 from fraud.features.realtime_features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
 import pytest
 import pandas as pd
+from datetime import datetime
 
 MOCK_VALUE = 42
 
@@ -17,7 +18,25 @@ MOCK_VALUE = 42
         (100, 100.0, False),
     ],
 )
-def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected):
+def test_transaction_amount_is_higher_than_average(tecton_pytest_spark_session, daily_mean, amount, expected):
+    # Same signup timestamp for all users
+    signup_timestamp = datetime(2022, 5, 1)
+
+    # Create the data
+    data = [
+        ("user_1", signup_timestamp, 1000000000000000),
+        ("user_2", signup_timestamp, 4000000000000000),
+        ("user_3", signup_timestamp, 5000000000000000),
+        ("user_4", signup_timestamp, 6000000000000000)
+    ]
+
+    # Define schema: user_id, signup_timestamp, cc_num
+    schema = ["user_id", "signup_timestamp", "cc_num"]
+
+    # Convert to Spark DataFrame
+    input_spark_df = tecton_pytest_spark_session.createDataFrame(data, schema)
+
+
     input_df = pd.DataFrame({
         # add the required fields to run get_features_for_events on the realtime feature view
         'user_id': ['user123'],
@@ -45,7 +64,7 @@ def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected)
         'user_transaction_amount_metrics__amt_mean_3d_10m': [MOCK_VALUE],
         # the expected feature value from the rtfv's Calculation
         'transaction_amount_is_higher_than_average__transaction_amount_is_higher_than_average': [expected]
-    })
+    }).astype({"timestamp": 'datetime64[us, UTC]'})
     
     actual_df = transaction_amount_is_higher_than_average.get_features_for_events(input_df).to_pandas()
     
