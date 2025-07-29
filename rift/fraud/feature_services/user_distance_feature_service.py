@@ -6,6 +6,6 @@ user_distance_feature_service = FeatureService(
     name='user_distance_feature_service',
     description='Feature Service for computing distance related features based on user location.',
     features=[user_to_user_distance, transaction_distance_from_home],
-    realtime_environment='tecton-core-1.1.0',
+    realtime_environment='tecton-core-1.2.1',
     online_serving_enabled=True
 )
