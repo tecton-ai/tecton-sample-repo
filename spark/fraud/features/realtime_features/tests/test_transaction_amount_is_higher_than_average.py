@@ -69,3 +69,9 @@ def test_transaction_amount_is_higher_than_average(tecton_pytest_spark_session, 
     actual_df = transaction_amount_is_higher_than_average.get_features_for_events(input_df).to_pandas()
     
     pd.testing.assert_frame_equal(actual_df, expected_df, check_like=True)
+
+@pytest.fixture(scope='module', autouse=True)
+def configure_spark_session(tecton_pytest_spark_session):
+    # Custom configuration for the spark session. In this case, configure the timezone so that we don't need to specify
+    # a timezone for every datetime in the mock data.
+    tecton_pytest_spark_session.conf.set("spark.sql.session.timeZone", "UTC")
