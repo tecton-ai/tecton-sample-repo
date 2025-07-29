@@ -1,7 +1,9 @@
 from fraud.features.realtime_features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
+import os
 import pytest
 import pandas as pd
 from datetime import datetime
+import pytz
 
 MOCK_VALUE = 42
 
@@ -18,6 +20,8 @@ MOCK_VALUE = 42
 #         (100, 100.0, False),
 #     ],
 # )
+
+@pytest.mark.skipif(os.environ.get("TECTON_TEST_SPARK") is None, reason="Requires JDK installation and $JAVA_HOME env variable to run, so we skip unless user sets the `TECTON_TEST_SPARK` env var.")
 def test_transaction_amount_is_higher_than_average(tecton_pytest_spark_session):
     # Same signup timestamp for all users
     signup_timestamp = datetime(2022, 5, 1)
