@@ -14,7 +14,7 @@ import pandas as pd
         (110.0, True),
     ],
 )
-def test_transaction_amount_is_high(tecton_pytest_spark_session, amount, expected):
+def test_transaction_amount_is_high(amount, expected):
     input_df = pd.DataFrame({
         'amt': [amount]
     })
