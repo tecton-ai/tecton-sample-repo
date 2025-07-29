@@ -47,7 +47,7 @@ def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected)
         'user_transaction_amount_metrics__amt_mean_3d_10m': [MOCK_VALUE],
         # the expected feature value from the rtfv's Calculation
         'transaction_amount_is_higher_than_average__transaction_amount_is_higher_than_average': [expected]
-    })
+    }).astype({"timestamp": "datetime64[us, UTC]" })
 
     actual_df = transaction_amount_is_higher_than_average.get_features_for_events(input_df).to_pandas()
 
