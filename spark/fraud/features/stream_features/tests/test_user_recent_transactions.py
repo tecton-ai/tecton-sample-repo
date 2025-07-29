@@ -50,7 +50,7 @@ def test_user_recent_transactions(my_custom_spark_session):
 
 # Example showing of how to create your own spark session for testing instead of the Tecton provided
 # tecton_pytest_spark_session.
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def my_custom_spark_session():
     """Returns a custom spark session configured for use in Tecton unit testing."""
     with resources.path("tecton_spark.jars", "tecton-udfs-spark-3.jar") as path:
