@@ -12,9 +12,9 @@ MOCK_VALUE = 42
 @pytest.mark.parametrize(
     "daily_mean,amount,expected",
     [
-        (100, 200.0, True),
-        (100, 10.0, False),
-        (100, 100.0, False),
+        (100, 200, True),
+        (100, 10, False),
+        (100, 100, False),
     ],
 )
 def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected):

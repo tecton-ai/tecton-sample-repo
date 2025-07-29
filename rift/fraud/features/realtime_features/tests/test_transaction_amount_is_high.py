@@ -9,9 +9,9 @@ import pandas as pd
 @pytest.mark.parametrize(
     "amount,expected",
     [
-        (90.0, False),
-        (100.0, False),
-        (110.0, True),
+        (90, False),
+        (100, False),
+        (110, True),
     ],
 )
 def test_transaction_amount_is_high(amount, expected):
