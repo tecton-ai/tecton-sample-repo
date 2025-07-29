@@ -1,14 +1,12 @@
-import pytest
+import os
 import pandas as pd
+import pytest
 
 from fraud.features.realtime_features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
 
 
-MOCK_VALUE = 42
-
 # Testing the 'transaction_amount_is_higher_than_average' feature which takes in request data ('amt')
 # and a precomputed feature ('amt_mean_1d_10m') as inputs
-
 # To test Realtime Feature Views with Calculations, we use the get_features_for_events method,
 # which evaluates the Calculation expressions on the input data.
 @pytest.mark.parametrize(
@@ -19,6 +17,7 @@ MOCK_VALUE = 42
         (100, 100.0, False),
     ],
 )
+@pytest.mark.skipif(os.environ.get("TECTON_TEST_SPARK") is None, reason="Requires JDK installation and $JAVA_HOME env variable to run, so we skip unless user sets the `TECTON_TEST_SPARK` env var.")
 def test_transaction_amount_is_higher_than_average(tecton_pytest_spark_session, daily_mean, amount, expected):
     input_df = pd.DataFrame({
         # add the required fields to run get_features_for_events on the realtime feature view
@@ -28,11 +27,11 @@ def test_transaction_amount_is_higher_than_average(tecton_pytest_spark_session, 
         'user_transaction_amount_metrics__amt_mean_1d_10m': [daily_mean],
         # add all the other rtfv's source's fields to mock the source entirely and skip executing part of the query tree
         # these fields are not used in the rtfv's features, so we provide a mock value for them
-        'user_transaction_amount_metrics__amt_sum_1h_10m': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_sum_1d_10m': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_sum_3d_10m': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_mean_1h_10m': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_mean_3d_10m': [MOCK_VALUE],
+        'user_transaction_amount_metrics__amt_sum_1h_10m': [1],
+        'user_transaction_amount_metrics__amt_sum_1d_10m': [2],
+        'user_transaction_amount_metrics__amt_sum_3d_10m': [3],
+        'user_transaction_amount_metrics__amt_mean_1h_10m': [4],
+        'user_transaction_amount_metrics__amt_mean_3d_10m': [5],
     })
 
     expected_df = pd.DataFrame({
@@ -40,11 +39,11 @@ def test_transaction_amount_is_higher_than_average(tecton_pytest_spark_session, 
         'timestamp': [pd.Timestamp('2023-01-01', tz='UTC')],
         'amt': [amount],
         'user_transaction_amount_metrics__amt_mean_1d_10m': [daily_mean],
-        'user_transaction_amount_metrics__amt_sum_1h_10m': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_sum_1d_10m': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_sum_3d_10m': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_mean_1h_10m': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_mean_3d_10m': [MOCK_VALUE],
+        'user_transaction_amount_metrics__amt_sum_1h_10m': [1],
+        'user_transaction_amount_metrics__amt_sum_1d_10m': [2],
+        'user_transaction_amount_metrics__amt_sum_3d_10m': [3],
+        'user_transaction_amount_metrics__amt_mean_1h_10m': [4],
+        'user_transaction_amount_metrics__amt_mean_3d_10m': [5],
         # the expected feature value from the rtfv's Calculation
         'transaction_amount_is_higher_than_average__transaction_amount_is_higher_than_average': [expected]
     }).astype({"timestamp": "datetime64[us, UTC]" })

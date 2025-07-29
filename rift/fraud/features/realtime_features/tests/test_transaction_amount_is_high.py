@@ -1,6 +1,7 @@
-from fraud.features.realtime_features.transaction_amount_is_high import transaction_amount_is_high
-import pytest
 import pandas as pd
+import pytest
+
+from fraud.features.realtime_features.transaction_amount_is_high import transaction_amount_is_high
 
 
 # Testing the 'transaction_amount_is_high' feature which depends on request data ('amt') as input

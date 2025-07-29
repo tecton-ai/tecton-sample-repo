@@ -1,8 +1,7 @@
-from fraud.features.realtime_features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
-import pytest
 import pandas as pd
+import pytest
 
-MOCK_VALUE = 42
+from fraud.features.realtime_features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
 
 # Testing the 'transaction_amount_is_higher_than_average' feature which takes in request data ('amt')
 # and a precomputed feature ('amt_mean_1d_continuous') as inputs
@@ -26,11 +25,11 @@ def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected)
         'user_transaction_amount_metrics__amt_mean_1d_continuous': [daily_mean],
         # add all the other rtfv's source's fields to mock the source entirely and skip executing part of the query tree
         # these fields are not used in the rtfv's features, so we provide a mock value for them
-        'user_transaction_amount_metrics__amt_sum_1h_continuous': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_sum_1d_continuous': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_sum_3d_continuous': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_mean_1h_continuous': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_mean_3d_continuous': [MOCK_VALUE],
+        'user_transaction_amount_metrics__amt_sum_1h_continuous': [1],
+        'user_transaction_amount_metrics__amt_sum_1d_continuous': [2],
+        'user_transaction_amount_metrics__amt_sum_3d_continuous': [3],
+        'user_transaction_amount_metrics__amt_mean_1h_continuous': [4],
+        'user_transaction_amount_metrics__amt_mean_3d_continuous': [5],
     })
     
     expected_df = pd.DataFrame({
@@ -38,11 +37,11 @@ def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected)
         'timestamp': [pd.Timestamp('2023-01-01', tz='UTC')],
         'amt': [amount],
         'user_transaction_amount_metrics__amt_mean_1d_continuous': [daily_mean],
-        'user_transaction_amount_metrics__amt_sum_1h_continuous': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_sum_1d_continuous': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_sum_3d_continuous': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_mean_1h_continuous': [MOCK_VALUE],
-        'user_transaction_amount_metrics__amt_mean_3d_continuous': [MOCK_VALUE],
+        'user_transaction_amount_metrics__amt_sum_1h_continuous': [1],
+        'user_transaction_amount_metrics__amt_sum_1d_continuous': [2],
+        'user_transaction_amount_metrics__amt_sum_3d_continuous': [3],
+        'user_transaction_amount_metrics__amt_mean_1h_continuous': [4],
+        'user_transaction_amount_metrics__amt_mean_3d_continuous': [5],
         # the expected feature value from the rtfv's Calculation
         'transaction_amount_is_higher_than_average__transaction_amount_is_higher_than_average': [expected]
     })
