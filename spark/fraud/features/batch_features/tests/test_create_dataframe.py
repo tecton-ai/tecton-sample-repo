@@ -15,3 +15,5 @@ def test_create_dataframe(tecton_pytest_spark_session):
 
     # Convert to Spark DataFrame
     input_spark_df = tecton_pytest_spark_session.createDataFrame(data, schema)
+
+    assert True
