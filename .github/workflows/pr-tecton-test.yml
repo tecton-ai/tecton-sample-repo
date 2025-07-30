@@ -26,6 +26,6 @@ jobs:
         TECTON_TEST_SPARK: 1
 
     - name: Run tecton test for Rift features
-      run: cd rift; tecton init; tecton test
+      run: cd rift; tecton init; tecton test --default-compute-mode rift
 
   

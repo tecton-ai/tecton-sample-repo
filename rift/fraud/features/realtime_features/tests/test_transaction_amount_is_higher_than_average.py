@@ -1,8 +1,13 @@
-from fraud.features.realtime_features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
+import pandas as pd
 import pytest
+
+from fraud.features.realtime_features.transaction_amount_is_higher_than_average import transaction_amount_is_higher_than_average
 
 # Testing the 'transaction_amount_is_higher_than_average' feature which takes in request data ('amt')
 # and a precomputed feature ('amt_mean_1d_continuous') as inputs
+
+# To test Realtime Feature Views with Calculations, we use the get_features_for_events method,
+# which evaluates the Calculation expressions on the input data.
 @pytest.mark.parametrize(
     "daily_mean,amount,expected",
     [
@@ -12,12 +17,35 @@ import pytest
     ],
 )
 def test_transaction_amount_is_higher_than_average(daily_mean, amount, expected):
-    user_transaction_amount_metrics = {'amt_mean_1d_continuous': daily_mean}
-    transaction_request = {'amt': amount}
-
-    actual = transaction_amount_is_higher_than_average.test_run(
-        transaction_request=transaction_request,
-        user_transaction_amount_metrics=user_transaction_amount_metrics)
-
-    expected = {'transaction_amount_is_higher_than_average': expected}
-    assert expected == actual
+    input_df = pd.DataFrame({
+        # add the required fields to run get_features_for_events on the realtime feature view
+        'user_id': ['user123'],
+        'timestamp': [pd.Timestamp('2023-01-01', tz='UTC')],
+        'amt': [amount],
+        'user_transaction_amount_metrics__amt_mean_1d_continuous': [daily_mean],
+        # add all the other rtfv's source's fields to mock the source entirely and skip executing part of the query tree
+        # these fields are not used in the rtfv's features, so we provide a mock value for them
+        'user_transaction_amount_metrics__amt_sum_1h_continuous': [1],
+        'user_transaction_amount_metrics__amt_sum_1d_continuous': [2],
+        'user_transaction_amount_metrics__amt_sum_3d_continuous': [3],
+        'user_transaction_amount_metrics__amt_mean_1h_continuous': [4],
+        'user_transaction_amount_metrics__amt_mean_3d_continuous': [5],
+    })
+    
+    expected_df = pd.DataFrame({
+        'user_id': ['user123'],
+        'timestamp': [pd.Timestamp('2023-01-01', tz='UTC')],
+        'amt': [amount],
+        'user_transaction_amount_metrics__amt_mean_1d_continuous': [daily_mean],
+        'user_transaction_amount_metrics__amt_sum_1h_continuous': [1],
+        'user_transaction_amount_metrics__amt_sum_1d_continuous': [2],
+        'user_transaction_amount_metrics__amt_sum_3d_continuous': [3],
+        'user_transaction_amount_metrics__amt_mean_1h_continuous': [4],
+        'user_transaction_amount_metrics__amt_mean_3d_continuous': [5],
+        # the expected feature value from the rtfv's Calculation
+        'transaction_amount_is_higher_than_average__transaction_amount_is_higher_than_average': [expected]
+    })
+    
+    actual_df = transaction_amount_is_higher_than_average.get_features_for_events(input_df).to_pandas()
+    
+    pd.testing.assert_frame_equal(actual_df, expected_df, check_like=True)
